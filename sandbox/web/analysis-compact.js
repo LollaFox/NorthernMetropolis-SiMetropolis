@@ -127,13 +127,15 @@ export class CompactAnalysisUI {
  saveProductConfiguration(){
   try{
    const script=$('construction-scenario').value;
-   if(!['configured','segregated','mixed'].includes(script))throw new Error('Choose a government script.');
+   if(!['default-city','function-zones','mixed-zones'].includes(script))throw new Error('Choose a government script.');
    const key=$('deepseek-api-key').value.trim();
    if(!key||key.length>4096||/[\r\n\u0000]/.test(key)||/^[\uFEFF"']/.test(key))throw new Error('Enter a DeepSeek API key. This sandbox does not run offline.');
    this.deepseekApiKey=key;this.engine='backend';this.presetAcknowledged=true;
    if($('analysis-engine'))$('analysis-engine').value='backend';
    if($('analysis-preset-ack'))$('analysis-preset-ack').checked=true;
-   if(script!=='configured'){$('analysis-start-date').value='2025-01-01';$('analysis-end-date').value='2026-12-01';$('analysis-step').value='month';}
+   const years=Number($('simulation-years')?.value);
+   if(![1,2,3,4,5].includes(years))throw new Error('Choose 1 to 5 years.');
+   $('analysis-start-date').value='2025-01-01';$('analysis-end-date').value=(2024+years)+'-12-01';$('analysis-step').value='month';
    const setup=validateSetup({...this.setup(),policyScope:{...scopeMetadata(this.selected,'backend'),policyId:this.policyId,areaId:this.areaId,model:this.currentPolicy.model,catalogVersion:CATALOG_VERSION}});
    if(this.apiResults||this.apiMap||this.localTopic)this.restoreRules();
    this.savedSetup=setup;this.session?.reset();

@@ -38,7 +38,7 @@ export function syncGovernment(owner){
 export function governmentSetup(){
  if(!$('construction-scenario')||$('analysis-engine')?.value!=='backend')return {};
  const constructionScenario=$('construction-scenario').value;
- if(constructionScenario==='configured')return {constructionScenario};
+ if(['configured','default-city','function-zones','mixed-zones'].includes(constructionScenario))return {constructionScenario};
  if(!GOVERNMENT_LIVE_DECISIONS_ENABLED)return {constructionScenario,fiscalEnabled:true,governmentMode:'fixed',fiscalParameters:Object.fromEntries(fields.map(([key,,value])=>[key,value]))};
  const fiscalParameters=Object.fromEntries(fields.map(([key])=>{const input=$('government-'+key),value=Number(input.value);if(!input.value.trim()||!Number.isFinite(value)||value<0)throw new Error('Enter a non-negative '+key);return [key,value];}));
  return {constructionScenario,fiscalEnabled:true,governmentMode:$('government-mode').value,fiscalParameters};

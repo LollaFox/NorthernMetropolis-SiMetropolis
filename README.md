@@ -19,13 +19,13 @@ This sandbox does not run offline. In Configure, choose a government script and 
 ## Using the web app
 
 1. Click Configure, or click Configure analysis before the first run. Both open the same settings.
-2. Choose a government script: mixed districts, functional districts, or the original server script.
+2. Choose a government script: Default City, Function Zones, or Mixed Zones.
 3. Enter a DeepSeek API key. A run cannot start without one.
 4. Save settings, then Start analysis. Review the assumptions and confirm the run.
-5. At the bottom, view population, jobs, and construction progress month by month. The original server script asks DeepSeek for a narrative on each completed building. Government start-date decisions stay on the fixed schedule.
+5. At the bottom, view population, jobs, and construction progress month by month. Each script asks DeepSeek for a narrative on each completed building. Government start-date decisions stay on the fixed schedule.
 6. Analysis history opens saved results. Export study downloads the saved run. After a refresh, enter the key again before resuming an unfinished task. Stop waiting does not cancel the backend task.
 
-The DeepSeek key is used for per-building narratives on the original server script. It is not used to decide when the government starts projects. That government-decision mode is disabled.
+The DeepSeek key is used for per-building narratives. It is not used to decide when the government starts projects. That government-decision mode is disabled.
 
 ## Saving and failures
 

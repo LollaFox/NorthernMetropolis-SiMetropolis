@@ -16,6 +16,7 @@ import uuid
 from . import engine, snapshots
 from .scenario import default_scenario, validate_scenario
 from .layout_scenarios import layout_scenario
+from .product_scripts import SCRIPTS, load_product_script
 from .storage import StorageError, atomic_write_json, monthly_state_path, read_json, write_monthly_state
 
 
@@ -92,7 +93,7 @@ def validate_setup(value, today=None):
     if not (113.7 <= bounds["west"] < bounds["east"] <= 114.7 and
             22.1 <= bounds["south"] < bounds["north"] <= 22.9):
         raise ServiceError("Select a rectangle within the Hong Kong–Shenzhen study extent.")
-    if value.get("constructionScenario", "configured") not in ("configured", "segregated", "mixed"):
+    if value.get("constructionScenario", "configured") not in ("configured", "segregated", "mixed", *SCRIPTS):
         raise ServiceError("Unknown construction scenario.")
     if type(value.get("fiscalEnabled", False)) is not bool:
         raise ServiceError("fiscalEnabled must be boolean")
@@ -235,7 +236,13 @@ class NarrativeService:
             if not GOVERNMENT_LIVE_DECISIONS_ENABLED and setup.get("governmentMode", "fixed") != "fixed":
                 raise ServiceError("Government decision AI is currently disabled.")
         selected = setup.get("constructionScenario", "configured")
-        config = copy.deepcopy(self.config) if selected == "configured" else layout_scenario(selected)
+        if selected in SCRIPTS:
+            try:
+                config = load_product_script(selected)
+            except (OSError, ValueError, TypeError, json.JSONDecodeError) as exc:
+                raise ServiceError(str(exc)) from None
+        else:
+            config = copy.deepcopy(self.config) if selected == "configured" else layout_scenario(selected)
         if setup.get("fiscalEnabled"):
             from .fiscal_engine import configured
             try:
@@ -311,8 +318,9 @@ class NarrativeService:
         counts = {kind: sum(obj["type"] == kind for obj in objects) for kind in ("residential", "business", "park", "station")}
         items = [
             ("construction_layout", "政府建设情景 / Construction layout",
-             "Two independent layouts; the selected script controls construction. PDF and policy tags do not override it.",
-             config["name"] + "; months are relative to the start date. Layout experiments complete in month 17. API maps show completed footprints, not construction meshes."),
+             "The selected script controls construction. PDF and policy tags do not override it.",
+             config["name"] + "; months are relative to the start date. The selected script finishes in month %s. API maps show completed footprints, not construction meshes." %
+             max((obj.get("completionMonth", 1) for obj in objects), default=1)),
             ("authority", "Scenario authority and policy override",
              "The selected policy is request context, not an interpreted construction or economic instruction. PDF upload is disabled."
              if pdf_disabled else

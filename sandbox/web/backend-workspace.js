@@ -24,7 +24,7 @@ export class BackendWorkspace{
   if(this.owner.session.pending||['review','confirmed'].includes(this.owner.session.state))this.owner.engine='backend';
   if(this.owner.config.productVersion==='government-integrated-1'&&!this.owner.session.pending){
    this.owner.engine='backend';$('analysis-engine').value='backend';
-   if($('construction-scenario')&&!$('construction-scenario').value)$('construction-scenario').value='mixed';
+   if($('construction-scenario')&&!$('construction-scenario').value)$('construction-scenario').value='default-city';
    // Government decision AI is disabled; do not select live or offline-test.
    if($('government-mode'))$('government-mode').value='fixed';
    $('analysis-start-date').value='2025-01-01';$('analysis-end-date').value='2026-12-01';

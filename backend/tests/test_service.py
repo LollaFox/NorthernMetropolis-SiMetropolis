@@ -446,8 +446,8 @@ class StartupTests(unittest.TestCase):
     def test_overview_scripts_fill_the_map_across_five_years(self):
         expected = {
             "default-city.json": {"residential": 83, "business": 20, "park": 24, "station": 5},
-            "functional-districts.json": {"residential": 46, "business": 66, "park": 12, "station": 8},
-            "mixed-districts.json": {"residential": 46, "business": 66, "park": 12, "station": 8},
+            "function-zones.json": {"residential": 46, "business": 66, "park": 12, "station": 8},
+            "mixed-zones.json": {"residential": 46, "business": 66, "park": 12, "station": 8},
         }
         loaded = {}
         for filename, counts in expected.items():
@@ -462,7 +462,7 @@ class StartupTests(unittest.TestCase):
             by_cell = {(item["x"], item["y"]): item for item in scenario["buildings"]}
             self.assertEqual(positions[by_cell[(0, 0)]["id"]], (-44, -44))
             self.assertEqual(positions[by_cell[(10, 11)]["id"]], (44, 44))
-        functional = loaded["functional-districts.json"]["buildings"]
+        functional = loaded["function-zones.json"]["buildings"]
         business = [item for item in functional if 3 <= item["x"] <= 8]
         self.assertEqual({"business": 66, "park": 2, "station": 4},
                          {kind: sum(item["type"] == kind for item in business) for kind in ("business", "park", "station")})
@@ -472,7 +472,7 @@ class StartupTests(unittest.TestCase):
         kinds = ("residential", "business", "park", "station")
         self.assertEqual(
             {kind: sum(item["type"] == kind for item in functional) for kind in kinds},
-            {kind: sum(item["type"] == kind for item in loaded["mixed-districts.json"]["buildings"]) for kind in kinds})
+            {kind: sum(item["type"] == kind for item in loaded["mixed-zones.json"]["buildings"]) for kind in kinds})
 
     def test_two_key_files_feed_one_flash_provider_without_public_secrets(self):
         with tempfile.TemporaryDirectory() as folder:
