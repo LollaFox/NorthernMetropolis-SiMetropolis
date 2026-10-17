@@ -27,6 +27,11 @@ from .context_records import REFERENCE_LEGEND, encode_context_records
 ROLES = ("narrator", "firm", "budget", "work", "park", "stability")
 RESIDENT_ROLES = ROLES[2:]
 ROLES = ROLES + ("government",)
+# Live government decisions are currently disabled in this sandbox.
+# Role "government" chooses when fixed projects start. It is separate from
+# role "narrator", which still writes a narrative for each completed building.
+# The product UI does not offer this role. Library tests may still call it.
+GOVERNMENT_LIVE_DECISIONS_ENABLED = False
 DEFAULT_MODEL = "gpt-6.1-sol"
 ENDPOINT = "https://api.openai.com/v1/responses"
 DEEPSEEK_ENDPOINT = "https://api.deepseek.com/chat/completions"

@@ -20,7 +20,7 @@ const node=(tag,value,cls)=>{const n=document.createElement(tag);if(value!==unde
 const number=n=>new Intl.NumberFormat('en').format(Math.round(n));
 export class CompactAnalysisUI {
  constructor(city,port,host={}){
-  this.city=city;this.port=port;this.engine='rules';this.selected=[...(port.cases.find(c=>c.id===port.caseId)?.analysisTags??['border-access'])];this.lastCaseId=port.caseId;this.resultTags=null;this.apiResults=false;this.apiMap=null;this.apiIndex=0;this.frameGeneration=0;this.session=null;this.busy=false;this.sampleFile=null;this.config={backendConfigured:false};this.savedSetup=null;this.pendingTags=null;
+  this.city=city;this.port=port;this.engine='rules';this.selected=[...(port.cases.find(c=>c.id===port.caseId)?.analysisTags??['border-access'])];this.lastCaseId=port.caseId;this.resultTags=null;this.apiResults=false;this.apiMap=null;this.apiIndex=0;this.frameGeneration=0;this.session=null;this.busy=false;this.sampleFile=null;this.config={backendConfigured:false};this.savedSetup=null;this.pendingTags=null;this.requiresDeepseekKey=Boolean($('deepseek-api-key'));
   this.policyId='huanggang-opening';this.areaId='huanggang';this.topics=new TopicStudiesUI(this);
   this.initCatalog();this.drawTags();this.bind();mountGovernment(this);this.observeLayout();this.onRuleRender(port.study.months[port.month]);this.backend=new BackendWorkspace(this,host);
   const b=this.bounds();this.picker=new RegionPicker($('analysis-area-map'),value=>{for(const key of Object.keys(value))$(`analysis-${key}`).value=value[key].toFixed(6);this.picker.set(value);});this.picker.set(b);
@@ -76,8 +76,9 @@ export class CompactAnalysisUI {
   $('analysis-review-ack').addEventListener('change',()=>this.update());
   $('analysis-confirm-run').addEventListener('click',()=>this.confirmAndRun());
   $('analysis-config-form').addEventListener('submit',e=>{e.preventDefault();this.saveConfiguration();});
+  $('deepseek-api-key')?.addEventListener('input',()=>{this.syncSaveAvailability();if($('deepseek-api-key').value.trim()&&$('analysis-config-status').classList.contains('config-key-warning'))this.configNote('');});
   $('analysis-engine').addEventListener('change',()=>{if($('analysis-preset-ack'))$('analysis-preset-ack').checked=false;this.renderEngineNote();});
-  $('analysis-sample-pdf').addEventListener('click',async()=>{try{const r=await fetch('./fixture-plan.pdf');if(!r.ok)throw new Error('Test PDF unavailable.');this.sampleFile=new File([await r.blob()],'fixture-plan.pdf',{type:'application/pdf'});$('analysis-pdf-note').textContent='Test PDF selected. No PDF content is analyzed in fixture mode.';}catch(e){$('analysis-config-status').textContent=e.message;}});
+  $('analysis-sample-pdf').addEventListener('click',async()=>{try{const r=await fetch('./fixture-plan.pdf');if(!r.ok)throw new Error('Test PDF unavailable.');this.sampleFile=new File([await r.blob()],'fixture-plan.pdf',{type:'application/pdf'});$('analysis-pdf-note').textContent='Test PDF selected. No PDF content is analyzed in fixture mode.';}catch(e){this.configNote(e.message);}});
   $('analysis-plan').addEventListener('change',()=>{this.sampleFile=null;const name=$('analysis-plan').files[0]?.name;$('analysis-pdf-note').textContent=(name?name+' · ':'')+'PDF attachment, up to 20 MB. In the scripted backend, its text does not change construction.';});
   for(const key of ['west','east','south','north'])$(`analysis-${key}`).addEventListener('input',()=>this.picker.set(this.bounds()));
   $('analysis-load-map').addEventListener('click',()=>{this.picker.loadTiles(this.config.tileURL||'https://tile.openstreetmap.org/{z}/{x}/{y}.png',s=>$('analysis-area-status').textContent=s);$('analysis-load-map').disabled=true;});
@@ -93,7 +94,9 @@ export class CompactAnalysisUI {
  renderTagSummary(){const tags=POLICY_TAGS.filter(t=>this.selected.includes(t.id));$('analysis-tag-summary').textContent=tags.length?`${tags.length} selected`:'Select at least one';$('analysis-tag-summary').title=tags.map(t=>t.label).join(' · ');}
  bounds(){return Object.fromEntries(['west','east','south','north'].map(k=>[k,Number($(`analysis-${k}`).value)]));}
  setup(){return {...governmentSetup(),bounds:this.bounds(),start:$('analysis-start-date').value,end:$('analysis-end-date').value,step:$('analysis-step').value,policyScope:{...scopeMetadata(this.selected,this.engine),policyId:this.policyId,areaId:this.areaId,model:this.currentPolicy.model,catalogVersion:CATALOG_VERSION}};}
- configure(){if(this.busy)return;if(this.backendReplay){this.backend.newAnalysis();return;}if(this.currentPolicy.model!=='huanggang'&&this.topics.record)this.topics.prepareForm();$('analysis-engine').value=this.engine;if($('analysis-preset-ack'))$('analysis-preset-ack').checked=Boolean(this.presetAcknowledged);this.renderEngineNote();$('analysis-config-status').textContent='';$('analysis-config-dialog').showModal();}
+ configNote(message){const el=$('analysis-config-status');el.textContent=message||'';el.classList.toggle('config-key-warning',/^Enter (a|the) DeepSeek API/.test(message||''));}
+ syncSaveAvailability(){if(!this.requiresDeepseekKey)return;const button=$('analysis-save-config');if(!button)return;const idle=!$('deepseek-api-key')?.value.trim();button.classList.toggle('config-save-idle',idle);button.setAttribute('aria-disabled',idle?'true':'false');}
+ configure(){if(this.busy)return;if(this.backendReplay){this.backend.newAnalysis();return;}if(this.currentPolicy.model!=='huanggang'&&this.topics.record)this.topics.prepareForm();if($('analysis-engine'))$('analysis-engine').value=this.engine;if($('analysis-preset-ack'))$('analysis-preset-ack').checked=Boolean(this.presetAcknowledged);if($('deepseek-api-key')&&this.deepseekApiKey)$('deepseek-api-key').value=this.deepseekApiKey;this.renderEngineNote();this.configNote('');this.syncSaveAvailability();$('analysis-config-dialog').showModal();}
  renderEngineNote(){
   syncGovernment(this);
   const engine=$('analysis-engine').value,api=engine!=='rules';$('analysis-api-config').classList.toggle('hidden',!api);$('analysis-sample-pdf').classList.toggle('hidden',engine==='rules');$('analysis-rule-assumptions').classList.toggle('hidden',api||this.currentPolicy.model!=='huanggang');$('topic-config').classList.toggle('hidden',api||this.currentPolicy.model==='huanggang');
@@ -102,6 +105,7 @@ export class CompactAnalysisUI {
   if(engine==='backend'&&this.backend?.active)$('analysis-engine-note').textContent='This selected policy is not connected to the backend construction script. Choose Local scenario models to analyze it, or explicitly review the fixed server script below. The PDF is an attachment only; it does not drive construction.';
  }
  saveConfiguration(){
+  if(this.requiresDeepseekKey){this.saveProductConfiguration();return;}
   try{
    const engine=$('analysis-engine').value;
    if(engine==='backend'&&this.backend?.active&&!$('analysis-preset-ack')?.checked)throw new Error('Choose Local scenario models for the selected policy, or acknowledge that you will run the fixed server construction script.');
@@ -118,7 +122,28 @@ export class CompactAnalysisUI {
     this.onOpen();
    }
    this.drawTags();this.navigation?.setContext('analysis');$('analysis-config-dialog').close();this.status(engine==='rules'?'Rule demo ready. Select tags and Start analysis.':'Settings saved. Start analysis to initialize and review the plan.');this.update();
-  }catch(e){$('analysis-config-status').textContent=e.message;}
+  }catch(e){this.configNote(e.message);}
+ }
+ saveProductConfiguration(){
+  try{
+   const script=$('construction-scenario').value;
+   if(!['configured','segregated','mixed'].includes(script))throw new Error('Choose a government script.');
+   const key=$('deepseek-api-key').value.trim();
+   if(!key||key.length>4096||/[\r\n\u0000]/.test(key)||/^[\uFEFF"']/.test(key))throw new Error('Enter a DeepSeek API key. This sandbox does not run offline.');
+   this.deepseekApiKey=key;this.engine='backend';this.presetAcknowledged=true;
+   if($('analysis-engine'))$('analysis-engine').value='backend';
+   if($('analysis-preset-ack'))$('analysis-preset-ack').checked=true;
+   if(script!=='configured'){$('analysis-start-date').value='2025-01-01';$('analysis-end-date').value='2026-12-01';$('analysis-step').value='month';}
+   const setup=validateSetup({...this.setup(),policyScope:{...scopeMetadata(this.selected,'backend'),policyId:this.policyId,areaId:this.areaId,model:this.currentPolicy.model,catalogVersion:CATALOG_VERSION}});
+   if(this.apiResults||this.apiMap||this.localTopic)this.restoreRules();
+   this.savedSetup=setup;this.session?.reset();
+   this.session=this.backend?.active?this.backend.createSession():new V3Session(new HttpTransport());
+   this.session._apiKey=key;
+   this.city.showPortStudy(false);document.querySelector('.port-flow-key')?.classList.add('hidden');
+   $('port-scenario-note').textContent='Government script saved. Start analysis to review and run it.';
+   this.drawTags();this.navigation?.setContext('analysis');$('analysis-config-dialog').close();
+   this.status('Script and API key saved. Start analysis to run.');this.onOpen();this.update();
+  }catch(e){this.configNote(e.message);}
  }
  update(){
   $('analysis-start').disabled=this.busy||!this.selected.length||!this.policyId;$('analysis-settings').disabled=this.busy||!this.policyId;
@@ -138,21 +163,30 @@ export class CompactAnalysisUI {
  async start(){
   if(this.busy)return;
   if(this.backendReplay){this.backend.newAnalysis();return;}
+  if(this.requiresDeepseekKey){
+   if(!this.deepseekApiKey){this.configure();return;}
+   this.engine='backend';this.presetAcknowledged=true;if($('analysis-engine'))$('analysis-engine').value='backend';if(this.session)this.session._apiKey=this.deepseekApiKey;
+  }
   if(this.engine==='backend'&&this.session?.pending){await this.backend.resume();return;}
   try{
    validateTags(this.selected,this.engine);assertPolicyScope(this.policyId,this.areaId,this.selected);
-   if(needsScriptAcknowledgement({engine:this.engine,backendActive:this.backend?.active,presetAcknowledged:this.presetAcknowledged,session:this.session})){this.configure();$('analysis-config-status').textContent='This selected policy is not connected. Choose a local scenario model, or explicitly use the fixed server script.';return;}
+   if(needsScriptAcknowledgement({engine:this.engine,backendActive:this.backend?.active,presetAcknowledged:this.presetAcknowledged,session:this.session})){this.configure();this.configNote('This selected policy is not connected. Choose a local scenario model, or explicitly use the fixed server script.');return;}
    if(this.localTopic){this.topics.run();return;}
    if(this.engine==='rules'){this.runRules();return;}
-   if(this.engine==='backend'&&!this.config.backendConfigured){this.configure();$('analysis-config-status').textContent='The team backend is not connected yet. No test result will be substituted.';return;}
+   if(this.engine==='backend'&&!this.config.backendConfigured){this.configure();this.configNote('The team backend is not connected yet. No test result will be substituted.');return;}
    const setup=this.setup();
    if(!this.session)this.session=this.engine==='backend'&&this.backend?.active?this.backend.createSession():new V3Session(this.engine==='fixture'?new FixtureTransport():new HttpTransport());
    if(this.session.state!=='draft'&&JSON.stringify(this.session.setup?.policyScope)!==JSON.stringify(setup.policyScope))this.session.reset();
    if(this.session.state==='ready'){if(this.engine==='backend'&&this.backend?.active)await this.backend.openSaved(this.session.run.simulationId);else{this.showApiResults();this.status('Showing the completed analysis. Configure a new setup to run again.');}return;}
    if(this.session.state==='confirmed'){await this.runApi();return;}
    if(this.session.state==='draft'){
-    const file=this.sampleFile||$('analysis-plan').files[0];if(!file){this.configure();$('analysis-config-status').textContent=this.backend?.active?'The current API requires a PDF attachment. Its text is not interpreted and does not change the server script.':'Add the PDF attachment required by this API before continuing.';return;}
-    this.busy=true;this.pendingTags=[...this.selected];this.status(this.backend?.active?'Preparing the scripted scenario review…':'Initializing the API review…');this.update();await this.session.initialize(setup,file);
+    if(this.requiresDeepseekKey){
+     // PDF upload is currently disabled. Do not attach a plan file.
+     this.busy=true;this.pendingTags=[...this.selected];this.status('Preparing the government script review…');this.update();await this.session.initialize(setup,null,{apiKey:this.deepseekApiKey});
+    }else{
+     const file=this.sampleFile||$('analysis-plan').files[0];if(!file){this.configure();this.configNote(this.backend?.active?'The current API requires a PDF attachment. Its text is not interpreted and does not change the server script.':'Add the PDF attachment required by this API before continuing.');return;}
+     this.busy=true;this.pendingTags=[...this.selected];this.status(this.backend?.active?'Preparing the scripted scenario review…':'Initializing the API review…');this.update();await this.session.initialize(setup,file);
+    }
    }
    this.renderReview();$('analysis-review-dialog').showModal();this.status('Review the initialized sources and assumptions to continue.');
   }catch(e){this.status(e.message,true);}finally{this.busy=false;this.update();}

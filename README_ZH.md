@@ -12,34 +12,20 @@ macOS 不支持双击启动。在终端中进入本目录后执行：
 python3 -B start_product.py
 ```
 
-打开 http://127.0.0.1:8898/ 。默认离线，不读取密钥、不调用API。关闭终端停止服务；不要同时启动两个使用同一数据目录的进程。
+打开 http://127.0.0.1:8898/ 。关闭终端停止服务；不要同时启动两个使用同一数据目录的进程。
 
-真实政府大模型：
-
-```powershell
-start-product.cmd --live --model deepseek-flash --api-key-file "你的DeepSeek密钥文件完整路径"
-```
-
-macOS 在本目录执行：
-
-```sh
-python3 -B start_product.py --live --model deepseek-flash --api-key-file "你的DeepSeek密钥文件完整路径"
-```
-
-也可设置 `DEEPSEEK_API_KEY` 环境变量后省略 `--api-key-file`。密钥只在后端使用，不输入网页。既有密钥文件可以直接引用，无需复制到本目录。在线服务启动后，仅在网页选择实时政府、审查确认时发起调用；浏览、历史回放和导出不发起调用。
+本沙盒不能离线运行。在 Configure 中选择政府脚本并填写 DeepSeek API key。密钥只发给本机服务器，用于建筑叙事，不保存在浏览器。政府决策 AI 和 PDF 上传已停用。
 
 ## 网页操作
 
-1. 点击 Configure（配置），Analysis mode 选择 Team API。
-2. 选择功能分区或混合布局；两个情景各有2栋商业、2栋住宅、2个公园。每次运行独立保存。
-3. 选择政府方式：Fixed schedule（固定计划）、Government test（明确标记的离线测试）、Government AI（真实API）。未启用实时后端时第三项不可选。
-4. 检查日期和财政参数。默认24个月；固定计划17个月完成，AI决定开工时间，不保证在窗口内全部完成。
-5. 勾选使用所选情景，点击 Use test PDF（占位附件）或上传PDF。PDF正文不解析。
-6. Save settings → Review scenario → 确认假设 → 运行。
-7. 底部按月查看人口、岗位和建设进度。点击 Evidence 查看政府当月决定、原因、项目预算、支出、税额和项目状态。右侧2D analysis按精确模型格网显示布局。
-8. Analysis history 打开已保存结果；Export study 下载完整历史及决策。刷新后未完成任务可用 Resume analysis 恢复等待；Stop waiting 不会取消后端任务。
+1. 点击 Configure，或在第一次运行前点击 Configure analysis。两者打开同一设置。
+2. 选择政府脚本：混合布局、功能分区，或原始服务器脚本。
+3. 填写 DeepSeek API key。没有密钥不能开始运行。
+4. 保存设置，然后 Start analysis。查看假设并确认运行。
+5. 底部按月查看人口、岗位和建设进度。原始服务器脚本会为每栋已完成建筑向 DeepSeek 请求一段叙事。政府开工时间仍按固定计划。
+6. Analysis history 打开已保存结果。刷新后如需继续未完成任务，要重新填写密钥。Stop waiting 不会取消后端任务。
 
-政府AI只决定预定项目何时开工，不能改地点、类型、数量、工期、税率或预算。居民、企业、通勤、财政与施工均使用规则。选用原始服务器情景时在本产品中按离线规则运行，不对其他角色调用大模型。
+DeepSeek 密钥用于原始服务器脚本的逐栋建筑叙事，不用于决定政府何时开工。政府决策模式已停用。
 
 ## 保存及异常
 

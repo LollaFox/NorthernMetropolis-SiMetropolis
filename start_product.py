@@ -12,7 +12,8 @@ ROOT = Path(__file__).resolve().parent
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--port',type=int,default=8898)
-    parser.add_argument('--live',action='store_true',help='Enable DeepSeek government decisions after web confirmation')
+    parser.add_argument('--scenario',type=Path,help='Government script JSON used by Original server scenario')
+    parser.add_argument('--live',action='store_true',help='Legacy server credential. Government decision AI is disabled; enter the DeepSeek key in Configure for building narratives.')
     parser.add_argument('--api-key-file',type=Path)
     parser.add_argument('--model',default='deepseek-flash')
     args=parser.parse_args()
@@ -40,6 +41,9 @@ def main():
     cmd=[sys.executable,'-B','-m','backend.server','--port',str(args.port),
          '--no-demo','--data-dir',str(ROOT/'backend/.data/product'),
          '--provider','deepseek' if args.live else 'offline']
+    if args.scenario:
+        scenario=args.scenario if args.scenario.is_absolute() else ROOT/args.scenario
+        cmd+=['--scenario',str(scenario.resolve())]
     if args.live:
         cmd+=['--model',args.model]
         if args.api_key_file:cmd+=['--api-key-file',str(args.api_key_file.resolve())]

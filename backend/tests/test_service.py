@@ -18,7 +18,7 @@ from backend.ai import OfflineProvider
 from backend.cli import add_pacing_arguments, add_provider_arguments, add_scenario_arguments, configured_provider_factory, configured_scenario, default_run_end
 from backend.scenario import northern_metropolis_scenario
 from backend.storage import atomic_write_json, read_json
-from backend.server import SavedCity, make_server, seed_offline_demo
+from backend.server import SavedCity, fills_overview_grid, make_server, overview_positions, seed_offline_demo
 from backend.service import NarrativeService, ServiceError, schedule, validate_setup
 
 
@@ -443,6 +443,37 @@ class StartupTests(unittest.TestCase):
         with contextlib.redirect_stderr(io.StringIO()), self.assertRaises(SystemExit):
             self.arguments(["--scenario", "any.json", "--preset", "northern-metropolis"])
 
+    def test_overview_scripts_fill_the_map_across_five_years(self):
+        expected = {
+            "default-city.json": {"residential": 83, "business": 20, "park": 24, "station": 5},
+            "functional-districts.json": {"residential": 46, "business": 66, "park": 12, "station": 8},
+            "mixed-districts.json": {"residential": 46, "business": 66, "park": 12, "station": 8},
+        }
+        loaded = {}
+        for filename, counts in expected.items():
+            scenario = json.loads((ROOT / "scripts" / filename).read_text(encoding="utf-8"))
+            loaded[filename] = scenario
+            self.assertTrue(fills_overview_grid(scenario))
+            self.assertEqual(counts, {kind: sum(item["type"] == kind for item in scenario["buildings"]) for kind in counts})
+            self.assertEqual(1, min(item["startMonth"] for item in scenario["buildings"]))
+            self.assertEqual(60, max(item["completionMonth"] for item in scenario["buildings"]))
+            self.assertEqual({0, 1, 2, 3, 4}, {(item["completionMonth"] - 1) // 12 for item in scenario["buildings"]})
+            positions = overview_positions(scenario)
+            by_cell = {(item["x"], item["y"]): item for item in scenario["buildings"]}
+            self.assertEqual(positions[by_cell[(0, 0)]["id"]], (-44, -44))
+            self.assertEqual(positions[by_cell[(10, 11)]["id"]], (44, 44))
+        functional = loaded["functional-districts.json"]["buildings"]
+        business = [item for item in functional if 3 <= item["x"] <= 8]
+        self.assertEqual({"business": 66, "park": 2, "station": 4},
+                         {kind: sum(item["type"] == kind for item in business) for kind in ("business", "park", "station")})
+        for side in ([item for item in functional if item["x"] <= 2], [item for item in functional if item["x"] >= 9]):
+            self.assertEqual(2, sum(item["type"] == "station" for item in side))
+        self.assertGreater(sum(item["type"] == "park" and (item["x"] <= 2 or item["x"] >= 9) for item in functional), 2)
+        kinds = ("residential", "business", "park", "station")
+        self.assertEqual(
+            {kind: sum(item["type"] == kind for item in functional) for kind in kinds},
+            {kind: sum(item["type"] == kind for item in loaded["mixed-districts.json"]["buildings"]) for kind in kinds})
+
     def test_two_key_files_feed_one_flash_provider_without_public_secrets(self):
         with tempfile.TemporaryDirectory() as folder:
             paths = [Path(folder) / ("credential-%s.key" % index) for index in (1, 2)]
@@ -475,6 +506,45 @@ class StartupTests(unittest.TestCase):
             for words in cases:
                 with self.assertRaises(ValueError, msg=words):
                     configured_provider_factory(self.arguments(words))
+
+
+class ProductConfigureTests(unittest.TestCase):
+    def test_page_key_is_memory_only_and_government_decisions_stay_disabled(self):
+        with tempfile.TemporaryDirectory() as folder:
+            service = NarrativeService(folder, scenario=SCENARIO, today="2026-10-16")
+            service.product_restrictions = True
+            try:
+                with self.assertRaises(ServiceError) as raised:
+                    service.initialize({**SETUP, "fiscalEnabled": True, "constructionScenario": "mixed",
+                                        "governmentMode": "live"}, None, None, "live_disabled")
+                self.assertIn("disabled", str(raised.exception).lower())
+                review = service.initialize({**SETUP, "deepseekApiKey": "must-not-persist"}, None, None, "init_no_pdf")
+                self.assertTrue(any(item["id"] == "upload" and item["value"] == "Disabled" for item in review["items"]))
+                service.remember_run_key(review["initializationId"], "page-secret-key")
+                saved = Path(folder, "catalog.json").read_text(encoding="utf-8")
+                self.assertNotIn("page-secret-key", saved)
+                self.assertNotIn("must-not-persist", saved)
+                service.confirm(review["initializationId"], {"reviewVersion": review["reviewVersion"]}, "confirm_no_pdf")
+                seen = {}
+
+                class Fake:
+                    metrics = []
+                    def __init__(self, **kwargs):
+                        seen.update(kwargs)
+                    def call(self, role, context):
+                        raise RuntimeError("no network")
+                    def set_metrics_callback(self, callback):
+                        pass
+                    def metrics_summary(self):
+                        return {}
+
+                with patch("backend.ai.DeepSeekProvider", Fake):
+                    body = {"initializationId": review["initializationId"], "reviewVersion": review["reviewVersion"]}
+                    finish(service, service.simulate(body, "run_no_pdf"))
+                self.assertEqual(seen.get("api_key"), "page-secret-key")
+                self.assertNotIn("page-secret-key", Path(folder, "catalog.json").read_text(encoding="utf-8"))
+            finally:
+                service.close()
 
 
 if __name__ == "__main__":

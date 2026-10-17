@@ -67,6 +67,21 @@ def schedule(start, end, step="month", limit=None):
     return result
 
 
+# Plan PDF upload is currently disabled. Product initialization sends JSON
+# metadata and no plan file. Callers that still pass PDF bytes keep the checks below.
+PDF_UPLOAD_ENABLED = False
+
+
+def _run_key(value):
+    if not isinstance(value, str):
+        raise ServiceError("A DeepSeek API key is required. Offline runs are not available.")
+    value = value.strip()
+    if (not value or len(value) > 4096 or any(c in value for c in "\r\n\x00")
+            or value.startswith(("\ufeff", '"', "'"))):
+        raise ServiceError("Enter one DeepSeek API key, without quotes or line breaks.")
+    return value
+
+
 def validate_setup(value, today=None):
     if not isinstance(value, dict):
         raise ServiceError("Metadata must be a JSON object.")
@@ -155,6 +170,7 @@ class NarrativeService:
         self.lock = threading.RLock()
         self.stop = threading.Event()
         self.threads = {}
+        self._run_keys = {}
         if self.catalog_path.exists():
             self.catalog = json.loads(self.catalog_path.read_text(encoding="utf-8"))
             if self.catalog.get("schemaVersion") != 1:
@@ -187,8 +203,37 @@ class NarrativeService:
         self._save()
         return copy.deepcopy(result)
 
+    def remember_run_key(self, initialization_id, api_key):
+        """Hold a browser-entered key in memory for building narratives.
+
+        The key is never written to the catalog, idempotency record, or logs.
+        """
+        api_key = _run_key(api_key)
+        with self.lock:
+            if initialization_id not in self.catalog["initializations"]:
+                raise ServiceError("Initialization not found.", 404)
+            self._run_keys[initialization_id] = api_key
+
+    def _require_product_run(self, record, initialization_id):
+        if not getattr(self, "product_restrictions", False):
+            return
+        from .ai import GOVERNMENT_LIVE_DECISIONS_ENABLED
+        if not GOVERNMENT_LIVE_DECISIONS_ENABLED:
+            mode = record["scenario"].get("fiscal", {}).get("governmentMode", record["setup"].get("governmentMode", "fixed"))
+            if mode != "fixed":
+                raise ServiceError("Government decision AI is currently disabled.")
+        if "fiscal" not in record["scenario"] and not self._run_keys.get(initialization_id):
+            raise ServiceError("A DeepSeek API key is required. Offline runs are not available.")
+
     def initialize(self, metadata, pdf, filename, key):
+        if isinstance(metadata, dict) and "deepseekApiKey" in metadata:
+            metadata = copy.deepcopy(metadata)
+            metadata.pop("deepseekApiKey", None)
         setup = validate_setup(metadata, self.today)
+        if getattr(self, "product_restrictions", False):
+            from .ai import GOVERNMENT_LIVE_DECISIONS_ENABLED
+            if not GOVERNMENT_LIVE_DECISIONS_ENABLED and setup.get("governmentMode", "fixed") != "fixed":
+                raise ServiceError("Government decision AI is currently disabled.")
         selected = setup.get("constructionScenario", "configured")
         config = copy.deepcopy(self.config) if selected == "configured" else layout_scenario(selected)
         if setup.get("fiscalEnabled"):
@@ -205,26 +250,34 @@ class NarrativeService:
                     raise ValueError("Fiscal experiments support at most 120 monthly steps")
             except (ValueError, TypeError, KeyError) as exc:
                 raise ServiceError(str(exc)) from None
-        if not isinstance(pdf, bytes) or not 0 < len(pdf) <= 20 * 1024 * 1024 or not pdf.startswith(b"%PDF-"):
-            raise ServiceError("Choose a PDF with a PDF signature, up to 20 MB.")
-        if not isinstance(filename, str) or len(filename) > 200 or not filename.lower().endswith(".pdf"):
-            raise ServiceError("The plan needs a .pdf filename up to 200 characters.")
-        # Multipart boundary, header order, filename and JSON whitespace do not
-        # identify the operation. Browser retries rebuild multipart boundaries.
-        fingerprint = {"setup": setup, "pdfSHA256": hashlib.sha256(pdf).hexdigest()}
+        pdf_disabled = pdf is None and filename is None
+        if pdf_disabled:
+            # PDF plan upload is currently disabled for this sandbox.
+            if PDF_UPLOAD_ENABLED:
+                raise ServiceError("Choose a PDF with a PDF signature, up to 20 MB.")
+            fingerprint = {"setup": setup, "pdfSHA256": None, "pdfDisabled": True}
+            pdf_record = {"disabled": True}
+        else:
+            if not isinstance(pdf, bytes) or not 0 < len(pdf) <= 20 * 1024 * 1024 or not pdf.startswith(b"%PDF-"):
+                raise ServiceError("Choose a PDF with a PDF signature, up to 20 MB.")
+            if not isinstance(filename, str) or len(filename) > 200 or not filename.lower().endswith(".pdf"):
+                raise ServiceError("The plan needs a .pdf filename up to 200 characters.")
+            # Multipart boundary, header order, filename and JSON whitespace do not
+            # identify the operation. Browser retries rebuild multipart boundaries.
+            fingerprint = {"setup": setup, "pdfSHA256": hashlib.sha256(pdf).hexdigest()}
+            pdf_record = {"filename": filename, "sha256": fingerprint["pdfSHA256"], "bytes": len(pdf)}
         with self.lock:
             digest, previous = self._operation("initializations", key, fingerprint)
             if previous:
                 return copy.deepcopy(previous["response"])
             identifier, version = "init_" + uuid.uuid4().hex, "review_" + uuid.uuid4().hex
             review = {"initializationId": identifier, "reviewVersion": version,
-                      "items": self._review_items(setup, filename, fingerprint["pdfSHA256"], config)}
+                      "items": self._review_items(setup, filename, fingerprint.get("pdfSHA256"), config, pdf_disabled=pdf_disabled)}
             self.catalog["initializations"][identifier] = {"setup": setup, "review": review, "confirmed": False,
-                                                         "scenario": copy.deepcopy(config), "pdf": {"filename": filename,
-                                                         "sha256": fingerprint["pdfSHA256"], "bytes": len(pdf)}}
+                                                         "scenario": copy.deepcopy(config), "pdf": pdf_record}
             return self._remember(key, digest, review)
 
-    def _review_items(self, setup, filename, digest, config=None):
+    def _review_items(self, setup, filename, digest, config=None, pdf_disabled=False):
         config = self.config if config is None else config
         if "fiscal" in config:
             f = config["fiscal"]
@@ -243,6 +296,10 @@ class NarrativeService:
                 "description":"Relative construction months; full layout takes 17 months. Existing population is a separate baseline object.",
                 "value":setup["start"]+" through "+setup["end"]+"; sources: "+ ", ".join(settings["sources"].values())})
             mode = f.get("governmentMode", "fixed")
+            if pdf_disabled:
+                values.append({"id":"pdf_disabled","field":"PDF upload","kind":"assumption",
+                    "description":"PDF upload is currently disabled. No plan file is accepted, stored, or sent to a model.",
+                    "value":"Disabled"})
             if mode != "fixed":
                 values[0]["description"] = "Government selects monthly project starts; residents, firms, fiscal settlement and construction use deterministic rules. PDF text is not interpreted."
                 values[-1]["description"] = "Locations and durations are fixed; government chooses start dates. Completion within the selected horizon is not guaranteed."
@@ -256,11 +313,17 @@ class NarrativeService:
             ("construction_layout", "政府建设情景 / Construction layout",
              "Two independent layouts; the selected script controls construction. PDF and policy tags do not override it.",
              config["name"] + "; months are relative to the start date. Layout experiments complete in month 17. API maps show completed footprints, not construction meshes."),
-            ("authority", "Scenario authority and policy override", "The selected policy and uploaded PDF are request context, not an interpreted construction or economic instruction.",
+            ("authority", "Scenario authority and policy override",
+             "The selected policy is request context, not an interpreted construction or economic instruction. PDF upload is disabled."
+             if pdf_disabled else
+             "The selected policy and uploaded PDF are request context, not an interpreted construction or economic instruction.",
              "Confirming explicitly runs the configured synthetic construction script instead. Selected policy: %s. Script: %s." %
              (str(setup.get("policyScope", {}).get("policyId", "unspecified"))[:150], ", ".join("%s %s" % (v, k) for k, v in counts.items()))),
-            ("upload", "PDF provenance", "The server checked file signature and retained the content digest. It does not extract or interpret PDF text and does not send the PDF to AI.",
-             "%s · SHA-256 %s · raw file not retained" % (filename, digest)),
+            ("upload", "PDF provenance",
+             "PDF upload is currently disabled. No plan file is accepted, stored, or sent to a model."
+             if pdf_disabled else
+             "The server checked file signature and retained the content digest. It does not extract or interpret PDF text and does not send the PDF to AI.",
+             "Disabled" if pdf_disabled else "%s · SHA-256 %s · raw file not retained" % (filename, digest)),
             ("schedule", "Dates and monthly settlement", "Construction month 1 is the first requested date. All months settle internally; output dates follow the original anchor day with month-end clamping.",
              "%s through %s; output step %s; %s output frames." % (setup["start"], setup["end"], setup["step"], len(schedule(setup["start"], setup["end"], setup["step"])))),
             ("people", "Resident groups and jobs", "Four fictional preference profiles make district-wide decisions. Numerical bookkeeping and fixed group sizes belong to code.",
@@ -304,6 +367,8 @@ class NarrativeService:
             if previous:
                 job_id = previous["response"]["jobId"]
                 job = self.catalog["jobs"][job_id]
+                saved = self.catalog["simulations"][job["simulationId"]]
+                self._require_product_run(self.catalog["initializations"][saved["initializationId"]], saved["initializationId"])
                 if job.get("recoverable") and not self.stop.is_set():
                     job.update(status="queued", recoverable=False)
                     job.pop("error", None)
@@ -315,6 +380,7 @@ class NarrativeService:
                 raise ServiceError("Initialization not found.", 404)
             if not record["confirmed"] or record["review"]["reviewVersion"] != body["reviewVersion"]:
                 raise ServiceError("Confirm this initialization review version first.", 409)
+            self._require_product_run(record, body["initializationId"])
             if self.stop.is_set():
                 raise ServiceError("Server is stopping; retry after restart.", 503)
             simulation_id, job_id = "sim_" + uuid.uuid4().hex, "job_" + uuid.uuid4().hex
@@ -362,9 +428,15 @@ class NarrativeService:
                 world = self._load_world(simulation_id, completed[-1]) if completed else engine.create_world(initial["scenario"])
                 self._save()
             government_mode = world.get("config", {}).get("fiscal", {}).get("governmentMode", "fixed")
+            run_key = self._run_keys.get(simulation["initializationId"])
             if government_mode == "live" and not getattr(self.provider_factory, "configuration", {}).get("live"):
                 raise ServiceError("Restart with the configured live provider to resume this government run.")
-            if government_mode == "offline-test":
+            # A page-entered key drives per-building narratives. Fixed government
+            # schedules do not call the disabled government-decision role.
+            if run_key and government_mode == "fixed" and world.get("model") != "hk-fiscal-v1":
+                from .ai import DEFAULT_DEEPSEEK_MODEL, DeepSeekProvider
+                provider = DeepSeekProvider(model=DEFAULT_DEEPSEEK_MODEL, api_key=run_key)
+            elif government_mode == "offline-test":
                 from .government_web import GovernmentTestProvider
                 provider = GovernmentTestProvider()
             elif (world.get("model") == "hk-fiscal-v1" and government_mode == "fixed") or (government_mode != "live" and getattr(self.provider_factory, "configuration", {}).get("governmentOnly")):

@@ -31,6 +31,46 @@ from .service import NarrativeService, ServiceError, canonical
 
 MAX_UPLOAD = 21 * 1024 * 1024
 KINDS = {"residential": "housing", "business": "office", "park": "park", "station": "transit"}
+DISPLAY_COLUMNS = [-44, -36, -28, -20, -12, -4, 4, 12, 28, 36, 44]
+
+
+def fills_overview_grid(config):
+    """True when one object occupies every cell of the 11×12 overview."""
+    buildings = config.get("buildings") if isinstance(config, dict) else None
+    grid = config.get("grid") if isinstance(config, dict) else None
+    if not isinstance(buildings, list) or not isinstance(grid, dict):
+        return False
+    covered = {(building.get("x"), building.get("y")) for building in buildings if isinstance(building, dict)}
+    return (grid.get("width") == 11 and grid.get("height") == 12 and len(buildings) == 132
+            and covered == {(x, y) for x in range(11) for y in range(12)})
+
+
+def overview_positions(config):
+    """Place a full overview script on its matching sites. Other scripts stay packed."""
+    buildings = config["buildings"]
+    sites = [(x, -44 + row * 8) for x in DISPLAY_COLUMNS for row in range(12)]
+    if fills_overview_grid(config):
+        return {building["id"]: (DISPLAY_COLUMNS[building["x"]], -44 + building["y"] * 8)
+                for building in buildings}
+    ordered = sorted(buildings, key=lambda building: (building["y"], building["x"], building["id"]))
+    return {building["id"]: sites[index] for index, building in enumerate(ordered[:len(sites)])}
+
+
+def overview_height(config, building):
+    """Give the overview scripts a varied skyline. Other scripts keep one height per type."""
+    kind = building["type"]
+    fixed = {"residential": 18, "business": 26, "park": .6, "station": 3.2}
+    if not fills_overview_grid(config):
+        return fixed[kind]
+    if kind in ("park", "station"):
+        return fixed[kind]
+    salt = sum(ord(character) for character in building["id"]) % 7
+    column = building["x"]
+    if kind == "business":
+        rise = (14, 16, 18, 28, 34, 40, 46, 42, 36, 20, 16)[column]
+        return round(min(56, max(12, rise + salt - 3)), 2)
+    rise = (12, 14, 16, 16, 18, 20, 24, 26, 22, 14, 11)[column]
+    return round(min(36, max(8, rise + salt - 3)), 2)
 DISPLAY_LIMITS = [
     "The city overview is a decorative projection of canonical saved states onto the existing 132 frontend sites. Stable (y,x,id) order preserves placement when schedules change, but visible distances and district labels are not simulation coordinates.",
     "Tower mesh heights are synthetic display units, not terrain elevations or measured building heights. V3 results show footprint zones only.",
@@ -106,10 +146,8 @@ class SavedCity:
         absolute_start = year * 12 + int(source_date[5:7]) - 1 - month
         origin_month = absolute_start % 12
         display_month = month + origin_month
-        columns = [-44, -36, -28, -20, -12, -4, 4, 12, 28, 36, 44]
-        sites = [(x, -44 + row * 8) for x in columns for row in range(12)]
         ordered = sorted(world["config"]["buildings"], key=lambda b: (b["y"], b["x"], b["id"]))
-        positions = {b["id"]: sites[index] for index, b in enumerate(ordered[:len(sites)])}
+        positions = overview_positions(world["config"])
         buildings = []
         firms = {firm["towerId"]: firm for firm in world["firms"]}
         for building in world["buildings"]:
@@ -123,7 +161,7 @@ class SavedCity:
             capacity = (world["config"]["groupSize"] * world["config"]["towerGroupSlots"] if kind == "residential"
                         else firm["jobCapacity"] if firm else 0)
             buildings.append({"id": building["id"], "kind": KINDS[kind], "x": x, "z": z,
-                              "height": {"residential": 18, "business": 26, "park": .6, "station": 3.2}[kind],
+                              "height": overview_height(world["config"], building),
                               "progress": progress, "capacity": capacity, "baseCapacity": capacity,
                               "owner": "business" if kind == "business" else "government", "upgrades": 0,
                               "createdMonth": building["startMonth"] - 1 + origin_month,
@@ -145,7 +183,7 @@ class SavedCity:
                 "sourceDate": source_date, "sourceStep": world["step"], "buildings": buildings,
                 "metrics": visible, "policies": {}, "actors": [], "messages": [message], "events": [],
                 "objectives": [], "ledger": [], "displayLimitations": DISPLAY_LIMITS,
-                "unrenderedBuildings": max(0, len(ordered) - len(sites))}
+                "unrenderedBuildings": max(0, len(ordered) - len(positions))}
 
     def state(self):
         with self.lock:
@@ -267,21 +305,48 @@ class Handler(StaticHandler):
         service = self.server.narrative
         key = self.headers.get("Idempotency-Key", "")
         if self.command == "GET" and path == "/config":
+            from .ai import GOVERNMENT_LIVE_DECISIONS_ENABLED
+            from .service import PDF_UPLOAD_ENABLED
             return 200, {"schema": "nm-v3-draft-1", "backendConfigured": True, "transport": "local-narrative-scenario",
                          "tileURL": "https://tile.openstreetmap.org/{z}/{x}/{y}.png", "synthetic": True,
                          "productVersion": "government-integrated-1",
-                         "governmentLiveAvailable": bool(getattr(service.provider_factory, "configuration", {}).get("live")),
+                         "governmentLiveAvailable": bool(GOVERNMENT_LIVE_DECISIONS_ENABLED and getattr(service.provider_factory, "configuration", {}).get("live")),
+                         "governmentDecisionsEnabled": GOVERNMENT_LIVE_DECISIONS_ENABLED,
+                         "pdfUploadEnabled": PDF_UPLOAD_ENABLED,
                          "governmentModel": getattr(service.provider_factory, "configuration", {}).get("model")}
         if self.command == "POST" and path == "/initializations":
-            content_type, raw = self._body("multipart/form-data", MAX_UPLOAD)
-            return 200, service.initialize(*parse_multipart(content_type, raw), key)
+            from .service import PDF_UPLOAD_ENABLED
+            content_type = self.headers.get("Content-Type", "")
+            kind = content_type.split(";", 1)[0].strip().lower()
+            api_key = self.headers.get("X-DeepSeek-Api-Key")
+            if api_key:
+                from .service import _run_key
+                api_key = _run_key(api_key)
+            if getattr(service, "product_restrictions", False):
+                if not PDF_UPLOAD_ENABLED and kind == "multipart/form-data":
+                    raise ServiceError("PDF upload is currently disabled.")
+                if not api_key:
+                    raise ServiceError("A DeepSeek API key is required. Offline runs are not available.")
+            if kind == "application/json":
+                metadata = self._json_body()
+                review = service.initialize(metadata, None, None, key)
+            else:
+                content_type, raw = self._body("multipart/form-data", MAX_UPLOAD)
+                review = service.initialize(*parse_multipart(content_type, raw), key)
+            if api_key:
+                service.remember_run_key(review["initializationId"], api_key)
+            return 200, review
         match = re.fullmatch(r"/initializations/([A-Za-z0-9_-]{1,100})/confirm", path)
         if self.command == "POST" and match:
             return 200, service.confirm(match.group(1), self._json_body(), key)
         if self.command == "GET" and path == "/simulations":
             return 200, service.list_simulations()
         if self.command == "POST" and path == "/simulations":
-            return 202, service.simulate(self._json_body(), key)
+            body = self._json_body()
+            api_key = self.headers.get("X-DeepSeek-Api-Key")
+            if api_key and isinstance(body, dict) and isinstance(body.get("initializationId"), str):
+                service.remember_run_key(body["initializationId"], api_key)
+            return 202, service.simulate(body, key)
         match = re.fullmatch(r"/jobs/([A-Za-z0-9_-]{1,100})", path)
         if self.command == "GET" and match:
             return 200, service.job(match.group(1))
@@ -368,6 +433,9 @@ def main():
         factory.configuration["governmentOnly"] = True
         service = NarrativeService(args.data_dir, provider_factory=factory, scenario=scenario)
         server = make_server(args.port, service=service, demo=not args.no_demo)
+        # Page-entered runs require a DeepSeek key. The optional startup demo
+        # is seeded before this flag, and the product launcher skips that demo.
+        service.product_restrictions = True
     except Exception as exc:
         print(json.dumps({"status": "startup_failed", "failureType": type(exc).__name__}))
         return 1

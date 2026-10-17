@@ -40,6 +40,8 @@ export function schedule({start, end, step}) {
   }
   return result;
 }
+// PDF plan upload is currently disabled in Configure. This checker remains for
+// older session retries that still carry a file.
 export async function validatePDF(file) {
   if (!file || !/\.pdf$/i.test(file.name) || !file.size || file.size > 20*1024*1024) fail('Choose a PDF up to 20 MB (preview upload limit).');
   const signature = new TextDecoder().decode(await file.slice(0,5).arrayBuffer());

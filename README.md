@@ -12,34 +12,20 @@ macOS does not support double-click. In Terminal, from this folder, run:
 python3 -B start_product.py
 ```
 
-Open http://127.0.0.1:8898/ . The default is offline: it does not read a key and does not call an API. Close the terminal to stop the service. Do not start two processes that use the same data directory at the same time.
+Open http://127.0.0.1:8898/ . Close the terminal to stop the service. Do not start two processes that use the same data directory at the same time.
 
-To use the real government model:
-
-```powershell
-start-product.cmd --live --model deepseek-flash --api-key-file "full path to your DeepSeek key file"
-```
-
-On macOS, from this folder:
-
-```sh
-python3 -B start_product.py --live --model deepseek-flash --api-key-file "full path to your DeepSeek key file"
-```
-
-You can also set the `DEEPSEEK_API_KEY` environment variable and omit `--api-key-file`. The key is used only on the backend and is never entered in the web page. An existing key file can be referenced directly; there is no need to copy it into this directory. After the online service starts, a call is made only when you select the live government option on the page and confirm the review. Browsing, history replay, and export do not make calls.
+This sandbox does not run offline. In Configure, choose a government script and enter a DeepSeek API key. The key is sent only to this local server for building narratives and is not saved in the browser. Government decision AI and PDF upload are disabled.
 
 ## Using the web app
 
-1. Click Configure. Under Analysis mode, select Team API.
-2. Choose a functional zone or a mixed layout. Each of the two scenarios has 2 commercial buildings, 2 residential buildings, and 2 parks. Each run is saved on its own.
-3. Choose a government mode: Fixed schedule, Government test (an explicitly labeled offline test), or Government AI (the real API). The third option is unavailable when the live backend is not enabled.
-4. Check the dates and fiscal parameters. The default is 24 months. A fixed schedule finishes in 17 months. The AI decides when construction starts and does not guarantee that everything finishes inside the window.
-5. Check the box to use the selected scenario, then click Use test PDF (placeholder attachment) or upload a PDF. The PDF body is not parsed.
-6. Save settings → Review scenario → confirm the assumptions → run.
-7. At the bottom, view population, jobs, and construction progress month by month. Click Evidence to see that month’s government decision, reasons, project budget, spending, tax, and project status. The 2D analysis on the right shows the layout on the exact model grid.
-8. Analysis history opens saved results. Export study downloads the full history and decisions. After a refresh, an unfinished task can resume waiting with Resume analysis. Stop waiting does not cancel the backend task.
+1. Click Configure, or click Configure analysis before the first run. Both open the same settings.
+2. Choose a government script: mixed districts, functional districts, or the original server script.
+3. Enter a DeepSeek API key. A run cannot start without one.
+4. Save settings, then Start analysis. Review the assumptions and confirm the run.
+5. At the bottom, view population, jobs, and construction progress month by month. The original server script asks DeepSeek for a narrative on each completed building. Government start-date decisions stay on the fixed schedule.
+6. Analysis history opens saved results. Export study downloads the saved run. After a refresh, enter the key again before resuming an unfinished task. Stop waiting does not cancel the backend task.
 
-Government AI only decides when scheduled projects start construction. It cannot change location, type, quantity, duration, tax rate, or budget. Residents, firms, commuting, finance, and construction all use rules. When you choose an original server scenario, this product runs it with offline rules and does not call a large model for the other roles.
+The DeepSeek key is used for per-building narratives on the original server script. It is not used to decide when the government starts projects. That government-decision mode is disabled.
 
 ## Saving and failures
 

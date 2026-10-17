@@ -2,13 +2,13 @@ import {reviewResponse, runResponse, snapshotResponse, validateSetup, validatePD
 
 export class HttpTransport {
   constructor(fetcher=(...args)=>globalThis.fetch(...args), timeout=30000) { this.fetcher=fetcher; this.timeout=timeout; }
-  async request(path, body, signal, key) {
+  async request(path, body, signal, key, extraHeaders) {
     const controller=new AbortController(), abort=()=>controller.abort();
     signal?.addEventListener('abort',abort,{once:true}); if(signal?.aborted) controller.abort();
     const timer=setTimeout(abort,this.timeout);
     try {
       const isForm=body instanceof FormData;
-      const response=await this.fetcher(`/api/v3${path}`,{method:body===undefined?'GET':'POST',body:body===undefined?undefined:isForm?body:JSON.stringify(body),headers:{...(isForm||body===undefined?{}:{'Content-Type':'application/json'}),...(key?{'Idempotency-Key':key}:{})},signal:controller.signal,cache:'no-store'});
+      const response=await this.fetcher(`/api/v3${path}`,{method:body===undefined?'GET':'POST',body:body===undefined?undefined:isForm?body:JSON.stringify(body),headers:{...(isForm||body===undefined?{}:{'Content-Type':'application/json'}),...(key?{'Idempotency-Key':key}:{}),...(extraHeaders||{})},signal:controller.signal,cache:'no-store'});
       const type=response.headers.get('content-type')||'';
       if(!type.includes('application/json')) throw new Error(`Expected JSON; server returned HTTP ${response.status}.`);
       const data=await response.json();
@@ -105,17 +105,28 @@ export class V3Session {
     else {this.run=runResponse(raw,this.setup);this.providerMetrics=clone(raw.providerMetrics?.summary??raw.providerMetrics??this.providerMetrics);this.state='ready';}
     this.pending=null;this.lastError=null;this.notify();return name==='initialize'?this.review:name==='simulate'?this.run:raw;
   }
-  async postOperation(name,body,signal,key){
+  _credentialHeaders(){return this._apiKey?{'X-DeepSeek-Api-Key':this._apiKey}:undefined;}
+  async postOperation(name,body,signal,key,headers){
     this.state=name==='initialize'?'initializing':name==='confirm'?'confirming':'running';
     this.pending={name,phase:'posting',jobId:null,recoverable:false};this.job=null;this.notify();
     const path=name==='initialize'?'/initializations':name==='confirm'?`/initializations/${id(this.review.initializationId)}/confirm`:'/simulations';
-    const raw=await this.resolveJob(await this.transport.request(path,body,signal,key),signal);return this.finish(name,raw,signal);
+    const raw=await this.resolveJob(await this.transport.request(path,body,signal,key,headers),signal);return this.finish(name,raw,signal);
   }
-  async initialize(input,file) {
+  async initialize(input,file,options={}) {
     if(this.busy)throw new Error('An operation is already in progress.');
     if(this.state!=='draft'&&!(this.state==='initializing'&&this.pending?.name==='initialize'&&!this.pending.jobId))throw new Error('Start a new setup before initializing again.');
     return this.operation('initialize',async(signal,key)=>{
-      const setup=validateSetup(input,this.today);await validatePDF(file);
+      const setup=validateSetup(input,this.today);
+      if(typeof options.apiKey==='string'&&options.apiKey)this._apiKey=options.apiKey;
+      // PDF plan upload is currently disabled. A missing file sends metadata only
+      // and does not invent a placeholder PDF. Older retries may still pass a file.
+      if(!file){
+        const fingerprint=JSON.stringify(setup)+':pdf-disabled';
+        if(this.lastFingerprint!==null && this.lastFingerprint!==fingerprint){key=this.keys.initialize=this.makeKey();delete this.keys.confirm;delete this.keys.simulate;}
+        this.lastFingerprint=fingerprint;this.setup=setup;
+        return this.postOperation('initialize',setup,signal,key,this._credentialHeaders());
+      }
+      await validatePDF(file);
       // The key changes when the user edits the request, but survives retry after a timeout.
       const digest=await crypto.subtle.digest('SHA-256',await file.arrayBuffer());
       assertLive(signal);
@@ -123,7 +134,7 @@ export class V3Session {
       if(this.lastFingerprint!==null && this.lastFingerprint!==fingerprint){key=this.keys.initialize=this.makeKey();delete this.keys.confirm;delete this.keys.simulate;}
       this.lastFingerprint=fingerprint;this.setup=setup;
       const form=new FormData();form.append('metadata',JSON.stringify(setup));form.append('plan',file,file.name);
-      return this.postOperation('initialize',form,signal,key);
+      return this.postOperation('initialize',form,signal,key,this._credentialHeaders());
     });
   }
   async confirm(acknowledged) {
@@ -133,13 +144,13 @@ export class V3Session {
   }
   async simulate() {
     if(this.state!=='confirmed')throw new Error('Confirm initialization before starting a simulation.');
-    return this.operation('simulate',(signal,key)=>this.postOperation('simulate',{initializationId:this.review.initializationId,reviewVersion:this.review.reviewVersion},signal,key));
+    return this.operation('simulate',(signal,key)=>this.postOperation('simulate',{initializationId:this.review.initializationId,reviewVersion:this.review.reviewVersion},signal,key,this._credentialHeaders()));
   }
   async resume(file){
     if(this.busy)throw new Error('An operation is already in progress.');
     const pending=this.pending;
     if(!pending){if(this.state==='ready')return this.run;if(this.state==='review'||this.state==='confirmed')return this.review;throw new Error('No pending backend operation is available to resume.');}
-    if(pending.name==='initialize'&&!pending.jobId){if(!file)throw new Error('Reselect the original PDF to retry initialization. PDF bytes are not stored in the browser session.');return this.initialize(this.setup,file);}
+    if(pending.name==='initialize'&&!pending.jobId){if(!file){if(this._apiKey)return this.initialize(this.setup,null,{apiKey:this._apiKey});throw new Error('Reselect the original PDF to retry initialization. PDF bytes are not stored in the browser session.');}return this.initialize(this.setup,file);}
     const body=()=>pending.name==='confirm'?{reviewVersion:this.review.reviewVersion}:{initializationId:this.review.initializationId,reviewVersion:this.review.reviewVersion};
     return this.operation(pending.name,async(signal,key)=>{
       let raw;
@@ -152,12 +163,12 @@ export class V3Session {
             await validatePDF(file);const digest=await crypto.subtle.digest('SHA-256',await file.arrayBuffer());assertLive(signal);
             const fingerprint=JSON.stringify(this.setup)+Array.from(new Uint8Array(digest)).join(',');
             if(fingerprint!==this.lastFingerprint)throw new Error('Reselect the original PDF with unchanged bytes before resuming this initialization.');
-            const form=new FormData();form.append('metadata',JSON.stringify(this.setup));form.append('plan',file,file.name);return this.postOperation('initialize',form,signal,key);
+            const form=new FormData();form.append('metadata',JSON.stringify(this.setup));form.append('plan',file,file.name);return this.postOperation('initialize',form,signal,key,this._credentialHeaders());
           }
-          return this.postOperation(pending.name,body(),signal,key);
+          return this.postOperation(pending.name,body(),signal,key,this._credentialHeaders());
         }
         raw=await this.resolveJob(data,signal);
-      }else return this.postOperation(pending.name,body(),signal,key);
+      }else return this.postOperation(pending.name,body(),signal,key,this._credentialHeaders());
       return this.finish(pending.name,raw,signal);
     });
   }

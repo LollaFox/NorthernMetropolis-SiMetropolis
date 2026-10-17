@@ -2,7 +2,17 @@ const $=id=>document.getElementById(id);
 const el=(tag,text)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;return n;};
 const fields=[['initial_budget','Project budget · HKD',200000000],['wage','Monthly wage · HKD',17000],['rent_per_person','Rent per resident · HKD/month',3000],['living_cost_per_person','Living cost · HKD/month',2500],['subsidy_per_person','Subsidy per resident · HKD/month',200]];
 
+// Live government decisions are currently disabled.
+// That mode asks a model when fixed projects start. It is not the per-building
+// narrative model, which still uses the DeepSeek key from Configure.
+export const GOVERNMENT_LIVE_DECISIONS_ENABLED = false;
+
 export function mountGovernment(owner){
+ if(!GOVERNMENT_LIVE_DECISIONS_ENABLED) return;
+ mountGovernmentDecisions(owner);
+}
+
+function mountGovernmentDecisions(owner){
  const section=el('section');section.id='government-config';section.className='analysis-preset-purpose hidden';
  const label=el('label','Construction layout · 建设情景'),layout=el('select');layout.id='construction-scenario';
  for(const [value,text] of [['configured','Original server scenario'],['segregated','功能分区 · Business district + residential/park district'],['mixed','混合布局 · Two mixed districts']]){const o=el('option',text);o.value=value;layout.append(o);}label.append(layout);section.append(label);
@@ -18,7 +28,7 @@ export function mountGovernment(owner){
 }
 
 export function syncGovernment(owner){
- if(!$('government-config'))return;
+ if(!GOVERNMENT_LIVE_DECISIONS_ENABLED||!$('government-config'))return;
  $('government-config').classList.toggle('hidden',$('analysis-engine').value!=='backend');
  const configured=$('construction-scenario').value==='configured';$('government-mode').disabled=configured;
  const live=$('government-mode').querySelector('option[value="live"]');live.disabled=!owner.config?.governmentLiveAvailable;
@@ -29,6 +39,7 @@ export function governmentSetup(){
  if(!$('construction-scenario')||$('analysis-engine')?.value!=='backend')return {};
  const constructionScenario=$('construction-scenario').value;
  if(constructionScenario==='configured')return {constructionScenario};
+ if(!GOVERNMENT_LIVE_DECISIONS_ENABLED)return {constructionScenario,fiscalEnabled:true,governmentMode:'fixed',fiscalParameters:Object.fromEntries(fields.map(([key,,value])=>[key,value]))};
  const fiscalParameters=Object.fromEntries(fields.map(([key])=>{const input=$('government-'+key),value=Number(input.value);if(!input.value.trim()||!Number.isFinite(value)||value<0)throw new Error('Enter a non-negative '+key);return [key,value];}));
  return {constructionScenario,fiscalEnabled:true,governmentMode:$('government-mode').value,fiscalParameters};
 }

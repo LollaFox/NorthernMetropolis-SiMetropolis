@@ -24,7 +24,9 @@ export class BackendWorkspace{
   if(this.owner.session.pending||['review','confirmed'].includes(this.owner.session.state))this.owner.engine='backend';
   if(this.owner.config.productVersion==='government-integrated-1'&&!this.owner.session.pending){
    this.owner.engine='backend';$('analysis-engine').value='backend';
-   $('construction-scenario').value='mixed';$('government-mode').value=this.owner.config.governmentLiveAvailable?'live':'offline-test';
+   if($('construction-scenario')&&!$('construction-scenario').value)$('construction-scenario').value='mixed';
+   // Government decision AI is disabled; do not select live or offline-test.
+   if($('government-mode'))$('government-mode').value='fixed';
    $('analysis-start-date').value='2025-01-01';$('analysis-end-date').value='2026-12-01';
   }
   this.owner.update();
@@ -126,10 +128,10 @@ export class BackendWorkspace{
  }
  pauseForExit(){if(this.state?.playing){this.state={...this.state,playing:false};this.request('/api/control',{playing:false}).catch(e=>this.owner.status('Could not pause saved playback: '+e.message,true));}}
  leave(){this.pauseForExit();++this.generation;this.owner.backendReplay=false;delete this.owner.city.canvas.dataset.backendSimulation;delete this.owner.city.canvas.dataset.backendDate;document.body.classList.remove('analysis-backend-replay');$('port-heading').querySelector('h1').textContent='Explore policy scenarios. Inspect the evidence.';this.updatePlayback();}
- newAnalysis(){this.owner.restoreRules();this.owner.engine='backend';this.owner.presetAcknowledged=false;this.owner.session?.reset();this.owner.session=this.createSession();this.owner.configure();this.owner.status('New backend analysis uses the selected layout and government mode. Review its assumptions before confirming.');}
+ newAnalysis(){this.owner.restoreRules();this.owner.engine='backend';this.owner.presetAcknowledged=false;this.owner.session?.reset();this.owner.session=this.createSession();this.owner.configure();this.owner.status('Choose a government script and enter a DeepSeek API key.');}
  async resume(){
   const o=this.owner;if(o.busy||!o.session?.pending)return;o.restoreRules();o.engine='backend';o.busy=true;o.update();
-  try{await o.session.resume(o.sampleFile||$('analysis-plan').files?.[0]);
+  try{if(o.deepseekApiKey&&o.session)o.session._apiKey=o.deepseekApiKey;await o.session.resume(o.sampleFile||$('analysis-plan')?.files?.[0]);
    if(o.session.state==='ready'){if(this.active)await this.openSaved(o.session.run.simulationId,undefined,{withinAnalysis:true});else{o.apiResults=true;o.fillApiMonths();o.showApiResults();await o.loadFrame(0);}}
    else if(o.session.state==='review'){o.renderReview();$('analysis-review-dialog').showModal();}
    else o.status('Saved operation restored. Start analysis to continue after confirmation.');

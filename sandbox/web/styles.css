@@ -37,8 +37,9 @@ body[data-view=street] .region-panel>p{display:none}body[data-view=street] .regi
 .scenario-dialog{width:min(420px,calc(100% - 32px));color:var(--ink);background:#132d37;border:1px solid #a7c4b75c;border-radius:8px;padding:24px;box-shadow:0 20px 70px #04171a80}
 .scenario-dialog::backdrop{background:#071b2580;backdrop-filter:blur(3px)}
 .scenario-dialog h2{font-size:25px;font-weight:450;margin:20px 0 12px}.scenario-dialog label{display:block;font-size:11px;color:#b9cec3;margin:20px 0 8px}
-.scenario-dialog input{width:100%;border:1px solid #b2cec450;background:#ffffff08;color:var(--ink);padding:12px;border-radius:4px;font-size:14px}
-.scenario-dialog .quiet{font-size:12px}.scenario-create{width:100%;background:#c3d7b6;color:#17353c;border-radius:4px;padding:12px;margin-top:10px;font-size:13px;font-weight:600}
+.scenario-dialog input,.scenario-dialog select{width:100%;border:1px solid #b2cec450;background:#0c2229;color:var(--ink);padding:12px;border-radius:4px;font-size:14px}
+#analysis-config-retired{display:none !important}
+.scenario-dialog .quiet{font-size:12px}.config-required{color:#c44545}#analysis-config-status.config-key-warning{color:#c44545;font-weight:700}.scenario-create{width:100%;background:#c3d7b6;color:#17353c;border-radius:4px;padding:12px;margin-top:10px;font-size:13px;font-weight:600}#analysis-save-config.config-save-idle{background:#7d9486;color:#17353ccc;cursor:not-allowed}
 body.clear-view .region-panel,body.clear-view .city-stat-row,body.clear-view .command-deck,body.clear-view .recent-change,body.clear-view .navigation-hint,body.clear-view .district-labels,body.clear-view .inspector,body.clear-view .view-tools,body.clear-view .layer-legend,body.clear-view .compass{display:none!important}
 body.clear-view .top-actions>button:not(#scene-toggle){display:none}body.clear-view .experience-tools{bottom:24px}
 #scene-toggle[aria-pressed=true]{color:#d5e9b3}
