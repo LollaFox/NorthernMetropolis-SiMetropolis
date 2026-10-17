@@ -1,0 +1,9 @@
+{
+  "schema": "nm-residential-migration-v1",
+  "status": "unavailable",
+  "areaId": "",
+  "unit": "persons",
+  "period": "month",
+  "source": "",
+  "records": []
+}

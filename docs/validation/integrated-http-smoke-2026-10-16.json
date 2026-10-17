@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "checks": [
+    "unified backend config",
+    "health HTTP 200",
+    "11 current resources match original project files",
+    "first, middle and last source dates and populations reconcile"
+  ],
+  "preview": "http://127.0.0.1:8893/",
+  "provider": "offline",
+  "liveCalls": "not enabled",
+  "selectedDate": "2026-09-01",
+  "months": 21,
+  "simulationId": "sim_5be9935b8e5a4ecc96b9e57dee700f62"
+}

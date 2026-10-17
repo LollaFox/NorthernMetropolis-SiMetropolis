@@ -1,0 +1,946 @@
+{
+  "schema": "nm-policy-chart-validation-v1",
+  "generatedAt": "2026-10-15T07:32:42.848Z",
+  "note": "Deterministic hypothetical/fixture visual specs, not real-world observations.",
+  "cases": [
+    {
+      "id": "kwu-tung-housing-2027-02-01",
+      "charts": {
+        "schema": "nm-policy-charts-v1",
+        "title": "Kwu Tung North · housing charts",
+        "basis": "Hypothetical local rule model · no observed outcomes",
+        "cards": [
+          {
+            "id": "topic-supply-demand",
+            "title": "Housing demand and available capacity",
+            "icon": "housing",
+            "kind": "line",
+            "unit": "households / usable housing units",
+            "description": "Kwu Tung North. Each usable housing unit is capacity for one household. Whole study window with month-specific effective versions; the marker identifies 2027-02-01. These are assumed capacities, not occupancy or enrollment.",
+            "labels": [
+              "2026-08-01",
+              "2026-09-01",
+              "2026-10-01",
+              "2026-11-01",
+              "2026-12-01",
+              "2027-01-01",
+              "2027-02-01",
+              "2027-03-01",
+              "2027-04-01",
+              "2027-05-01",
+              "2027-06-01",
+              "2027-07-01"
+            ],
+            "series": [
+              {
+                "id": "demand",
+                "label": "Households",
+                "role": "demand",
+                "values": [
+                  12000,
+                  12040,
+                  12080,
+                  12120,
+                  12160,
+                  12200,
+                  12240,
+                  12280,
+                  12320,
+                  12360,
+                  12400,
+                  12440
+                ]
+              },
+              {
+                "id": "baseline",
+                "label": "No-policy capacity",
+                "role": "baseline",
+                "values": [
+                  11000,
+                  11000,
+                  11000,
+                  11000,
+                  11000,
+                  11000,
+                  11000,
+                  11000,
+                  11000,
+                  11000,
+                  11000,
+                  11000
+                ]
+              },
+              {
+                "id": "policy",
+                "label": "Policy capacity",
+                "role": "policy",
+                "values": [
+                  11000,
+                  11000,
+                  11000,
+                  11000,
+                  11000,
+                  11000,
+                  11400,
+                  11800,
+                  12200,
+                  12600,
+                  12600,
+                  12600
+                ]
+              }
+            ],
+            "selectedIndex": 6,
+            "scope": "Kwu Tung North"
+          },
+          {
+            "id": "topic-unmet-demand",
+            "title": "Housing unmet demand",
+            "icon": "housing",
+            "kind": "line",
+            "unit": "households",
+            "description": "Baseline and policy gaps are non-negative demand minus available capacity. New capacity is not automatically a benefit of the same size; the 2027-02-01 gap reduction is 400 households. A zero modelled gap does not establish real-world adequacy.",
+            "labels": [
+              "2026-08-01",
+              "2026-09-01",
+              "2026-10-01",
+              "2026-11-01",
+              "2026-12-01",
+              "2027-01-01",
+              "2027-02-01",
+              "2027-03-01",
+              "2027-04-01",
+              "2027-05-01",
+              "2027-06-01",
+              "2027-07-01"
+            ],
+            "series": [
+              {
+                "id": "baseline-gap",
+                "label": "No-policy unmet demand",
+                "role": "baseline",
+                "values": [
+                  1000,
+                  1040,
+                  1080,
+                  1120,
+                  1160,
+                  1200,
+                  1240,
+                  1280,
+                  1320,
+                  1360,
+                  1400,
+                  1440
+                ]
+              },
+              {
+                "id": "policy-gap",
+                "label": "Policy unmet demand",
+                "role": "unmet",
+                "values": [
+                  1000,
+                  1040,
+                  1080,
+                  1120,
+                  1160,
+                  1200,
+                  840,
+                  480,
+                  120,
+                  0,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "selectedIndex": 6,
+            "scope": "Kwu Tung North"
+          },
+          {
+            "id": "topic-commissioning",
+            "title": "Housing commissioning · 2027-02-01",
+            "icon": "housing",
+            "kind": "stack",
+            "unit": "usable housing units",
+            "description": "Current effective version: KH-001. Delivered capacity and the remaining scheduled addition refer only to the version effective at 2027-02-01; no later revision is imported.",
+            "labels": [
+              "2027-02-01"
+            ],
+            "series": [
+              {
+                "id": "commissioned",
+                "label": "Commissioned additions",
+                "role": "policy",
+                "values": [
+                  400
+                ]
+              },
+              {
+                "id": "remaining",
+                "label": "Not yet commissioned",
+                "role": "context",
+                "values": [
+                  1200
+                ]
+              }
+            ],
+            "scope": "Kwu Tung North"
+          }
+        ],
+        "unavailable": [
+          {
+            "id": "residential-migration",
+            "icon": "migration",
+            "title": "Residential migration unavailable",
+            "reason": "The current model has no residential inflow or outflow counts. Passenger crossings, housing capacity and zone population are not residential migration.",
+            "requiredFields": [
+              "areaId",
+              "unit: persons",
+              "period: month",
+              "source",
+              "records[].date",
+              "records[].status: observed or modelled",
+              "records[].inflow",
+              "records[].outflow"
+            ]
+          },
+          {
+            "id": "transport-construction",
+            "icon": "construction",
+            "title": "Transport construction unavailable",
+            "reason": "Road and MTR features do not identify newly built infrastructure, project progress or added kilometres. No construction schedule or length data are supplied.",
+            "requiredFields": [
+              "projectId",
+              "areaId",
+              "unit: km",
+              "period: month",
+              "source",
+              "records[].date",
+              "records[].status",
+              "records[].plannedKm",
+              "records[].completedKm"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "hung-shui-kiu-school-2027-09-01",
+      "charts": {
+        "schema": "nm-policy-charts-v1",
+        "title": "Hung Shui Kiu · education charts",
+        "basis": "Hypothetical local rule model · no observed outcomes",
+        "cards": [
+          {
+            "id": "topic-supply-demand",
+            "title": "Education demand and available capacity",
+            "icon": "education",
+            "kind": "line",
+            "unit": "pupils / school places",
+            "description": "Hung Shui Kiu. Each usable school place is capacity for one pupil. Whole study window with month-specific effective versions; the marker identifies 2027-09-01. These are assumed capacities, not occupancy or enrollment.",
+            "labels": [
+              "2026-08-01",
+              "2026-09-01",
+              "2026-10-01",
+              "2026-11-01",
+              "2026-12-01",
+              "2027-01-01",
+              "2027-02-01",
+              "2027-03-01",
+              "2027-04-01",
+              "2027-05-01",
+              "2027-06-01",
+              "2027-07-01",
+              "2027-08-01",
+              "2027-09-01",
+              "2027-10-01",
+              "2027-11-01",
+              "2027-12-01"
+            ],
+            "series": [
+              {
+                "id": "demand",
+                "label": "Eligible pupils",
+                "role": "demand",
+                "values": [
+                  3600,
+                  3610,
+                  3620,
+                  3630,
+                  3640,
+                  3650,
+                  3660,
+                  3670,
+                  3680,
+                  3690,
+                  3700,
+                  3710,
+                  3720,
+                  3730,
+                  3740,
+                  3750,
+                  3760
+                ]
+              },
+              {
+                "id": "baseline",
+                "label": "No-policy capacity",
+                "role": "baseline",
+                "values": [
+                  3000,
+                  3000,
+                  3000,
+                  3000,
+                  3000,
+                  3000,
+                  3000,
+                  3000,
+                  3000,
+                  3000,
+                  3000,
+                  3000,
+                  3000,
+                  3000,
+                  3000,
+                  3000,
+                  3000
+                ]
+              },
+              {
+                "id": "policy",
+                "label": "Policy capacity",
+                "role": "policy",
+                "values": [
+                  3000,
+                  3000,
+                  3000,
+                  3000,
+                  3000,
+                  3000,
+                  3000,
+                  3000,
+                  3000,
+                  3000,
+                  3000,
+                  3000,
+                  3000,
+                  3900,
+                  3900,
+                  3900,
+                  3900
+                ]
+              }
+            ],
+            "selectedIndex": 13,
+            "scope": "Hung Shui Kiu"
+          },
+          {
+            "id": "topic-unmet-demand",
+            "title": "School-place unmet demand",
+            "icon": "education",
+            "kind": "line",
+            "unit": "pupils",
+            "description": "Baseline and policy gaps are non-negative demand minus available capacity. New capacity is not automatically a benefit of the same size; the 2027-09-01 gap reduction is 730 pupils. A zero modelled gap does not establish real-world adequacy.",
+            "labels": [
+              "2026-08-01",
+              "2026-09-01",
+              "2026-10-01",
+              "2026-11-01",
+              "2026-12-01",
+              "2027-01-01",
+              "2027-02-01",
+              "2027-03-01",
+              "2027-04-01",
+              "2027-05-01",
+              "2027-06-01",
+              "2027-07-01",
+              "2027-08-01",
+              "2027-09-01",
+              "2027-10-01",
+              "2027-11-01",
+              "2027-12-01"
+            ],
+            "series": [
+              {
+                "id": "baseline-gap",
+                "label": "No-policy unmet demand",
+                "role": "baseline",
+                "values": [
+                  600,
+                  610,
+                  620,
+                  630,
+                  640,
+                  650,
+                  660,
+                  670,
+                  680,
+                  690,
+                  700,
+                  710,
+                  720,
+                  730,
+                  740,
+                  750,
+                  760
+                ]
+              },
+              {
+                "id": "policy-gap",
+                "label": "Policy unmet demand",
+                "role": "unmet",
+                "values": [
+                  600,
+                  610,
+                  620,
+                  630,
+                  640,
+                  650,
+                  660,
+                  670,
+                  680,
+                  690,
+                  700,
+                  710,
+                  720,
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              }
+            ],
+            "selectedIndex": 13,
+            "scope": "Hung Shui Kiu"
+          },
+          {
+            "id": "topic-commissioning",
+            "title": "School-place commissioning · 2027-09-01",
+            "icon": "education",
+            "kind": "stack",
+            "unit": "school places",
+            "description": "Current effective version: HS-001. Delivered capacity and the remaining scheduled addition refer only to the version effective at 2027-09-01; no later revision is imported.",
+            "labels": [
+              "2027-09-01"
+            ],
+            "series": [
+              {
+                "id": "commissioned",
+                "label": "Commissioned additions",
+                "role": "policy",
+                "values": [
+                  900
+                ]
+              },
+              {
+                "id": "remaining",
+                "label": "Not yet commissioned",
+                "role": "context",
+                "values": [
+                  0
+                ]
+              }
+            ],
+            "scope": "Hung Shui Kiu"
+          }
+        ],
+        "unavailable": [
+          {
+            "id": "residential-migration",
+            "icon": "migration",
+            "title": "Residential migration unavailable",
+            "reason": "The current model has no residential inflow or outflow counts. Passenger crossings, housing capacity and zone population are not residential migration.",
+            "requiredFields": [
+              "areaId",
+              "unit: persons",
+              "period: month",
+              "source",
+              "records[].date",
+              "records[].status: observed or modelled",
+              "records[].inflow",
+              "records[].outflow"
+            ]
+          },
+          {
+            "id": "transport-construction",
+            "icon": "construction",
+            "title": "Transport construction unavailable",
+            "reason": "Road and MTR features do not identify newly built infrastructure, project progress or added kilometres. No construction schedule or length data are supplied.",
+            "requiredFields": [
+              "projectId",
+              "areaId",
+              "unit: km",
+              "period: month",
+              "source",
+              "records[].date",
+              "records[].status",
+              "records[].plannedKm",
+              "records[].completedKm"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "port-all",
+      "charts": {
+        "schema": "nm-policy-charts-v1",
+        "title": "Huanggang · all passengers charts",
+        "basis": "Rule-based trip scenario · not resident migration",
+        "cards": [
+          {
+            "id": "port-cohort-trend",
+            "title": "All passengers · baseline and policy",
+            "icon": "transport",
+            "kind": "line",
+            "unit": "passenger trips/day",
+            "description": "Both directions combined. Each month uses its own effective policy version. Crossings may repeat; these are not unique residents or net migration.",
+            "labels": [
+              "August 2026",
+              "September 2026",
+              "October 2026"
+            ],
+            "series": [
+              {
+                "id": "baseline",
+                "label": "No-opening baseline",
+                "role": "baseline",
+                "values": [
+                  20000,
+                  20000,
+                  20000
+                ]
+              },
+              {
+                "id": "policy",
+                "label": "Policy trips",
+                "role": "policy",
+                "values": [
+                  21339.333333333332,
+                  22343.833333333332,
+                  23348.333333333332
+                ]
+              }
+            ],
+            "selectedIndex": 0,
+            "scope": "All passengers"
+          },
+          {
+            "id": "port-directions",
+            "title": "All passengers · crossing direction · August 2026",
+            "icon": "transport",
+            "kind": "stack",
+            "unit": "passenger trips/day",
+            "description": "Inbound and outbound passenger crossings for the selected cohort. Baseline and additional-trip directions use their own assumed shares. The two additional components sum to 1339.3333333333335 trips/day; this is not residential inflow/outflow.",
+            "labels": [
+              "Inbound crossings",
+              "Outbound crossings"
+            ],
+            "series": [
+              {
+                "id": "baseline",
+                "label": "Baseline crossings",
+                "role": "baseline",
+                "values": [
+                  10100,
+                  9900
+                ]
+              },
+              {
+                "id": "additional",
+                "label": "Additional crossings",
+                "role": "policy",
+                "values": [
+                  682.7333333333335,
+                  656.6
+                ]
+              }
+            ],
+            "scope": "All passengers"
+          },
+          {
+            "id": "port-capacity",
+            "title": "All-passenger capacity constraint · August 2026",
+            "icon": "capacity",
+            "kind": "bar",
+            "unit": "passenger trips/day",
+            "description": "Shared feeder constraint for all passengers, regardless of the selected all passengers view. Unserved additions are requested additional crossings that cannot be served. Capacity is an assumed daily operating limit.",
+            "labels": [
+              "Served total",
+              "Requested total",
+              "Unserved additions",
+              "Effective capacity"
+            ],
+            "series": [
+              {
+                "id": "all-passenger-counts",
+                "label": "All-passenger daily counts",
+                "role": "context",
+                "values": [
+                  21339.333333333332,
+                  21339.333333333332,
+                  0,
+                  30000
+                ]
+              }
+            ],
+            "scope": "All passengers"
+          }
+        ],
+        "unavailable": [
+          {
+            "id": "residential-migration",
+            "icon": "migration",
+            "title": "Residential migration unavailable",
+            "reason": "The current model has no residential inflow or outflow counts. Passenger crossings, housing capacity and zone population are not residential migration.",
+            "requiredFields": [
+              "areaId",
+              "unit: persons",
+              "period: month",
+              "source",
+              "records[].date",
+              "records[].status: observed or modelled",
+              "records[].inflow",
+              "records[].outflow"
+            ]
+          },
+          {
+            "id": "transport-construction",
+            "icon": "construction",
+            "title": "Transport construction unavailable",
+            "reason": "Road and MTR features do not identify newly built infrastructure, project progress or added kilometres. No construction schedule or length data are supplied.",
+            "requiredFields": [
+              "projectId",
+              "areaId",
+              "unit: km",
+              "period: month",
+              "source",
+              "records[].date",
+              "records[].status",
+              "records[].plannedKm",
+              "records[].completedKm"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "port-commuters",
+      "charts": {
+        "schema": "nm-policy-charts-v1",
+        "title": "Huanggang · commuters charts",
+        "basis": "Rule-based trip scenario · not resident migration",
+        "cards": [
+          {
+            "id": "port-cohort-trend",
+            "title": "Commuters · baseline and policy",
+            "icon": "transport",
+            "kind": "line",
+            "unit": "passenger trips/day",
+            "description": "Both directions combined. Each month uses its own effective policy version. Crossings may repeat; these are not unique residents or net migration.",
+            "labels": [
+              "August 2026",
+              "September 2026",
+              "October 2026"
+            ],
+            "series": [
+              {
+                "id": "baseline",
+                "label": "No-opening baseline",
+                "role": "baseline",
+                "values": [
+                  10000,
+                  10000,
+                  10000
+                ]
+              },
+              {
+                "id": "policy",
+                "label": "Policy trips",
+                "role": "policy",
+                "values": [
+                  10620.666666666666,
+                  11086.166666666666,
+                  11551.666666666666
+                ]
+              }
+            ],
+            "selectedIndex": 0,
+            "scope": "Commuters"
+          },
+          {
+            "id": "port-directions",
+            "title": "Commuters · crossing direction · August 2026",
+            "icon": "transport",
+            "kind": "stack",
+            "unit": "passenger trips/day",
+            "description": "Inbound and outbound passenger crossings for the selected cohort. Baseline and additional-trip directions use their own assumed shares. The two additional components sum to 620.6666666666667 trips/day; this is not residential inflow/outflow.",
+            "labels": [
+              "Inbound crossings",
+              "Outbound crossings"
+            ],
+            "series": [
+              {
+                "id": "baseline",
+                "label": "Baseline crossings",
+                "role": "baseline",
+                "values": [
+                  4500,
+                  5500
+                ]
+              },
+              {
+                "id": "additional",
+                "label": "Additional crossings",
+                "role": "policy",
+                "values": [
+                  279.30000000000007,
+                  341.36666666666673
+                ]
+              }
+            ],
+            "scope": "Commuters"
+          },
+          {
+            "id": "port-capacity",
+            "title": "All-passenger capacity constraint · August 2026",
+            "icon": "capacity",
+            "kind": "bar",
+            "unit": "passenger trips/day",
+            "description": "Shared feeder constraint for all passengers, regardless of the selected commuters view. Unserved additions are requested additional crossings that cannot be served. Capacity is an assumed daily operating limit.",
+            "labels": [
+              "Served total",
+              "Requested total",
+              "Unserved additions",
+              "Effective capacity"
+            ],
+            "series": [
+              {
+                "id": "all-passenger-counts",
+                "label": "All-passenger daily counts",
+                "role": "context",
+                "values": [
+                  21339.333333333332,
+                  21339.333333333332,
+                  0,
+                  30000
+                ]
+              }
+            ],
+            "scope": "All passengers"
+          }
+        ],
+        "unavailable": [
+          {
+            "id": "residential-migration",
+            "icon": "migration",
+            "title": "Residential migration unavailable",
+            "reason": "The current model has no residential inflow or outflow counts. Passenger crossings, housing capacity and zone population are not residential migration.",
+            "requiredFields": [
+              "areaId",
+              "unit: persons",
+              "period: month",
+              "source",
+              "records[].date",
+              "records[].status: observed or modelled",
+              "records[].inflow",
+              "records[].outflow"
+            ]
+          },
+          {
+            "id": "transport-construction",
+            "icon": "construction",
+            "title": "Transport construction unavailable",
+            "reason": "Road and MTR features do not identify newly built infrastructure, project progress or added kilometres. No construction schedule or length data are supplied.",
+            "requiredFields": [
+              "projectId",
+              "areaId",
+              "unit: km",
+              "period: month",
+              "source",
+              "records[].date",
+              "records[].status",
+              "records[].plannedKm",
+              "records[].completedKm"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "api-returned-fields-test-only",
+      "charts": {
+        "schema": "nm-policy-charts-v1",
+        "title": "API charts · 2026-09-01",
+        "basis": "Synthetic API fixture · not a real policy forecast",
+        "cards": [
+          {
+            "id": "api-population",
+            "title": "Returned zone population · 2026-09-01",
+            "icon": "population",
+            "kind": "bar",
+            "unit": "persons",
+            "description": "Returned zone populations in one snapshot. Zone totals are not unique migration counts; no baseline, net change or policy gain is inferred.",
+            "labels": [
+              "Fixture A",
+              "Fixture B"
+            ],
+            "series": [
+              {
+                "id": "population",
+                "label": "Returned population",
+                "role": "context",
+                "values": [
+                  1200,
+                  null
+                ]
+              }
+            ],
+            "scope": "fixture-area"
+          },
+          {
+            "id": "api-jobs",
+            "title": "Returned zone jobs · 2026-09-01",
+            "icon": "jobs",
+            "kind": "bar",
+            "unit": "jobs",
+            "description": "Sum of the returned job categories within each zone. Missing or incomplete categories remain unavailable. These are snapshot counts, not jobs created by policy.",
+            "labels": [
+              "Fixture A",
+              "Fixture B"
+            ],
+            "series": [
+              {
+                "id": "jobs",
+                "label": "Returned jobs",
+                "role": "context",
+                "values": [
+                  100,
+                  null
+                ]
+              }
+            ],
+            "scope": "fixture-area"
+          },
+          {
+            "id": "api-congestion",
+            "title": "Returned segment congestion · 2026-09-01",
+            "icon": "transport",
+            "kind": "bar",
+            "unit": "raw congestion index",
+            "description": "Raw returned segment values; null remains missing and negative indices are retained. These values are not percentages, added road length or new construction. The backend has not provided a scale definition.",
+            "labels": [
+              "Road 1 · segment 1",
+              "Road 1 · segment 2",
+              "Road 1 · segment 3"
+            ],
+            "series": [
+              {
+                "id": "congestion",
+                "label": "Returned raw congestion",
+                "role": "context",
+                "values": [
+                  0,
+                  null,
+                  -12
+                ]
+              }
+            ],
+            "scope": "fixture-area"
+          }
+        ],
+        "unavailable": [
+          {
+            "id": "residential-migration",
+            "icon": "migration",
+            "title": "Residential migration unavailable",
+            "reason": "The current model has no residential inflow or outflow counts. Passenger crossings, housing capacity and zone population are not residential migration.",
+            "requiredFields": [
+              "areaId",
+              "unit: persons",
+              "period: month",
+              "source",
+              "records[].date",
+              "records[].status: observed or modelled",
+              "records[].inflow",
+              "records[].outflow"
+            ]
+          },
+          {
+            "id": "transport-construction",
+            "icon": "construction",
+            "title": "Transport construction unavailable",
+            "reason": "Road and MTR features do not identify newly built infrastructure, project progress or added kilometres. No construction schedule or length data are supplied.",
+            "requiredFields": [
+              "projectId",
+              "areaId",
+              "unit: km",
+              "period: month",
+              "source",
+              "records[].date",
+              "records[].status",
+              "records[].plannedKm",
+              "records[].completedKm"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "missing-residential-migration",
+      "charts": {
+        "schema": "nm-policy-charts-v1",
+        "title": "Residential migration charts",
+        "basis": "Data unavailable",
+        "cards": [],
+        "unavailable": [
+          {
+            "id": "residential-migration",
+            "icon": "migration",
+            "title": "Residential migration unavailable",
+            "reason": "The current model has no residential inflow or outflow counts. Passenger crossings, housing capacity and zone population are not residential migration.",
+            "requiredFields": [
+              "areaId",
+              "unit: persons",
+              "period: month",
+              "source",
+              "records[].date",
+              "records[].status: observed or modelled",
+              "records[].inflow",
+              "records[].outflow"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "missing-transport-construction",
+      "charts": {
+        "schema": "nm-policy-charts-v1",
+        "title": "Transport construction charts",
+        "basis": "Data unavailable",
+        "cards": [],
+        "unavailable": [
+          {
+            "id": "transport-construction",
+            "icon": "construction",
+            "title": "Transport construction unavailable",
+            "reason": "Road and MTR features do not identify newly built infrastructure, project progress or added kilometres. No construction schedule or length data are supplied.",
+            "requiredFields": [
+              "projectId",
+              "areaId",
+              "unit: km",
+              "period: month",
+              "source",
+              "records[].date",
+              "records[].status",
+              "records[].plannedKm",
+              "records[].completedKm"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

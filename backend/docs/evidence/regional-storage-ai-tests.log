@@ -1,0 +1,51 @@
+test_all_resident_roles_and_fixed_actions (test_ai.DecisionTests) ... ok
+test_duplicate_conflict_empty_and_oversize_text (test_ai.DecisionTests) ... ok
+test_exact_schemas_accept_only_role_fields (test_ai.DecisionTests) ... ok
+test_independent_output_copy (test_ai.DecisionTests) ... ok
+test_authentication_failure_does_not_retry_or_save_secret (test_ai.DeepSeekTests) ... ok
+test_correction_stage_retains_its_bounded_transient_retry (test_ai.DeepSeekTests) ... ok
+test_eligible_actions_and_omission_remain_allowed (test_ai.DeepSeekTests) ... ok
+test_environment_explicit_key_and_invalid_config (test_ai.DeepSeekTests) ... ok
+test_every_role_uses_same_local_exact_validation (test_ai.DeepSeekTests) ... ok
+test_existing_profile_arrival_is_corrected_using_actual_engine_context (test_ai.DeepSeekTests) ... ok
+test_fixed_endpoint_payload_json_schema_and_usage (test_ai.DeepSeekTests) ... ok
+test_format_correction_exhaustion_stays_failed_without_trimming (test_ai.DeepSeekTests) ... ok
+test_ineligible_or_invented_action_rejects_entire_batch_after_correction (test_ai.DeepSeekTests) ... ok
+test_long_reason_gets_one_safe_correction_and_retains_both_attempts (test_ai.DeepSeekTests) ... ok
+test_menu_is_derived_from_context_without_mutating_or_trusting_injected_menu (test_ai.DeepSeekTests) ... ok
+test_nonstop_refusal_tools_empty_and_malformed_are_rejected (test_ai.DeepSeekTests) ... ok
+test_openai_context_guard_rejects_semantic_error_without_correction (test_ai.DeepSeekTests) ... ok
+test_refusal_and_filtering_do_not_trigger_correction (test_ai.DeepSeekTests) ... ok
+test_regional_scale_metadata_retains_aggregate_and_per_person_units (test_ai.DeepSeekTests) ... ok
+test_stdlib_transport_blocks_redirects_and_counts_cache_fallback (test_ai.DeepSeekTests) ... ok
+test_transient_retry_and_timeout_exhaustion (test_ai.DeepSeekTests) ... ok
+test_batch_parallelism_is_bounded_and_result_order_retained (test_ai.DualKeyTests) ... ok
+test_callbacks_cannot_mutate_or_break_decisions (test_ai.DualKeyTests) ... ok
+test_one_batch_failure_is_an_item_and_does_not_lose_other_results (test_ai.DualKeyTests) ... ok
+test_sequential_calls_rotate_and_metrics_are_unique_safe_copies (test_ai.DualKeyTests) ... ok
+test_refusal_incomplete_and_missing_output (test_ai.ExtractionTests) ... ok
+test_rest_messages_ignore_reasoning_and_join_output_text (test_ai.ExtractionTests) ... ok
+test_top_level_output_text_and_invalid_json (test_ai.ExtractionTests) ... ok
+test_aggregate_group_scale_preserves_per_person_preference (test_ai.FixtureTests) ... ok
+test_empty_residential_shell_is_not_nearby_residents (test_ai.FixtureTests) ... ok
+test_existing_workers_keep_actual_jobs_when_vacancies_are_empty (test_ai.FixtureTests) ... ok
+test_explicit_fixture_label_determinism_and_no_context_mutation (test_ai.FixtureTests) ... ok
+test_facts_change_fixture_choice_with_same_narrative (test_ai.FixtureTests) ... ok
+test_narrative_changes_resident_choice_with_same_numeric_facts (test_ai.FixtureTests) ... ok
+test_neighborhood_status_and_business_narrative_affect_firm (test_ai.FixtureTests) ... ok
+test_authentication_failure_does_not_retry_or_expose_body (test_ai.OpenAITransportTests) ... ok
+test_configuration_validation_and_model_override (test_ai.OpenAITransportTests) ... ok
+test_many_calls_have_no_cumulative_cap (test_ai.OpenAITransportTests) ... ok
+test_request_shape_timeout_schema_metrics_and_no_key_persistence (test_ai.OpenAITransportTests) ... ok
+test_stdlib_http_response_transport (test_ai.OpenAITransportTests) ... ok
+test_timeout_retry_exhaustion_and_invalid_output_do_not_succeed (test_ai.OpenAITransportTests) ... ok
+test_transient_http_retry_counts_each_attempt (test_ai.OpenAITransportTests) ... ok
+test_cli_audit_keeps_every_current_month_event (test_ai.StartupAndCalendarTests) ... ok
+test_cli_failure_preserves_completed_state_and_safe_metrics (test_ai.StartupAndCalendarTests) ... ok
+test_month_anchor_clamps_without_drift (test_ai.StartupAndCalendarTests) ... ok
+test_offline_needs_no_key_live_requires_explicit_key (test_ai.StartupAndCalendarTests) ... ok
+
+----------------------------------------------------------------------
+Ran 46 tests in 0.079s
+
+OK

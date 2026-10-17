@@ -1,0 +1,610 @@
+{
+  "schemaVersion": 1,
+  "status": "provider limited",
+  "checkedAtUTC": "2026-10-16T08:00:35.515211+00:00",
+  "baseURL": "http://127.0.0.1:8879",
+  "simulationId": "sim_14f1c8f27d814f5fb4d423010fd9bea1",
+  "jobId": "job_1d42aaf0577949aca3a892c19f2076e2",
+  "jobExecutionStatus": "complete",
+  "notice": "The engine settled all months, but provider failures triggered explicit recoveries. This is not a fully successful live AI run or validated forecast.",
+  "checks": {
+    "months": 21,
+    "allEngineInvariants": true,
+    "httpStatesExactlyMatchDisk": true,
+    "httpPerObjectTotalsExactlyMatchEngine": true,
+    "scaleMetadataMatches": true,
+    "snapshotCount": 21
+  },
+  "canonicalMonthlyHashes": [
+    {
+      "date": "2025-01-01",
+      "sha256": "f908effb301e2587aa7ac43e520f53d766c1b7007dd7cc84d6e135232134314d"
+    },
+    {
+      "date": "2025-02-01",
+      "sha256": "a0b92bb10eeb82e77ac6f9105ec1d644e1c4ee41a226316c808d33b10f613fe5"
+    },
+    {
+      "date": "2025-03-01",
+      "sha256": "cbfab73573a57b0fe277e4508eec8b7254e03b956a199b9f2bfc38d211aa71a8"
+    },
+    {
+      "date": "2025-04-01",
+      "sha256": "627bd1107607a386e10df0172f22dc6ef2c05123c3845b2dd5a651a120151815"
+    },
+    {
+      "date": "2025-05-01",
+      "sha256": "0b6d56086c3ca3dc4e89811bfe15331080014477d67bca806de6f531d2e42900"
+    },
+    {
+      "date": "2025-06-01",
+      "sha256": "020d270754131c5c21c0acbde1d29212e7243f336f74d00dd1eacb78993e1893"
+    },
+    {
+      "date": "2025-07-01",
+      "sha256": "9b7dd2942c02587cb9f83a619bc447007215cca103ca38d98f7b263d221a061a"
+    },
+    {
+      "date": "2025-08-01",
+      "sha256": "ee2183b6f305c108a17791f3d0058fc272300eb1e42545e9b0432ab5e6623ff9"
+    },
+    {
+      "date": "2025-09-01",
+      "sha256": "e2c4f1132cf88e6f3caf90c42bfc3ebc3572b1b233f941aa7ed59766a7498b97"
+    },
+    {
+      "date": "2025-10-01",
+      "sha256": "b435902f18ccdc250fbba6638f22d0d937e86d20d46f74fb7f558656764b5035"
+    },
+    {
+      "date": "2025-11-01",
+      "sha256": "50a015a04355f5bdc45286442c925894411270f93880cda5626b69bb2bcb4ff2"
+    },
+    {
+      "date": "2025-12-01",
+      "sha256": "629bb39544bdaac7c607fb894ced098c44c0cbb04c66241b6217836cf646e870"
+    },
+    {
+      "date": "2026-01-01",
+      "sha256": "dc93d2ca2020eb5def6e2fd3ab59012ac69cb0d885b1cdd92ed8cb45a6944138"
+    },
+    {
+      "date": "2026-02-01",
+      "sha256": "eae6ff0b55012de37a8dc4af9a8204064a15ecda97f76b69a9896f8fb52e535c"
+    },
+    {
+      "date": "2026-03-01",
+      "sha256": "62da286a976fd4fbf61a87a6a2f63c514165b4607f8a04f353e9b7f1d6884b99"
+    },
+    {
+      "date": "2026-04-01",
+      "sha256": "92d1f6e7f316dfc5d49d6033c48ea4b3b49c924f9c68400155653aeb7f90f1b8"
+    },
+    {
+      "date": "2026-05-01",
+      "sha256": "574044cfa472bd07ff7416138a290a5429190c371f5363fa185e3109efee93f1"
+    },
+    {
+      "date": "2026-06-01",
+      "sha256": "2b84f1c981afcd4e192ce7a5351df989335c9b32e02f0d7559a01153b81a3f3c"
+    },
+    {
+      "date": "2026-07-01",
+      "sha256": "44f3bd0fdedce149195d7d3d693d3b41e23cdf8a38d9b30edf63b981d933318d"
+    },
+    {
+      "date": "2026-08-01",
+      "sha256": "458d94f8e5310ecb0597f31296045258fafb00134538d3f331cd67eeecef94f6"
+    },
+    {
+      "date": "2026-09-01",
+      "sha256": "50875c90f433615fe10f981fdd5d5e701b8c5b6cce235e59b8e7d24150259785"
+    }
+  ],
+  "storedFileHashes": [
+    {
+      "file": "2025-01-01.json.gz",
+      "sha256": "72b658f4bce79eb44f67b0cde30da7cd1fc3befa43ada96f5a5d9a8d4dc96fa8"
+    },
+    {
+      "file": "2025-02-01.json.gz",
+      "sha256": "32f7cfffd8a7c092b7969efef2d8d48f0787d5fd88ea029a7ed6e3c6b99da93b"
+    },
+    {
+      "file": "2025-03-01.json.gz",
+      "sha256": "be152619283e6a9bdcb663a814b1a200f183f6b00dfbca40e9d5678c1e4dfdc1"
+    },
+    {
+      "file": "2025-04-01.json.gz",
+      "sha256": "fbc2f7cfabe2a2ab8a9beff5aa0eae3f6fc3fba72a25a00d247c8e1cebf7fd17"
+    },
+    {
+      "file": "2025-05-01.json.gz",
+      "sha256": "bb9e18fcc9f6f875e53c43517f5343cdb71c01690900b6dccf9134c03dc3ecbe"
+    },
+    {
+      "file": "2025-06-01.json.gz",
+      "sha256": "0fdf2937312f5016bb5f8feb09534fc1417a9bf6ce00438d2ad294892f23bfdc"
+    },
+    {
+      "file": "2025-07-01.json.gz",
+      "sha256": "9fbea9340437419694cde23a84e5554dcb698449bf6e3e2e60d51b83d6bbc5ec"
+    },
+    {
+      "file": "2025-08-01.json.gz",
+      "sha256": "5be41362bb71169e719197f9fd15d034d8e0486817c87eba764af74978820539"
+    },
+    {
+      "file": "2025-09-01.json.gz",
+      "sha256": "11cf98c29dee719c691ecbddaec45cf9dbf206c944fa940a5ca138659320747c"
+    },
+    {
+      "file": "2025-10-01.json.gz",
+      "sha256": "fccbece116b1a6689d221e1e55ad1c46e6962f0bfc2da0c429c366b8a4d72ff3"
+    },
+    {
+      "file": "2025-11-01.json.gz",
+      "sha256": "fb093e3b8bd4f8d97a4884f7cda249a8f0ba95fcb2498337d94b190d24659dab"
+    },
+    {
+      "file": "2025-12-01.json.gz",
+      "sha256": "120c0c66d55e7915ac49b23235345946f3977b1a1fc42c154bf943a8b53b5ac3"
+    },
+    {
+      "file": "2026-01-01.json.gz",
+      "sha256": "e08bf91b9b3b72887acd740639cad516c63c9aa71efc7c9560b66f46617eb961"
+    },
+    {
+      "file": "2026-02-01.json.gz",
+      "sha256": "579ea038ab3b5e54604bf07adea47e6f135522e2b4ac3e3ef74db1d8dbe814ca"
+    },
+    {
+      "file": "2026-03-01.json.gz",
+      "sha256": "4f9a4d2bda70754996b7f83de3e9f4e89e22a9e153ace48b83a0245acb1a2fbc"
+    },
+    {
+      "file": "2026-04-01.json.gz",
+      "sha256": "1c38fb857f5f951dfca31d3c7fb1ea0581042ae0102a7bca578c468e45cfdb09"
+    },
+    {
+      "file": "2026-05-01.json.gz",
+      "sha256": "07c16a9d0d88f537f90498bf859b8ba537157941531ad7418d292f54bebe4aea"
+    },
+    {
+      "file": "2026-06-01.json.gz",
+      "sha256": "68feed7b770ab6ecbaf22910d6f7b5ae474957ed0c724324f6fb784239774c1d"
+    },
+    {
+      "file": "2026-07-01.json.gz",
+      "sha256": "69d6ed28a4637ea19c47434d8ba561731afb11bf78eae9d329f5fa41bd4ae26d"
+    },
+    {
+      "file": "2026-08-01.json.gz",
+      "sha256": "2256ecaaf0bf1b42353e9a43b775f6f1e40dd0b8568567a7182e10803ed0ab92"
+    },
+    {
+      "file": "2026-09-01.json.gz",
+      "sha256": "4dd3ca9fb5499695b755f89e7f17d6ecbc452f3cb1acd8ebb969e00e73f8edb7"
+    },
+    {
+      "file": "shared-objects.json.gz",
+      "sha256": "2c5c6f67d0c87dfc833469528d77a0401ad2bbd01c9bf0e6221c292b57de92ce"
+    }
+  ],
+  "monthlySummary": [
+    {
+      "date": "2025-01-01",
+      "auditStatuses": {
+        "ok": 7
+      },
+      "population": 0,
+      "completedResidentCapacity": 0,
+      "offeredJobs": 26000,
+      "filledJobs": 0
+    },
+    {
+      "date": "2025-02-01",
+      "auditStatuses": {
+        "ok": 11
+      },
+      "population": 18750,
+      "completedResidentCapacity": 125000,
+      "offeredJobs": 52000,
+      "filledJobs": 11250
+    },
+    {
+      "date": "2025-03-01",
+      "auditStatuses": {
+        "ok": 12
+      },
+      "population": 31250,
+      "completedResidentCapacity": 250000,
+      "offeredJobs": 78000,
+      "filledJobs": 18750
+    },
+    {
+      "date": "2025-04-01",
+      "auditStatuses": {
+        "ok": 11
+      },
+      "population": 31250,
+      "completedResidentCapacity": 375000,
+      "offeredJobs": 104000,
+      "filledJobs": 18750
+    },
+    {
+      "date": "2025-05-01",
+      "auditStatuses": {
+        "ok": 11
+      },
+      "population": 31250,
+      "completedResidentCapacity": 500000,
+      "offeredJobs": 130000,
+      "filledJobs": 18750
+    },
+    {
+      "date": "2025-06-01",
+      "auditStatuses": {
+        "ok": 12
+      },
+      "population": 43750,
+      "completedResidentCapacity": 625000,
+      "offeredJobs": 156000,
+      "filledJobs": 26250
+    },
+    {
+      "date": "2025-07-01",
+      "auditStatuses": {
+        "ok": 11
+      },
+      "population": 56250,
+      "completedResidentCapacity": 750000,
+      "offeredJobs": 182000,
+      "filledJobs": 33750
+    },
+    {
+      "date": "2025-08-01",
+      "auditStatuses": {
+        "ok": 11
+      },
+      "population": 68750,
+      "completedResidentCapacity": 875000,
+      "offeredJobs": 208000,
+      "filledJobs": 41250
+    },
+    {
+      "date": "2025-09-01",
+      "auditStatuses": {
+        "ok": 12
+      },
+      "population": 87500,
+      "completedResidentCapacity": 1000000,
+      "offeredJobs": 234000,
+      "filledJobs": 52500
+    },
+    {
+      "date": "2025-10-01",
+      "auditStatuses": {
+        "ok": 11
+      },
+      "population": 93750,
+      "completedResidentCapacity": 1125000,
+      "offeredJobs": 260000,
+      "filledJobs": 56250
+    },
+    {
+      "date": "2025-11-01",
+      "auditStatuses": {
+        "ok": 11
+      },
+      "population": 112500,
+      "completedResidentCapacity": 1250000,
+      "offeredJobs": 286000,
+      "filledJobs": 67500
+    },
+    {
+      "date": "2025-12-01",
+      "auditStatuses": {
+        "provider_error": 12
+      },
+      "population": 112500,
+      "completedResidentCapacity": 1375000,
+      "offeredJobs": 312000,
+      "filledJobs": 67500
+    },
+    {
+      "date": "2026-01-01",
+      "auditStatuses": {
+        "provider_error": 11
+      },
+      "population": 112500,
+      "completedResidentCapacity": 1500000,
+      "offeredJobs": 338000,
+      "filledJobs": 67500
+    },
+    {
+      "date": "2026-02-01",
+      "auditStatuses": {
+        "provider_error": 11
+      },
+      "population": 112500,
+      "completedResidentCapacity": 1625000,
+      "offeredJobs": 364000,
+      "filledJobs": 67500
+    },
+    {
+      "date": "2026-03-01",
+      "auditStatuses": {
+        "provider_error": 12
+      },
+      "population": 112500,
+      "completedResidentCapacity": 1750000,
+      "offeredJobs": 390000,
+      "filledJobs": 67500
+    },
+    {
+      "date": "2026-04-01",
+      "auditStatuses": {
+        "provider_error": 11
+      },
+      "population": 112500,
+      "completedResidentCapacity": 1875000,
+      "offeredJobs": 416000,
+      "filledJobs": 67500
+    },
+    {
+      "date": "2026-05-01",
+      "auditStatuses": {
+        "provider_error": 11
+      },
+      "population": 112500,
+      "completedResidentCapacity": 2000000,
+      "offeredJobs": 442000,
+      "filledJobs": 67500
+    },
+    {
+      "date": "2026-06-01",
+      "auditStatuses": {
+        "provider_error": 12
+      },
+      "population": 112500,
+      "completedResidentCapacity": 2125000,
+      "offeredJobs": 468000,
+      "filledJobs": 67500
+    },
+    {
+      "date": "2026-07-01",
+      "auditStatuses": {
+        "provider_error": 11
+      },
+      "population": 112500,
+      "completedResidentCapacity": 2250000,
+      "offeredJobs": 494000,
+      "filledJobs": 67500
+    },
+    {
+      "date": "2026-08-01",
+      "auditStatuses": {
+        "provider_error": 11
+      },
+      "population": 112500,
+      "completedResidentCapacity": 2375000,
+      "offeredJobs": 520000,
+      "filledJobs": 67500
+    },
+    {
+      "date": "2026-09-01",
+      "auditStatuses": {
+        "provider_error": 10
+      },
+      "population": 112500,
+      "completedResidentCapacity": 2500000,
+      "offeredJobs": 520000,
+      "filledJobs": 67500
+    }
+  ],
+  "provider": {
+    "summary": {
+      "attemptCount": 232,
+      "callCount": 232,
+      "credentialSlots": 2,
+      "inputBytes": 33405910,
+      "interruptedUncheckpointedUsage": "unknown; a remote call interrupted before a monthly checkpoint may be repeated on explicit retry",
+      "latencyMs": 269576.84900000005,
+      "maxConcurrency": 2,
+      "model": "deepseek-flash",
+      "provider": "deepseek",
+      "sourceType": "live_ai",
+      "statuses": {
+        "http_error": 112,
+        "ok": 120
+      },
+      "successfulCalls": 120,
+      "usage": {
+        "input_cache_hit_tokens": 69504,
+        "input_cache_miss_tokens": 2257024,
+        "input_tokens": 2326528,
+        "output_tokens": 6715,
+        "total_tokens": 2333243
+      },
+      "usageAvailable": true
+    },
+    "attemptRows": 232,
+    "attemptSHA256": "22524b7ff8e50ce1eacac6c57b240bc3add89d3de99d0e4fb5e3fdc876f7889e",
+    "byRole": {
+      "budget": {
+        "http_error": 10,
+        "ok": 11
+      },
+      "firm": {
+        "http_error": 9,
+        "ok": 11
+      },
+      "narrator": {
+        "http_error": 63,
+        "ok": 65
+      },
+      "park": {
+        "http_error": 10,
+        "ok": 11
+      },
+      "stability": {
+        "http_error": 10,
+        "ok": 11
+      },
+      "work": {
+        "http_error": 10,
+        "ok": 11
+      }
+    },
+    "byCredentialSlot": {
+      "1": {
+        "ok": 61,
+        "http_error": 56
+      },
+      "2": {
+        "ok": 59,
+        "http_error": 56
+      }
+    },
+    "diagnosisReportedByLead": "112 requests returned HTTP 402 insufficient balance after 120 successful requests; both credential slots were affected.",
+    "diagnosisLimit": "Saved metric rows retain http_error, not raw HTTP status codes or response bodies."
+  },
+  "audit": {
+    "statusCounts": {
+      "ok": 120,
+      "provider_error": 112
+    },
+    "byRole": {
+      "budget": {
+        "ok": 11,
+        "provider_error": 10
+      },
+      "firm": {
+        "ok": 11,
+        "provider_error": 9
+      },
+      "narrator": {
+        "ok": 65,
+        "provider_error": 63
+      },
+      "park": {
+        "ok": 11,
+        "provider_error": 10
+      },
+      "stability": {
+        "ok": 11,
+        "provider_error": 10
+      },
+      "work": {
+        "ok": 11,
+        "provider_error": 10
+      }
+    },
+    "schemaOrEngineInvalidDecisionCount": 0,
+    "firmRecoveries": 9,
+    "narrativeRecoveries": 63,
+    "residentProviderErrorBatches": 40,
+    "residentActionOutcomes": {
+      "applied": 34,
+      "move_in": 26,
+      "leave": 8
+    },
+    "eventCounts": {
+      "construction_completed": 132,
+      "construction_started": 132,
+      "firm_assigned": 11,
+      "firm_recovery": 9,
+      "narrative_recovery": 63,
+      "narrative_saved": 65,
+      "resident_decision_rejected": 40,
+      "residents_arrived": 26,
+      "residents_left": 8
+    }
+  },
+  "final": {
+    "metrics": {
+      "businessTowers": 20,
+      "filledJobs": 67500,
+      "groups": 18,
+      "jobCapacity": 520000,
+      "meanSatisfaction": 74.6682,
+      "monthlyGDP": 1040000000,
+      "monthlyProfit": 520000000,
+      "parks": 8,
+      "population": 112500,
+      "profiles": {
+        "budget": {
+          "groups": 1,
+          "meanSatisfaction": 39.0799,
+          "population": 6250
+        },
+        "park": {
+          "groups": 1,
+          "meanSatisfaction": 56.9573,
+          "population": 6250
+        },
+        "stability": {
+          "groups": 1,
+          "meanSatisfaction": 79.7697,
+          "population": 6250
+        },
+        "work": {
+          "groups": 15,
+          "meanSatisfaction": 77.8814,
+          "population": 93750
+        }
+      },
+      "residentialTowers": 100,
+      "stations": 4,
+      "totalGDP": 11960000000,
+      "unemployedWorkers": 0,
+      "vacancies": 452500
+    },
+    "buildingTypes": {
+      "business": 20,
+      "park": 8,
+      "residential": 100,
+      "station": 4
+    },
+    "buildingStatuses": {
+      "complete": 132
+    },
+    "firmTypes": {
+      "small": 20
+    },
+    "residentCapacity": 2500000,
+    "actualResidents": 112500,
+    "offeredJobs": 520000,
+    "filledJobs": 67500,
+    "vacancies": 452500,
+    "workerAccountingNotice": "Potential group workers without an allocated modeled job are not measured real-world unemployment."
+  },
+  "storage": {
+    "canonicalJSONBytes": 31815688,
+    "gzipOnlyBaseline": {
+      "logicalBytes": 2005421,
+      "allocatedBytes": 2052096,
+      "files": 21
+    },
+    "actualPooledRun": {
+      "logicalBytes": 1153237,
+      "allocatedBytes": 1200128,
+      "files": 22
+    },
+    "logicalSavingsVsFullGzipPercent": 42.494,
+    "allocatedSavingsVsFullGzipPercent": 41.517,
+    "scope": "All 21 monthly roots plus the entire shared pool; catalog, metrics, launch evidence and exports excluded equally. No full JSON export was persisted."
+  },
+  "idempotentReplay": {
+    "key": "regional-shared-storage-20261016-v1-simulate",
+    "fingerprint": "f44526cd60998dc4bceb158f1d7ff9649200a049e3c9906690718266875cfc72",
+    "sameCompletedJob": true,
+    "catalogBytesUnchanged": true,
+    "providerAttemptHashUnchanged": true,
+    "callCountBefore": 232,
+    "callCountAfter": 232,
+    "additionalObservedProviderCalls": 0
+  },
+  "elapsedSeconds": 4.76
+}

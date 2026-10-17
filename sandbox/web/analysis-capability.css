@@ -1,0 +1,10 @@
+/* Round 1: one compact support line, expanded detail only on request. */
+body[data-workspace=analysis] #port-deck{grid-template-areas:"input input" "capability capability" "status status";gap:8px 14px}
+.analysis-capability{grid-area:capability;border-top:1px solid #adc3b237;padding-top:7px;min-width:0;font-size:12px;color:#c6d7c5}
+.analysis-capability summary{display:flex;align-items:center;gap:9px;cursor:pointer;list-style:none;line-height:1.5;min-height:27px}
+.analysis-capability summary::-webkit-details-marker{display:none}
+.analysis-capability summary:focus-visible{outline:2px solid #d8e3bd;outline-offset:3px}
+.capability-title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}.capability-badge{border:1px solid #b7cbaf66;border-radius:3px;padding:2px 6px;font-size:11px;color:#dde5cd;white-space:nowrap}.analysis-capability[data-support=script] .capability-badge,.analysis-capability[data-support=unavailable] .capability-badge{color:#f0d09e;border-style:dashed;border-color:#dfbe7b77}.capability-expand{font-size:11px;margin-left:auto;color:#a8c1b4;white-space:nowrap}.capability-content{max-height:min(24vh,190px);overflow:auto;padding:2px 0 3px;scrollbar-width:thin}.capability-content p{font-size:12px;line-height:1.55;margin:7px 0;max-width:1100px}.capability-content strong{font-weight:600;color:#dfdfc8}
+body[data-workspace=history] #analysis-capability{display:none!important}
+.analysis-preset-purpose{border-top:1px solid #b7c4ad44;border-bottom:1px solid #b7c4ad44;padding:5px 0;margin:12px 0}.analysis-preset-purpose .analysis-check{font-size:12px}.analysis-preset-purpose p{font-size:12px;line-height:1.6}
+@media(max-width:760px){.analysis-capability summary{flex-wrap:wrap;gap:5px 8px}.capability-title{max-width:100%;flex:1 1 160px}.capability-expand{margin-left:0}.capability-content{max-height:20vh}.analysis-tag-hint{line-height:1.5}}

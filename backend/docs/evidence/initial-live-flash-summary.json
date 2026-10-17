@@ -1,0 +1,133 @@
+{
+  "runLabel": "initial-live-trial-before-eligibility-correction",
+  "providerSummary": {
+    "provider": "deepseek",
+    "sourceType": "live_ai",
+    "model": "deepseek-flash",
+    "credentialSlots": 2,
+    "maxConcurrency": 2,
+    "callCount": 132,
+    "attemptCount": 132,
+    "successfulCalls": 132,
+    "inputBytes": 9323508,
+    "latencyMs": 224457.617,
+    "statuses": {
+      "ok": 132
+    },
+    "usage": {
+      "input_tokens": 2413511,
+      "input_cache_miss_tokens": 2382535,
+      "total_tokens": 2422450,
+      "output_tokens": 8939,
+      "input_cache_hit_tokens": 30976
+    },
+    "usageAvailable": true,
+    "interruptedUncheckpointedUsage": "unknown; a remote call interrupted before a monthly checkpoint may be repeated on explicit retry"
+  },
+  "elapsedSecondsUpperBound15SecondPolling": 180.04,
+  "credentialSlotAttempts": {
+    "1": 66,
+    "2": 66
+  },
+  "monthlyStates": 12,
+  "auditStatuses": {
+    "ok": 131,
+    "invalid_response": 1
+  },
+  "residentBatches": 48,
+  "finalMetrics": {
+    "businessTowers": 12,
+    "filledJobs": 510,
+    "groups": 34,
+    "jobCapacity": 900,
+    "meanSatisfaction": 66.7917,
+    "monthlyGDP": 1800000,
+    "monthlyProfit": 900000,
+    "parks": 10,
+    "population": 850,
+    "profiles": {
+      "budget": {
+        "groups": 3,
+        "meanSatisfaction": 54.7218,
+        "population": 75
+      },
+      "park": {
+        "groups": 21,
+        "meanSatisfaction": 61.7859,
+        "population": 525
+      },
+      "stability": {
+        "groups": 1,
+        "meanSatisfaction": 83.6157,
+        "population": 25
+      },
+      "work": {
+        "groups": 9,
+        "meanSatisfaction": 80.6258,
+        "population": 225
+      }
+    },
+    "residentialTowers": 50,
+    "stations": 4,
+    "totalGDP": 8700000,
+    "unemployedWorkers": 0,
+    "vacancies": 390
+  },
+  "residentialCompletionCounts": [
+    {
+      "date": "2025-01-01",
+      "completed": 0
+    },
+    {
+      "date": "2025-02-01",
+      "completed": 5
+    },
+    {
+      "date": "2025-03-01",
+      "completed": 10
+    },
+    {
+      "date": "2025-04-01",
+      "completed": 15
+    },
+    {
+      "date": "2025-05-01",
+      "completed": 20
+    },
+    {
+      "date": "2025-06-01",
+      "completed": 25
+    },
+    {
+      "date": "2025-07-01",
+      "completed": 30
+    },
+    {
+      "date": "2025-08-01",
+      "completed": 35
+    },
+    {
+      "date": "2025-09-01",
+      "completed": 40
+    },
+    {
+      "date": "2025-10-01",
+      "completed": 45
+    },
+    {
+      "date": "2025-11-01",
+      "completed": 50
+    },
+    {
+      "date": "2025-12-01",
+      "completed": 50
+    }
+  ],
+  "rejections": [
+    {
+      "date": "2025-11-01",
+      "role": "park",
+      "error": "profile already occupies tower R42"
+    }
+  ]
+}

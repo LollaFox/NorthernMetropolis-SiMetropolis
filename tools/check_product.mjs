@@ -1,0 +1,45 @@
+import {createRequire} from 'node:module';
+import {mkdir,writeFile} from 'node:fs/promises';
+const require=createRequire(import.meta.url);
+const {chromium}=require(process.env.PLAYWRIGHT_PATH);
+const browser=await chromium.launch({headless:true,executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',args:['--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+const page=await browser.newPage({viewport:{width:1440,height:1000}});
+const errors=[];page.on('pageerror',e=>errors.push(e.message));
+const base=process.env.PRODUCT_BASE||'http://127.0.0.1:8898';
+await mkdir('outputs/product-check',{recursive:true});
+try{
+ await page.goto(base);
+ await page.locator('#analysis-settings').click();
+ await page.locator('#analysis-engine').selectOption('backend');
+ await page.locator('#construction-scenario').selectOption(process.env.PRODUCT_LAYOUT||'mixed');
+ await page.locator('#government-mode').selectOption('offline-test');
+ await page.locator('#analysis-preset-ack').check();
+ await page.locator('#analysis-sample-pdf').click();
+ await page.screenshot({path:'outputs/product-check/configuration.png',fullPage:true});
+ await page.locator('#analysis-save-config').click();
+ await page.locator('#analysis-start').click();
+ await page.locator('#analysis-review-dialog[open]').waitFor();
+ await page.locator('#analysis-review-ack').check();
+ await page.locator('#analysis-confirm-run').click();
+ await page.waitForFunction(()=>document.querySelector('#government-results'),{},{timeout:90000});
+ await page.locator('#analysis-month').selectOption('23');
+ await page.waitForFunction(()=>document.querySelector('#government-results')?.textContent.includes('month 24'),{},{timeout:30000});
+ if(!await page.locator('#government-results').isVisible())await page.locator('#analysis-results-toggle').click();
+ await page.locator('#government-results').waitFor({state:'visible'});
+ await page.locator('#government-results').scrollIntoViewIfNeeded();
+ const result=await page.locator('#government-results').innerText();
+ if(!result.includes('OFFLINE TEST')||!result.includes('Project balance'))throw new Error('Missing actual results');
+ await page.screenshot({path:'outputs/product-check/results.png',fullPage:true});
+ const history=await (await page.request.get(base+'/api/v3/simulations')).json();
+ const run=history.simulations[0];
+ const exported=await (await page.request.get(base+`/api/v3/simulations/${run.simulationId}/export`)).json();
+ if(exported.monthlyStates.length!==24||exported.monthlyStates.at(-1).governmentDecisions.length!==24)throw new Error('Monthly decisions missing');
+ await page.reload();
+ await page.waitForFunction(()=>document.querySelector('#analysis-settings')&&!document.querySelector('#analysis-settings').disabled);
+ const after=await (await page.request.get(base+'/api/v3/simulations')).json();
+ if(after.simulations.length!==history.simulations.length)throw new Error('Reload created a run');
+ if(errors.length)throw new Error(errors.join('\n'));
+ await writeFile('outputs/product-check/check.json',JSON.stringify({passed:true,simulationId:run.simulationId,months:24,mode:'offline-test',pageErrors:errors},null,2));
+ console.log('PASS: browser configuration → review → 24 months → decisions/fiscal results → reload; no page errors.');
+}catch(error){await page.screenshot({path:'outputs/product-check/failure.png',fullPage:true});console.error('PAGE ERRORS',errors);console.error('STATUS',await page.locator('#analysis-entry-status').textContent());throw error;}
+finally{await browser.close();}

@@ -1,0 +1,16 @@
+{
+  "version": "government-integrated-1",
+  "date": "2026-10-17",
+  "frontendSource": "D:\\Metropolis\\Front\\northern-metropolis-white-model",
+  "backendSource": "D:\\Metropolis_mini\\v0.1.0\\northern-metropolis-backend-v0.1.0\\northern-metropolis-backend-v0.1.0",
+  "launch": "python -B start_product.py",
+  "port": 8898,
+  "verification": {
+    "backendTestsPassed": 94,
+    "frontendTestsPassed": 513,
+    "browser": "Chrome, both layouts, offline government, 24 months, results and reload",
+    "liveAPI": "not run; provider transport mocked in tests"
+  },
+  "runtimeData": "backend/.data/product",
+  "credentialsIncluded": false
+}

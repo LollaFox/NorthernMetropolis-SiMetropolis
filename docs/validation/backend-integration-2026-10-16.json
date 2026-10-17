@@ -1,0 +1,68 @@
+{
+  "version": "H3-backend-v0.1.0-integrated-2026-10-16",
+  "date": "2026-10-16",
+  "upstream": {
+    "version": "v0.1.0",
+    "commit": "bce2bb9777866de0cdbcc667cea1511dec0259a1",
+    "sha256": "7b88454f6d67b19cbdb5fa60aacbfbc0de5f65680a7022cfd7792c6c85588d69",
+    "localModifications": true
+  },
+  "testSuites": [
+    {
+      "suite": "sandbox/tests/test_*.mjs",
+      "passed": 401,
+      "failed": 0,
+      "note": "test_renderer.mjs is included by geography tests, not run twice"
+    },
+    {
+      "suite": "sandbox/tests/run_checks.py",
+      "passed": 61,
+      "failed": 0
+    },
+    {
+      "suite": "backend/tests",
+      "passed": 74,
+      "failed": 0,
+      "note": "includes loopback HTTP and real JS client contract bridge"
+    },
+    {
+      "suite": "tests",
+      "passed": 60,
+      "failed": 0,
+      "note": "provider transports mocked; no live calls"
+    }
+  ],
+  "testTotal": 596,
+  "independentOfflineSmoke": {
+    "passed": 38,
+    "failed": 0,
+    "temporaryStorage": true,
+    "network": false
+  },
+  "staticChecks": {
+    "uniqueHtmlIds": 210,
+    "rootJavascriptModules": 32,
+    "syntax": "passed",
+    "relativeImports": "resolved"
+  },
+  "actualExport": {
+    "months": 21,
+    "objectsPerMonth": 132,
+    "firstDate": "2025-01-01",
+    "lastDate": "2026-09-01",
+    "residentAndJobReconciliation": "passed"
+  },
+  "runtime": {
+    "url": "http://127.0.0.1:8893/",
+    "provider": "offline",
+    "localServerConfigured": true,
+    "deepseekEnabled": false,
+    "credentialFilesRead": false
+  },
+  "limits": [
+    "No browser/GPU/layout acceptance: local URL policy blocks browser access.",
+    "Synthetic results are not real regional observations or a validated policy forecast.",
+    "PDF body is not interpreted; configured JSON controls construction.",
+    "No matched policy counterfactual or GenAI benefit study."
+  ]
+}

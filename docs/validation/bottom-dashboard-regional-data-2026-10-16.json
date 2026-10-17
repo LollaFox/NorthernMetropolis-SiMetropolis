@@ -1,0 +1,168 @@
+{
+  "version": "H3-bottom-dashboard-2026-10-16",
+  "source": "Existing real OfflineProvider service export; synthetic city, not measured regional data",
+  "savedMonths": 21,
+  "objectsPerMonth": 132,
+  "dates": [
+    "2025-01-01",
+    "2026-09-01"
+  ],
+  "headlineChecks": "exact canonical resident/place/job/stage values and prior saved-month differences in every month",
+  "chartChecks": "identical full-period axis by chart; exact selected-month marker in every month",
+  "first": [
+    {
+      "id": "residents",
+      "label": "Modeled residents",
+      "value": 0,
+      "unit": "persons",
+      "delta": null,
+      "note": ""
+    },
+    {
+      "id": "places",
+      "label": "Available housing capacity",
+      "value": 0,
+      "unit": "resident places",
+      "delta": null,
+      "note": "Person capacity, not dwelling units."
+    },
+    {
+      "id": "jobs",
+      "label": "Filled jobs",
+      "value": 0,
+      "unit": "jobs",
+      "delta": null,
+      "note": "Offered jobs and vacancies are in the Jobs chart."
+    },
+    {
+      "id": "construction",
+      "label": "Completed development",
+      "value": 3,
+      "unit": "development clusters",
+      "delta": null,
+      "note": ""
+    }
+  ],
+  "last": [
+    {
+      "id": "residents",
+      "label": "Modeled residents",
+      "value": 1762500,
+      "unit": "persons",
+      "delta": -256250,
+      "note": ""
+    },
+    {
+      "id": "places",
+      "label": "Available housing capacity",
+      "value": 2500000,
+      "unit": "resident places",
+      "delta": 125000,
+      "note": "Person capacity, not dwelling units."
+    },
+    {
+      "id": "jobs",
+      "label": "Filled jobs",
+      "value": 624000,
+      "unit": "jobs",
+      "delta": 0,
+      "note": "Offered jobs and vacancies are in the Jobs chart."
+    },
+    {
+      "id": "construction",
+      "label": "Completed development",
+      "value": 132,
+      "unit": "development clusters",
+      "delta": 7,
+      "note": ""
+    }
+  ],
+  "withheldNarrativeItems": [
+    {
+      "date": "2025-01-01",
+      "count": 2
+    },
+    {
+      "date": "2025-02-01",
+      "count": 8
+    },
+    {
+      "date": "2025-03-01",
+      "count": 15
+    },
+    {
+      "date": "2025-04-01",
+      "count": 21
+    },
+    {
+      "date": "2025-05-01",
+      "count": 27
+    },
+    {
+      "date": "2025-06-01",
+      "count": 34
+    },
+    {
+      "date": "2025-07-01",
+      "count": 40
+    },
+    {
+      "date": "2025-08-01",
+      "count": 46
+    },
+    {
+      "date": "2025-09-01",
+      "count": 53
+    },
+    {
+      "date": "2025-10-01",
+      "count": 59
+    },
+    {
+      "date": "2025-11-01",
+      "count": 65
+    },
+    {
+      "date": "2025-12-01",
+      "count": 72
+    },
+    {
+      "date": "2026-01-01",
+      "count": 78
+    },
+    {
+      "date": "2026-02-01",
+      "count": 84
+    },
+    {
+      "date": "2026-03-01",
+      "count": 91
+    },
+    {
+      "date": "2026-04-01",
+      "count": 97
+    },
+    {
+      "date": "2026-05-01",
+      "count": 103
+    },
+    {
+      "date": "2026-06-01",
+      "count": 110
+    },
+    {
+      "date": "2026-07-01",
+      "count": 116
+    },
+    {
+      "date": "2026-08-01",
+      "count": 122
+    },
+    {
+      "date": "2026-09-01",
+      "count": 128
+    }
+  ],
+  "independentCausalValidation": false,
+  "liveModelCalls": false
+}

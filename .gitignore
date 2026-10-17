@@ -1,0 +1,10 @@
+/backend/.data/
+__pycache__/
+*.pyc
+
+# Original local city and integration archives
+sandbox/.data/
+.history/
+__pycache__/
+
+/api_key

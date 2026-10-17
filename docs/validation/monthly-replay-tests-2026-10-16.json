@@ -1,0 +1,23 @@
+{
+  "version": "H3-monthly-replay-2026-10-16",
+  "frontendTests": {
+    "passed": 420,
+    "failed": 0
+  },
+  "backendTests": {
+    "passed": 76,
+    "failed": 0
+  },
+  "rerunTotal": 496,
+  "unchangedSuitesPreviouslyPassed": {
+    "sandboxPython": 61,
+    "providerMockTests": 60
+  },
+  "htmlUniqueIds": 215,
+  "rootJavascriptModules": 33,
+  "apiEvidence": "monthly-replay-http-2026-10-16.json",
+  "replayCadenceSeconds": 1.6,
+  "visualTransitionSeconds": 0.65,
+  "browserVisualAcceptance": false,
+  "liveDeepseekEnabled": false
+}

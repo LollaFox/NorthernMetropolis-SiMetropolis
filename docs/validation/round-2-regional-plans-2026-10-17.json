@@ -1,0 +1,161 @@
+{
+  "version": "H3-round-2-map-analysis-2026-10-17",
+  "passed": true,
+  "source": "Existing OfflineProvider canonical export; synthetic, not observed",
+  "months": 21,
+  "layerFrames": 105,
+  "stableExtentAndScales": true,
+  "canonicalDataUnchanged": true,
+  "frames": [
+    {
+      "date": "2025-01-01",
+      "objects": 132,
+      "residents": 0,
+      "housing": 0,
+      "jobs": 0
+    },
+    {
+      "date": "2025-02-01",
+      "objects": 132,
+      "residents": 62500,
+      "housing": 125000,
+      "jobs": 37500
+    },
+    {
+      "date": "2025-03-01",
+      "objects": 132,
+      "residents": 181250,
+      "housing": 250000,
+      "jobs": 78000
+    },
+    {
+      "date": "2025-04-01",
+      "objects": 132,
+      "residents": 231250,
+      "housing": 375000,
+      "jobs": 104000
+    },
+    {
+      "date": "2025-05-01",
+      "objects": 132,
+      "residents": 400000,
+      "housing": 500000,
+      "jobs": 130000
+    },
+    {
+      "date": "2025-06-01",
+      "objects": 132,
+      "residents": 468750,
+      "housing": 625000,
+      "jobs": 156000
+    },
+    {
+      "date": "2025-07-01",
+      "objects": 132,
+      "residents": 600000,
+      "housing": 750000,
+      "jobs": 182000
+    },
+    {
+      "date": "2025-08-01",
+      "objects": 132,
+      "residents": 675000,
+      "housing": 875000,
+      "jobs": 221000
+    },
+    {
+      "date": "2025-09-01",
+      "objects": 132,
+      "residents": 831250,
+      "housing": 1000000,
+      "jobs": 260000
+    },
+    {
+      "date": "2025-10-01",
+      "objects": 132,
+      "residents": 912500,
+      "housing": 1125000,
+      "jobs": 299000
+    },
+    {
+      "date": "2025-11-01",
+      "objects": 132,
+      "residents": 1043750,
+      "housing": 1250000,
+      "jobs": 325000
+    },
+    {
+      "date": "2025-12-01",
+      "objects": 132,
+      "residents": 1137500,
+      "housing": 1375000,
+      "jobs": 351000
+    },
+    {
+      "date": "2026-01-01",
+      "objects": 132,
+      "residents": 1268750,
+      "housing": 1500000,
+      "jobs": 390000
+    },
+    {
+      "date": "2026-02-01",
+      "objects": 132,
+      "residents": 1331250,
+      "housing": 1625000,
+      "jobs": 429000
+    },
+    {
+      "date": "2026-03-01",
+      "objects": 132,
+      "residents": 1481250,
+      "housing": 1750000,
+      "jobs": 468000
+    },
+    {
+      "date": "2026-04-01",
+      "objects": 132,
+      "residents": 1568750,
+      "housing": 1875000,
+      "jobs": 494000
+    },
+    {
+      "date": "2026-05-01",
+      "objects": 132,
+      "residents": 1712500,
+      "housing": 2000000,
+      "jobs": 520000
+    },
+    {
+      "date": "2026-06-01",
+      "objects": 132,
+      "residents": 1781250,
+      "housing": 2125000,
+      "jobs": 546000
+    },
+    {
+      "date": "2026-07-01",
+      "objects": 132,
+      "residents": 1918750,
+      "housing": 2250000,
+      "jobs": 585000
+    },
+    {
+      "date": "2026-08-01",
+      "objects": 132,
+      "residents": 2018750,
+      "housing": 2375000,
+      "jobs": 624000
+    },
+    {
+      "date": "2026-09-01",
+      "objects": 132,
+      "residents": 1762500,
+      "housing": 2500000,
+      "jobs": 624000
+    }
+  ],
+  "svgRendererRasterized": true,
+  "browserVisualAcceptance": false,
+  "liveModelCalls": false
+}

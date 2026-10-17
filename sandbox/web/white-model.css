@@ -1,0 +1,7 @@
+/* Presentation-only reference. Panel structure and English labels are preserved. */
+body.white-model .world-vignette{background:linear-gradient(180deg,rgba(21,38,46,.6),transparent 13%,transparent 82%,rgba(21,38,46,.15))}
+body.white-model .port-heading{color:#243741;text-shadow:none}
+body.white-model .port-heading .eyebrow,body.white-model .port-heading p,body.white-model .port-heading small{color:#42565f}
+body.white-model .port-heading .cyan{color:#006f86}body.white-model .port-heading .gold{color:#986100}
+body.white-model .port-panel{box-shadow:0 12px 30px #26374324}
+body.white-model .port-heading small{background:#eef1f2e6;padding:7px;border-radius:4px}

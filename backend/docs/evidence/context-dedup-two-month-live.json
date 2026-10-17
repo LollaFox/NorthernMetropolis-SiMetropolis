@@ -1,0 +1,334 @@
+{
+  "schemaVersion": 1,
+  "status": "live responses validated",
+  "checkedAtUTC": "2026-10-16T08:32:23.528358+00:00",
+  "baseURL": "http://127.0.0.1:8878",
+  "simulationId": "sim_5136e2d4bc2544bdbb75d20f49b3cd11",
+  "jobId": "job_31531f4fa98a409eb546f4d7f59eb50c",
+  "jobExecutionStatus": "complete",
+  "notice": "All provider responses and engine decisions passed local validation. This does not establish semantic quality or forecast accuracy.",
+  "checks": {
+    "months": 2,
+    "allEngineInvariants": true,
+    "httpStatesExactlyMatchDisk": true,
+    "httpPerObjectTotalsExactlyMatchEngine": true,
+    "scaleMetadataMatches": true,
+    "snapshotCount": 2,
+    "expectedMonthlyDates": [
+      "2025-01-01",
+      "2025-02-01"
+    ],
+    "expectedSnapshotDates": [
+      "2025-01-01",
+      "2025-02-01"
+    ]
+  },
+  "canonicalMonthlyHashes": [
+    {
+      "date": "2025-01-01",
+      "sha256": "94126e6ab904e601428e9f6078008a81138074a915360160be43c787c7f2e231"
+    },
+    {
+      "date": "2025-02-01",
+      "sha256": "5258ba5876043e5b5c39281829efd131cba43a68db6f55415fe5a5349727d770"
+    }
+  ],
+  "storedFileHashes": [
+    {
+      "file": "2025-01-01.json.gz",
+      "sha256": "ed0d6390f3bc96b67a3a2c3d90386d379eb822d443dd1f77f56c84e45f5a9b94"
+    },
+    {
+      "file": "2025-02-01.json.gz",
+      "sha256": "5178841093235f90dfd1765d3e8e9888416a08922ece772e8b90c5fb9b7e9d2a"
+    },
+    {
+      "file": "shared-objects.json.gz",
+      "sha256": "e85f9290c37036b71647cb6d391c34f5b07b14794147a84b414ecf2c8c02b7ef"
+    }
+  ],
+  "monthlySummary": [
+    {
+      "date": "2025-01-01",
+      "auditStatuses": {
+        "ok": 7
+      },
+      "population": 0,
+      "completedResidentCapacity": 0,
+      "offeredJobs": 26000,
+      "filledJobs": 0
+    },
+    {
+      "date": "2025-02-01",
+      "auditStatuses": {
+        "ok": 11
+      },
+      "population": 18750,
+      "completedResidentCapacity": 125000,
+      "offeredJobs": 52000,
+      "filledJobs": 11250
+    }
+  ],
+  "provider": {
+    "summary": {
+      "attemptCount": 18,
+      "callCount": 18,
+      "credentialSlots": 2,
+      "inputBytes": 291050,
+      "interruptedUncheckpointedUsage": "unknown; a remote call interrupted before a monthly checkpoint may be repeated on explicit retry",
+      "latencyMs": 24790.434,
+      "maxConcurrency": 2,
+      "model": "deepseek-flash",
+      "provider": "deepseek",
+      "sourceType": "live_ai",
+      "statuses": {
+        "ok": 18
+      },
+      "successfulCalls": 18,
+      "usage": {
+        "input_cache_hit_tokens": 10112,
+        "input_cache_miss_tokens": 59965,
+        "input_tokens": 70077,
+        "output_tokens": 915,
+        "total_tokens": 70992
+      },
+      "usageAvailable": true
+    },
+    "attemptRows": 18,
+    "attemptSHA256": "af805f9410895920f173c40c29fc5f97b0def6660d9d24d26fd73473947ec698",
+    "byRole": {
+      "budget": {
+        "ok": 2
+      },
+      "firm": {
+        "ok": 2
+      },
+      "narrator": {
+        "ok": 8
+      },
+      "park": {
+        "ok": 2
+      },
+      "stability": {
+        "ok": 2
+      },
+      "work": {
+        "ok": 2
+      }
+    },
+    "byCredentialSlot": {
+      "1": {
+        "ok": 9
+      },
+      "2": {
+        "ok": 9
+      }
+    },
+    "diagnosisLimit": "Saved metric rows retain status classes such as http_error, not raw HTTP status codes or response bodies."
+  },
+  "audit": {
+    "statusCounts": {
+      "ok": 18
+    },
+    "byRole": {
+      "budget": {
+        "ok": 2
+      },
+      "firm": {
+        "ok": 2
+      },
+      "narrator": {
+        "ok": 8
+      },
+      "park": {
+        "ok": 2
+      },
+      "stability": {
+        "ok": 2
+      },
+      "work": {
+        "ok": 2
+      }
+    },
+    "schemaOrEngineInvalidDecisionCount": 0,
+    "firmRecoveries": 0,
+    "narrativeRecoveries": 0,
+    "residentProviderErrorBatches": 0,
+    "residentActionOutcomes": {
+      "applied": 3,
+      "move_in": 3
+    },
+    "eventCounts": {
+      "construction_completed": 9,
+      "construction_started": 16,
+      "firm_assigned": 2,
+      "narrative_saved": 8,
+      "residents_arrived": 3
+    }
+  },
+  "final": {
+    "metrics": {
+      "businessTowers": 2,
+      "filledJobs": 11250,
+      "groups": 3,
+      "jobCapacity": 52000,
+      "meanSatisfaction": 54.5806,
+      "monthlyGDP": 104000000,
+      "monthlyProfit": 52000000,
+      "parks": 1,
+      "population": 18750,
+      "profiles": {
+        "budget": {
+          "groups": 1,
+          "meanSatisfaction": 55.0725,
+          "population": 6250
+        },
+        "park": {
+          "groups": 1,
+          "meanSatisfaction": 36.5583,
+          "population": 6250
+        },
+        "stability": {
+          "groups": 0,
+          "meanSatisfaction": null,
+          "population": 0
+        },
+        "work": {
+          "groups": 1,
+          "meanSatisfaction": 72.1111,
+          "population": 6250
+        }
+      },
+      "residentialTowers": 5,
+      "stations": 1,
+      "totalGDP": 156000000,
+      "unemployedWorkers": 0,
+      "vacancies": 40750
+    },
+    "buildingTypes": {
+      "business": 20,
+      "park": 8,
+      "residential": 100,
+      "station": 4
+    },
+    "buildingStatuses": {
+      "complete": 9,
+      "construction": 7,
+      "planned": 116
+    },
+    "firmTypes": {
+      "small": 2
+    },
+    "residentCapacity": 125000,
+    "actualResidents": 18750,
+    "offeredJobs": 52000,
+    "filledJobs": 11250,
+    "vacancies": 40750,
+    "workerAccountingNotice": "Potential group workers without an allocated modeled job are not measured real-world unemployment."
+  },
+  "storage": {
+    "canonicalJSONBytes": 395062,
+    "gzipOnlyBaseline": {
+      "logicalBytes": 29764,
+      "allocatedBytes": 36864,
+      "files": 2
+    },
+    "actualPooledRun": {
+      "logicalBytes": 20245,
+      "allocatedBytes": 28672,
+      "files": 3
+    },
+    "logicalSavingsVsFullGzipPercent": 31.9816,
+    "allocatedSavingsVsFullGzipPercent": 22.2222,
+    "scope": "All 2 monthly roots plus the entire shared pool; catalog, metrics, launch evidence and exports excluded equally. No full JSON export was persisted."
+  },
+  "idempotentReplay": {
+    "key": "regional-dedup-two-month-20261016-v1-simulate",
+    "fingerprint": "f7ac6cc2081f94c5adc483bcea332582cc6ccc62766a313b93723ea8ea24795b",
+    "sameCompletedJob": true,
+    "catalogBytesUnchanged": true,
+    "providerAttemptHashUnchanged": true,
+    "callCountBefore": 18,
+    "callCountAfter": 18,
+    "additionalObservedProviderCalls": 0
+  },
+  "contextSummary": {
+    "monthlyAuditContextBytesByRole": [
+      {
+        "date": "2025-01-01",
+        "byRole": {
+          "firm": {
+            "records": 1,
+            "contextBytes": 9827,
+            "maxContextBytes": 9827
+          },
+          "narrator": {
+            "records": 2,
+            "contextBytes": 20956,
+            "maxContextBytes": 10789
+          },
+          "budget": {
+            "records": 1,
+            "contextBytes": 10534,
+            "maxContextBytes": 10534
+          },
+          "work": {
+            "records": 1,
+            "contextBytes": 10534,
+            "maxContextBytes": 10534
+          },
+          "park": {
+            "records": 1,
+            "contextBytes": 10527,
+            "maxContextBytes": 10527
+          },
+          "stability": {
+            "records": 1,
+            "contextBytes": 10568,
+            "maxContextBytes": 10568
+          }
+        }
+      },
+      {
+        "date": "2025-02-01",
+        "byRole": {
+          "narrator": {
+            "records": 6,
+            "contextBytes": 74487,
+            "maxContextBytes": 13344
+          },
+          "firm": {
+            "records": 1,
+            "contextBytes": 12658,
+            "maxContextBytes": 12658
+          },
+          "budget": {
+            "records": 1,
+            "contextBytes": 34009,
+            "maxContextBytes": 34009
+          },
+          "work": {
+            "records": 1,
+            "contextBytes": 34022,
+            "maxContextBytes": 34022
+          },
+          "park": {
+            "records": 1,
+            "contextBytes": 34000,
+            "maxContextBytes": 34000
+          },
+          "stability": {
+            "records": 1,
+            "contextBytes": 34068,
+            "maxContextBytes": 34068
+          }
+        }
+      }
+    ],
+    "maxProviderInputBytes": 26941,
+    "maxReturnedProviderInputTokens": 6725,
+    "notice": "Audit bytes describe canonical context JSON; provider payload bytes/tokens also include instructions/schema. No context text is saved in this evidence."
+  },
+  "perObjectTotalsSHA256": "169be7ca6803fe314335bde249b92f01419442e9ee4908837bb19f0b1a3ecc18",
+  "elapsedSeconds": 0.059
+}

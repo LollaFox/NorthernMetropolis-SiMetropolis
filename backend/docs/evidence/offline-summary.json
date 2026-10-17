@@ -1,0 +1,82 @@
+{
+  "status": "completed",
+  "sourceType": "deterministic_fixture_not_ai",
+  "provider": "offline-fixture",
+  "model": null,
+  "requestedStart": "2025-01-01",
+  "requestedEnd": "2025-12-01",
+  "completedMonths": [
+    "2025-01-01",
+    "2025-02-01",
+    "2025-03-01",
+    "2025-04-01",
+    "2025-05-01",
+    "2025-06-01",
+    "2025-07-01",
+    "2025-08-01",
+    "2025-09-01",
+    "2025-10-01",
+    "2025-11-01",
+    "2025-12-01"
+  ],
+  "elapsedMs": 1581.33,
+  "metrics": {
+    "population": 4075,
+    "groups": 163,
+    "residentialTowers": 50,
+    "businessTowers": 12,
+    "parks": 10,
+    "stations": 4,
+    "jobCapacity": 1050,
+    "filledJobs": 1050,
+    "vacancies": 0,
+    "unemployedWorkers": 1395,
+    "monthlyProfit": 1050000,
+    "monthlyGDP": 2100000,
+    "totalGDP": 13800000,
+    "meanSatisfaction": 42.3524,
+    "profiles": {
+      "budget": {
+        "population": 1250,
+        "groups": 50,
+        "meanSatisfaction": 27.791
+      },
+      "work": {
+        "population": 625,
+        "groups": 25,
+        "meanSatisfaction": 26.3074
+      },
+      "park": {
+        "population": 1000,
+        "groups": 40,
+        "meanSatisfaction": 52.2819
+      },
+      "stability": {
+        "population": 1200,
+        "groups": 48,
+        "meanSatisfaction": 57.6028
+      }
+    }
+  },
+  "ai": {
+    "provider": "offline-fixture",
+    "sourceType": "deterministic_fixture_not_ai",
+    "model": null,
+    "callCount": 132,
+    "attemptCount": 132,
+    "successfulCalls": 132,
+    "inputBytes": 7296714,
+    "latencyMs": 48.972,
+    "statuses": {
+      "ok": 132
+    },
+    "usage": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "total_tokens": 0
+    },
+    "usageAvailable": false
+  },
+  "output": "/private/tmp/nm-narrative-final-20261016",
+  "notice": "Synthetic exploratory scenario; not a validated forecast."
+}

@@ -1,0 +1,503 @@
+{
+  "schema": "nm-standardized-readout-examples-v1",
+  "generatedAt": "2026-10-15T03:23:23.142Z",
+  "note": "Deterministic test explanations. Not empirical forecasts or restorable scenarios.",
+  "examples": [
+    {
+      "id": "kwu-tung-housing-2026-08-01",
+      "brief": {
+        "schema": "nm-policy-interpretation-v1",
+        "title": "Housing interpretation · 2026-08-01",
+        "basis": "Hypothetical local rule model · explicit assumptions",
+        "summary": "2026-08-01 · Kwu Tung North: demand is 12,000 households; the policy scenario leaves a gap of 1,000 households, 0 fewer than the no-policy baseline.",
+        "sections": [
+          {
+            "id": "scope",
+            "title": "Area, policy and affected demand",
+            "items": [
+              "Kwu Tung North · Additional homes · scenario. This month covers 12,000 households and 11,000 usable housing units.",
+              "Schematic district; not an official policy polygon. One usable housing unit represents capacity for one household."
+            ]
+          },
+          {
+            "id": "comparison",
+            "title": "Baseline and current policy result",
+            "items": [
+              "No-policy baseline: 11,000 usable housing units; unmet demand 1,000 households.",
+              "Current policy scenario: 11,000 baseline + 0 commissioned = 11,000 usable housing units; unmet demand 1,000 households.",
+              "Gap reduction is 0 households, not automatically the 0 commissioned additions. It is capped by demand that was unmet in the baseline."
+            ]
+          },
+          {
+            "id": "mechanism",
+            "title": "Demand and commissioning mechanism",
+            "items": [
+              "Demand starts at 12,000 households and increases by 40 per month. At index 0, the zero-clamped demand is 12,000.",
+              "KH-001 is effective, but commissioning starts on 2027-02-01. Capacity commissioned so far is 0 usable housing units; previously commissioned capacity is retained.",
+              "Capacity covers 91.67% of assumed demand; this is a capacity ratio, not an observed service outcome."
+            ]
+          },
+          {
+            "id": "timing",
+            "title": "Effective version and next milestones",
+            "items": [
+              "The effective version at 2026-08-01 is KH-001, effective from 2026-08-01. 1 revision(s) are effective by this month; the last version in the same month applies.",
+              "Next commissioning milestone under this version: 2027-02-01. Planned completion: 2027-05-01.",
+              "Next available observation: 2026-09-01. Later adjustments are not used to explain this month's result."
+            ]
+          },
+          {
+            "id": "limits",
+            "title": "Evidence and interpretation limits",
+            "items": [
+              "All starting values, growth and delivery dates are test assumptions; this explanation is deterministic and uses no LLM inference.",
+              "No rent, household income, affordability, migration choice or actual project schedule is available. One usable unit represents capacity for one household, not a promise of settlement.",
+              "The remaining 1,000-households gap describes this capacity model, not measured unmet applications."
+            ]
+          },
+          {
+            "id": "next",
+            "title": "What to verify next",
+            "items": [
+              "Check the assumed 2027-02-01 commissioning date and 4-month rollout before using this scenario for delivery planning.",
+              "Collect sourced household demand, usable housing stock and project commissioning schedules. Validate them before replacing these assumptions."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "kwu-tung-housing-2027-02-01",
+      "brief": {
+        "schema": "nm-policy-interpretation-v1",
+        "title": "Housing interpretation · 2027-02-01",
+        "basis": "Hypothetical local rule model · explicit assumptions",
+        "summary": "2027-02-01 · Kwu Tung North: demand is 12,240 households; the policy scenario leaves a gap of 840 households, 400 fewer than the no-policy baseline.",
+        "sections": [
+          {
+            "id": "scope",
+            "title": "Area, policy and affected demand",
+            "items": [
+              "Kwu Tung North · Additional homes · scenario. This month covers 12,240 households and 11,400 usable housing units.",
+              "Schematic district; not an official policy polygon. One usable housing unit represents capacity for one household."
+            ]
+          },
+          {
+            "id": "comparison",
+            "title": "Baseline and current policy result",
+            "items": [
+              "No-policy baseline: 11,000 usable housing units; unmet demand 1,240 households.",
+              "Current policy scenario: 11,000 baseline + 400 commissioned = 11,400 usable housing units; unmet demand 840 households.",
+              "Gap reduction is 400 households, not automatically the 400 commissioned additions. It is capped by demand that was unmet in the baseline."
+            ]
+          },
+          {
+            "id": "mechanism",
+            "title": "Demand and commissioning mechanism",
+            "items": [
+              "Demand starts at 12,000 households and increases by 40 per month. At index 6, the zero-clamped demand is 12,240.",
+              "KH-001 specifies 1,600 total additional usable housing units, commissioned from 2027-02-01 over 4 month(s). 400 are available in this month and 1,200 remain.",
+              "Capacity covers 93.14% of assumed demand; this is a capacity ratio, not an observed service outcome."
+            ]
+          },
+          {
+            "id": "timing",
+            "title": "Effective version and next milestones",
+            "items": [
+              "The effective version at 2027-02-01 is KH-001, effective from 2026-08-01. 1 revision(s) are effective by this month; the last version in the same month applies.",
+              "Remaining capacity under this version is phased through 2027-05-01.",
+              "Next available observation: 2027-03-01. Later adjustments are not used to explain this month's result."
+            ]
+          },
+          {
+            "id": "limits",
+            "title": "Evidence and interpretation limits",
+            "items": [
+              "All starting values, growth and delivery dates are test assumptions; this explanation is deterministic and uses no LLM inference.",
+              "No rent, household income, affordability, migration choice or actual project schedule is available. One usable unit represents capacity for one household, not a promise of settlement.",
+              "The remaining 840-households gap describes this capacity model, not measured unmet applications."
+            ]
+          },
+          {
+            "id": "next",
+            "title": "What to verify next",
+            "items": [
+              "Check whether 840 unmet households reflect missing baseline capacity, the demand assumption, or capacity still awaiting commissioning.",
+              "Collect sourced household demand, usable housing stock and project commissioning schedules. Validate them before replacing these assumptions."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "kwu-tung-housing-2027-07-01",
+      "brief": {
+        "schema": "nm-policy-interpretation-v1",
+        "title": "Housing interpretation · 2027-07-01",
+        "basis": "Hypothetical local rule model · explicit assumptions",
+        "summary": "2027-07-01 · Kwu Tung North: demand is 12,440 households; the policy scenario leaves a gap of 0 households, 1,440 fewer than the no-policy baseline.",
+        "sections": [
+          {
+            "id": "scope",
+            "title": "Area, policy and affected demand",
+            "items": [
+              "Kwu Tung North · Additional homes · scenario. This month covers 12,440 households and 12,600 usable housing units.",
+              "Schematic district; not an official policy polygon. One usable housing unit represents capacity for one household."
+            ]
+          },
+          {
+            "id": "comparison",
+            "title": "Baseline and current policy result",
+            "items": [
+              "No-policy baseline: 11,000 usable housing units; unmet demand 1,440 households.",
+              "Current policy scenario: 11,000 baseline + 1,600 commissioned = 12,600 usable housing units; unmet demand 0 households.",
+              "Gap reduction is 1,440 households, not automatically the 1,600 commissioned additions. It is capped by demand that was unmet in the baseline."
+            ]
+          },
+          {
+            "id": "mechanism",
+            "title": "Demand and commissioning mechanism",
+            "items": [
+              "Demand starts at 12,000 households and increases by 40 per month. At index 11, the zero-clamped demand is 12,440.",
+              "KH-001 specifies 1,600 total additional usable housing units, commissioned from 2027-02-01 over 4 month(s). 1,600 are available in this month and 0 remain.",
+              "Capacity covers 100% of assumed demand; this is a capacity ratio, not an observed service outcome."
+            ]
+          },
+          {
+            "id": "timing",
+            "title": "Effective version and next milestones",
+            "items": [
+              "The effective version at 2027-07-01 is KH-001, effective from 2026-08-01. 1 revision(s) are effective by this month; the last version in the same month applies.",
+              "All 1,600 additions specified by this version are commissioned; demand can still change in later months.",
+              "This is the final observation in the study window. Extend the study in a new case to inspect later months."
+            ]
+          },
+          {
+            "id": "limits",
+            "title": "Evidence and interpretation limits",
+            "items": [
+              "All starting values, growth and delivery dates are test assumptions; this explanation is deterministic and uses no LLM inference.",
+              "No rent, household income, affordability, migration choice or actual project schedule is available. One usable unit represents capacity for one household, not a promise of settlement.",
+              "A zero modelled housing gap does not establish that real needs are resolved."
+            ]
+          },
+          {
+            "id": "next",
+            "title": "What to verify next",
+            "items": [
+              "Check allocation, accessibility and eligibility data before interpreting the zero modelled gap as adequate real-world provision.",
+              "Collect sourced household demand, usable housing stock and project commissioning schedules. Validate them before replacing these assumptions."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "hung-shui-kiu-school-2027-09-01",
+      "brief": {
+        "schema": "nm-policy-interpretation-v1",
+        "title": "Education interpretation · 2027-09-01",
+        "basis": "Hypothetical local rule model · explicit assumptions",
+        "summary": "2027-09-01 · Hung Shui Kiu: demand is 3,730 eligible pupils; the policy scenario leaves a gap of 0 pupils, 730 fewer than the no-policy baseline.",
+        "sections": [
+          {
+            "id": "scope",
+            "title": "Area, policy and affected demand",
+            "items": [
+              "Hung Shui Kiu · Additional school places · scenario. This month covers 3,730 eligible pupils and 3,900 school places.",
+              "Schematic district; not an official policy polygon. This is a school-capacity comparison for eligible pupils."
+            ]
+          },
+          {
+            "id": "comparison",
+            "title": "Baseline and current policy result",
+            "items": [
+              "No-policy baseline: 3,000 school places; unmet demand 730 pupils.",
+              "Current policy scenario: 3,000 baseline + 900 commissioned = 3,900 school places; unmet demand 0 pupils.",
+              "Gap reduction is 730 pupils, not automatically the 900 commissioned additions. It is capped by demand that was unmet in the baseline."
+            ]
+          },
+          {
+            "id": "mechanism",
+            "title": "Demand and commissioning mechanism",
+            "items": [
+              "Demand starts at 3,600 eligible pupils and increases by 10 per month. At index 13, the zero-clamped demand is 3,730.",
+              "HS-001 specifies 900 total additional school places, commissioned from 2027-09-01 over 1 month(s). 900 are available in this month and 0 remain.",
+              "Capacity covers 100% of assumed demand; this is a capacity ratio, not an observed service outcome."
+            ]
+          },
+          {
+            "id": "timing",
+            "title": "Effective version and next milestones",
+            "items": [
+              "The effective version at 2027-09-01 is HS-001, effective from 2026-08-01. 1 revision(s) are effective by this month; the last version in the same month applies.",
+              "All 900 additions specified by this version are commissioned; demand can still change in later months.",
+              "Next available observation: 2027-10-01. Later adjustments are not used to explain this month's result."
+            ]
+          },
+          {
+            "id": "limits",
+            "title": "Evidence and interpretation limits",
+            "items": [
+              "All starting values, growth and delivery dates are test assumptions; this explanation is deterministic and uses no LLM inference.",
+              "Education only. Capacity coverage is not a geographic catchment or an enrollment guarantee. No healthcare, waiting-time, travel-time or care-service model is included.",
+              "A zero modelled school-place gap does not establish that real needs are resolved."
+            ]
+          },
+          {
+            "id": "next",
+            "title": "What to verify next",
+            "items": [
+              "Check allocation, accessibility and eligibility data before interpreting the zero modelled gap as adequate real-world provision.",
+              "Collect sourced pupil demand, school capacity and opening schedules. Validate them before replacing these assumptions."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "port-waiting",
+      "brief": {
+        "schema": "nm-policy-interpretation-v1",
+        "title": "Port interpretation · August 2026",
+        "basis": "Rule-based passenger-trip scenario · no LLM decisions",
+        "summary": "All passenger trips: baseline 20,000, policy 20,000, added 0 passenger trips/day in August 2026.",
+        "sections": [
+          {
+            "id": "scope",
+            "title": "Trip cohort and policy focus",
+            "items": [
+              "Huanggang · All passenger trips. Counts are passenger trips in both directions combined; repeated crossings are possible and these are not unique residents.",
+              "Border access focus: the current clearance assumption is 5 minutes, compared with the model's 30-minute reference."
+            ]
+          },
+          {
+            "id": "comparison",
+            "title": "Selected-cohort comparison and shared capacity",
+            "items": [
+              "All passenger trips: no-opening baseline 20,000 passenger trips/day; policy 20,000 passenger trips/day; difference +0 passenger trips/day.",
+              "At the same average rate across 31 days, the selected cohort adds 0 passenger trips in this month.",
+              "All passengers: 20,000 / 30,000 passenger trips/day use 66.67% of assumed effective capacity; 0 requested additional passenger trips/day are unserved."
+            ]
+          },
+          {
+            "id": "mechanism",
+            "title": "Opening, information and capacity mechanism",
+            "items": [
+              "Opening exposure is 0% in this month. The policy is scheduled, so added trips are zero despite the entered reach and clearance assumptions.",
+              "The selected cohort's requested addition is 0 passenger trips/day. The three trip-purpose groups are combined using fixed assumed shares."
+            ]
+          },
+          {
+            "id": "timing",
+            "title": "Current version and observation timing",
+            "items": [
+              "August 2026: HG-001, effective from August 2026. Opening exposure is 0% of the month; adoption weight is 40%.",
+              "This version uses the model’s announced opening on 12 October 2026 at 06:30; October averages include a partial month of exposure.",
+              "Next available observation: September 2026. Review it separately; this explanation does not import its parameter revision."
+            ]
+          },
+          {
+            "id": "limits",
+            "title": "Evidence and trip-count limits",
+            "items": [
+              "Baseline, sensitivities, awareness and route allocation are uncalibrated study assumptions; no observed traffic or LLM decision is loaded.",
+              "Additional crossings are not net migration, new residents or a measured social benefit. Other-port diversion, housing and school effects are outside this model."
+            ]
+          },
+          {
+            "id": "next",
+            "title": "What to verify next",
+            "items": [
+              "Check the opening date and inspect a month with non-zero exposure before evaluating uptake.",
+              "Keep the all passenger trips comparison separate from shared all-passenger capacity when reporting results."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "port-commuters-capacity-limited",
+      "brief": {
+        "schema": "nm-policy-interpretation-v1",
+        "title": "Port interpretation · September 2026",
+        "basis": "Rule-based passenger-trip scenario · no LLM decisions",
+        "summary": "Commuter trips: baseline 10,000, policy 10,231.71, added 231.71 passenger trips/day in September 2026.",
+        "sections": [
+          {
+            "id": "scope",
+            "title": "Trip cohort and policy focus",
+            "items": [
+              "Huanggang · Commuter trips. Counts are passenger trips in both directions combined; repeated crossings are possible and these are not unique residents.",
+              "Transport capacity focus: effective feeder capacity is 20,500 passenger trips/day for all passengers, with 0 trips/day headroom in the returned result."
+            ]
+          },
+          {
+            "id": "comparison",
+            "title": "Selected-cohort comparison and shared capacity",
+            "items": [
+              "Commuter trips: no-opening baseline 10,000 passenger trips/day; policy 10,231.71 passenger trips/day; difference +231.71 passenger trips/day.",
+              "At the same average rate across 30 days, the selected cohort adds 6,951.22 passenger trips in this month.",
+              "All passengers: 20,500 / 20,500 passenger trips/day use 100% of assumed effective capacity; 1,843.83 requested additional passenger trips/day are unserved."
+            ]
+          },
+          {
+            "id": "mechanism",
+            "title": "Opening, information and capacity mechanism",
+            "items": [
+              "All-passenger requested additions exceed available feeder headroom. 1,843.83 requested additional passenger trips/day are unserved, and group additions are reduced proportionally.",
+              "The selected cohort's requested addition is 1,086.17 passenger trips/day. Its assumed awareness-adjusted informed share is 66.5%."
+            ]
+          },
+          {
+            "id": "timing",
+            "title": "Current version and observation timing",
+            "items": [
+              "September 2026: HG-001, effective from August 2026. Opening exposure is 100% of the month; adoption weight is 70%.",
+              "This version assumes opening on 1 August 2026; it is a hypothetical event date.",
+              "Next available observation: October 2026. Review it separately; this explanation does not import its parameter revision."
+            ]
+          },
+          {
+            "id": "limits",
+            "title": "Evidence and trip-count limits",
+            "items": [
+              "Baseline, sensitivities, awareness and route allocation are uncalibrated study assumptions; no observed traffic or LLM decision is loaded.",
+              "Additional crossings are not net migration, new residents or a measured social benefit. Other-port diversion, housing and school effects are outside this model."
+            ]
+          },
+          {
+            "id": "next",
+            "title": "What to verify next",
+            "items": [
+              "Verify all-passenger feeder capacity and the 1,843.83 trips/day unserved-demand assumption before attributing the constrained result to low demand.",
+              "Keep the commuter trips comparison separate from shared all-passenger capacity when reporting results."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "api-synthetic-without-baseline",
+      "brief": {
+        "schema": "nm-policy-interpretation-v1",
+        "title": "API snapshot interpretation · 2026-09-01",
+        "basis": "Synthetic API fixture · not an observed result or policy forecast",
+        "summary": "Synthetic test snapshot at 2026-09-01 contains 1 returned zone record(s). Policy impact cannot be inferred from one snapshot alone.",
+        "sections": [
+          {
+            "id": "scope",
+            "title": "Returned area and requested policy",
+            "items": [
+              "Returned snapshot date: 2026-09-01.",
+              "Requested area identifier: kwu-tung-north.",
+              "Requested policy identifier: kwu-tung-housing.",
+              "Requested tags: housing-affordability. Tags describe the request; they do not establish an estimated effect."
+            ]
+          },
+          {
+            "id": "comparison",
+            "title": "Returned values and comparison availability",
+            "items": [
+              "Synthetic zone: population 1,200; satisfaction 30 (raw index; not a percentage); 0 returned job categories.",
+              "No no-policy baseline or matched comparison is supplied. These values do not establish a policy-induced increase, reduction or benefit."
+            ]
+          },
+          {
+            "id": "mechanism",
+            "title": "Returned layers and model explanation",
+            "items": [
+              "Available returned layers: 0 road lines; 0 MTR lines; 0 pollution records; 0 power lines.",
+              "The snapshot does not provide a causal policy mechanism or agent decision trace; no such mechanism is inferred."
+            ]
+          },
+          {
+            "id": "timing",
+            "title": "Snapshot date and study window",
+            "items": [
+              "Only the 2026-09-01 snapshot is interpreted here. No previous or counterfactual snapshot is supplied to this explanation.",
+              "Requested study window: 2026-08-01 to 2026-10-01, step month. This request window does not itself demonstrate change over time."
+            ]
+          },
+          {
+            "id": "limits",
+            "title": "Source, scales and interpretation limits",
+            "items": [
+              "Synthetic API fixture · not an observed result or policy forecast",
+              "Raw satisfaction and congestion values retain their supplied index units. They are not treated as percentages, outcome improvements or observed survey results."
+            ]
+          },
+          {
+            "id": "next",
+            "title": "Evidence needed before policy comparison",
+            "items": [
+              "For the 2026-09-01 result, obtain source definitions and agreed units for the fields actually returned.",
+              "Request a matched baseline, documented policy mechanism and comparable dates before evaluating policy effects; replace this synthetic fixture with team-model output first."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "api-sparse-no-metrics",
+      "brief": {
+        "schema": "nm-policy-interpretation-v1",
+        "title": "API snapshot interpretation · 2026-09-01",
+        "basis": "Returned API snapshot · evidence depends on the team model",
+        "summary": "Returned snapshot at 2026-09-01. Policy impact cannot be inferred from one snapshot alone.",
+        "sections": [
+          {
+            "id": "scope",
+            "title": "Returned area and requested policy",
+            "items": [
+              "Returned snapshot date: 2026-09-01.",
+              "Requested area identifier: kwu-tung-north.",
+              "Requested policy identifier: kwu-tung-housing.",
+              "Requested tags: housing-affordability. Tags describe the request; they do not establish an estimated effect."
+            ]
+          },
+          {
+            "id": "comparison",
+            "title": "Returned values and comparison availability",
+            "items": [
+              "No zone array is provided in this snapshot.",
+              "No no-policy baseline or matched comparison is supplied. These values do not establish a policy-induced increase, reduction or benefit."
+            ]
+          },
+          {
+            "id": "mechanism",
+            "title": "Returned layers and model explanation",
+            "items": [
+              "No grid or infrastructure counts are provided in this snapshot.",
+              "The snapshot does not provide a causal policy mechanism or agent decision trace; no such mechanism is inferred."
+            ]
+          },
+          {
+            "id": "timing",
+            "title": "Snapshot date and study window",
+            "items": [
+              "Only the 2026-09-01 snapshot is interpreted here. No previous or counterfactual snapshot is supplied to this explanation.",
+              "Requested study window: 2026-08-01 to 2026-10-01, step month. This request window does not itself demonstrate change over time."
+            ]
+          },
+          {
+            "id": "limits",
+            "title": "Source, scales and interpretation limits",
+            "items": [
+              "Returned API snapshot · evidence depends on the team model",
+              "Raw satisfaction and congestion values retain their supplied index units. They are not treated as percentages, outcome improvements or observed survey results."
+            ]
+          },
+          {
+            "id": "next",
+            "title": "Evidence needed before policy comparison",
+            "items": [
+              "For the 2026-09-01 result, obtain source definitions and agreed units for the fields actually returned.",
+              "Request a matched baseline, documented policy mechanism and comparable dates before evaluating policy effects."
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

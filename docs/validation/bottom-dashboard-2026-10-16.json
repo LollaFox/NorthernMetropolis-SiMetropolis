@@ -1,0 +1,36 @@
+{
+  "version": "H3-bottom-dashboard-2026-10-16",
+  "status": "passed",
+  "url": "http://127.0.0.1:8893/",
+  "htmlUniqueIds": 246,
+  "htmlNesting": "passed",
+  "rootJavaScriptModulesChecked": 39,
+  "relativeImportsAndStyleReferences": "passed",
+  "servedResourcesMatched": [
+    "index.html",
+    "app.js",
+    "analysis-dashboard.js",
+    "analysis-dashboard-model.js",
+    "dashboard-chart.js",
+    "evidence-gate.js",
+    "analysis-dashboard.css",
+    "analysis-compact.js",
+    "analysis-compact.css",
+    "backend-results.js",
+    "backend-workspace.js",
+    "workspace-navigation.js",
+    "topic-ui.js",
+    "policy-charts.js"
+  ],
+  "historyIndexBytes": 355,
+  "backendRecords": 1,
+  "canonicalStoreUnchanged": true,
+  "javascriptTestsPassed": 468,
+  "backendRegression": "unchanged this update; previous 78 passed",
+  "browserVisualAcceptance": false,
+  "liveModelCalls": false,
+  "notes": [
+    "HTTP resource checks and DOM tests are not screenshot or GPU acceptance.",
+    "Read-only checks do not invoke a provider."
+  ]
+}

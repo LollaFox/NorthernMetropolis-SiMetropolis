@@ -1,0 +1,33 @@
+{
+  "version": "H3-navigation-history-2026-10-16",
+  "status": "passed",
+  "url": "http://127.0.0.1:8893/",
+  "historyApi": "GET /api/v3/simulations",
+  "indexBytes": 355,
+  "backendRecords": 1,
+  "canonicalStoreUnchanged": true,
+  "servedResourcesMatched": [
+    "index.html",
+    "app.js",
+    "workspace-navigation.js",
+    "analysis-history.js",
+    "analysis-compact.js",
+    "analysis-compact.css",
+    "port-study.js",
+    "port-study.css",
+    "backend-workspace.js",
+    "topic-ui.js"
+  ],
+  "navigationOrder": [
+    "Analysis sandbox",
+    "Analysis history",
+    "Settings",
+    "Help"
+  ],
+  "testSuites": {
+    "javascriptPassed": 437,
+    "backendPassed": 78
+  },
+  "browserVisualAcceptance": false,
+  "liveModelCalls": false
+}

@@ -1,0 +1,138 @@
+{
+  "version": "0.1.0",
+  "sourceCommit": "bce2bb9777866de0cdbcc667cea1511dec0259a1",
+  "sourceTag": "v0.1.0",
+  "result": "passed",
+  "environment": {
+    "python": "3.9.6",
+    "platform": "Darwin",
+    "dependenciesInstalled": false
+  },
+  "archiveChecks": {
+    "zipIntegrity": "passed",
+    "trackedFileCount": 179,
+    "gitBlobEqualityChecksPassed": 179,
+    "extractedSourceFilesUnchangedAfterSmoke": 179,
+    "requiredDocuments": [
+      "README.md",
+      "backend/docs/releases/RELEASE_NOTES.md",
+      "backend/docs/releases/FRONTEND_HANDOFF_EN.md",
+      "backend/docs/releases/FRONTEND_HANDOFF_ZH.md",
+      "backend/docs/releases/CITY_HISTORY_EN.md",
+      "backend/docs/releases/CITY_HISTORY_ZH.md",
+      "frontend/sandbox/THIRD_PARTY_NOTICES.md",
+      "frontend/sandbox/web/vendor/THREE-LICENSE.txt"
+    ],
+    "forbiddenPaths": [],
+    "frontendUnchangedFromBaselineCommit": "12f49a1",
+    "tagResolvesToSourceCommit": true,
+    "trackedWorkingTreeAndIndexUnchanged": true
+  },
+  "tests": [
+    {
+      "command": "python3 -B -m unittest discover -s backend/tests -v",
+      "execution": "local loopback allowed after sandbox denied bind(127.0.0.1)",
+      "collected": 74,
+      "passed": 74,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "exitCode": 0,
+      "elapsedSeconds": 7.355,
+      "runnerSummary": "Ran 74 tests; OK"
+    },
+    {
+      "command": "python3 -B -m unittest discover -s tests -v",
+      "execution": "default filesystem sandbox",
+      "collected": 60,
+      "passed": 60,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "exitCode": 0,
+      "elapsedSeconds": 0.175,
+      "runnerSummary": "Ran 60 tests; OK"
+    }
+  ],
+  "testTotals": {
+    "collected": 134,
+    "passed": 134,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "initialSandboxAttempt": {
+    "command": "python3 -B -m unittest discover -s backend/tests -v",
+    "collected": 74,
+    "errors": 3,
+    "reason": "Sandbox denied local bind(127.0.0.1); rerun with loopback permission passed all 74.",
+    "productFailure": false
+  },
+  "smokeCommands": [
+    {
+      "command": "python3 -B -m backend.cli --help",
+      "exitCode": 0,
+      "elapsedSeconds": 0.058
+    },
+    {
+      "command": "python3 -B -m backend.server --help",
+      "exitCode": 0,
+      "elapsedSeconds": 0.074
+    },
+    {
+      "command": "python3 -B -m backend.cli --provider offline --preset northern-metropolis --start 2025-01-01 --end 2025-02-01 --output /private/tmp/nm-v010-release-ovda0bos/offline-regional-two-month",
+      "exitCode": 0,
+      "elapsedSeconds": 0.158
+    }
+  ],
+  "offlineReadback": {
+    "hydratedStates": 2,
+    "invariantsPassed": 2,
+    "derivedTotalsReconciled": 2,
+    "rows": [
+      {
+        "date": "2025-01-01",
+        "objects": 132,
+        "auditStatuses": {
+          "ok": 7
+        },
+        "totals": {
+          "housingCapacity": 0,
+          "plannedHousingCapacity": 2500000,
+          "actualResidents": 0,
+          "offeredJobs": 26000,
+          "filledJobs": 0,
+          "vacancies": 26000
+        }
+      },
+      {
+        "date": "2025-02-01",
+        "objects": 132,
+        "auditStatuses": {
+          "ok": 11
+        },
+        "totals": {
+          "housingCapacity": 125000,
+          "plannedHousingCapacity": 2500000,
+          "actualResidents": 62500,
+          "offeredJobs": 52000,
+          "filledJobs": 37500,
+          "vacancies": 14500
+        }
+      }
+    ]
+  },
+  "isolation": {
+    "extractedSource": "/private/tmp/nm-v010-release-ovda0bos/extracted/northern-metropolis-backend-v0.1.0",
+    "runtimeOutput": "/private/tmp/nm-v010-release-ovda0bos/offline-regional-two-month",
+    "liveProviderCalls": 0,
+    "credentialFilesRead": 0,
+    "publicationOrPush": false,
+    "sourceFilesEdited": false
+  },
+  "limitations": [
+    "Release artifact smoke used a deterministic offline two-month regional run, not a new live provider trial or forecast validation.",
+    "Browser UI tests and other operating systems were not rerun for the archive; existing release evidence documents earlier checks.",
+    "Only the archive and adjacent metadata/checksum records are release artifacts; temporary smoke outputs are outside the source archive."
+  ]
+}

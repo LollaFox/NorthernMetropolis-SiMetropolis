@@ -1,0 +1,2 @@
+请双击 start-product.cmd，打开 http://127.0.0.1:8898/ 。
+实时政府API启动方法与完整使用步骤见 README.md。

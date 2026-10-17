@@ -1,0 +1,20 @@
+{
+  "checks": 10,
+  "state": "ready",
+  "simulationId": "sim_5d35145f47de4733b394d938f9a9b244",
+  "frames": [
+    {
+      "date": "2025-01-01",
+      "zones": 3
+    },
+    {
+      "date": "2025-06-01",
+      "zones": 39
+    },
+    {
+      "date": "2025-12-01",
+      "zones": 76
+    }
+  ],
+  "callCount": 132
+}

@@ -1,0 +1,29 @@
+{
+  "kind": "eight_replays_of_original_rejected_context",
+  "elapsedSeconds": 8.88,
+  "valid": 8,
+  "total": 8,
+  "providerSummary": {
+    "provider": "deepseek",
+    "sourceType": "live_ai",
+    "model": "deepseek-flash",
+    "credentialSlots": 2,
+    "maxConcurrency": 2,
+    "callCount": 8,
+    "attemptCount": 8,
+    "successfulCalls": 8,
+    "inputBytes": 2513576,
+    "latencyMs": 17484.48,
+    "statuses": {
+      "ok": 8
+    },
+    "usage": {
+      "input_tokens": 653480,
+      "input_cache_hit_tokens": 489472,
+      "output_tokens": 994,
+      "total_tokens": 654474,
+      "input_cache_miss_tokens": 164008
+    },
+    "usageAvailable": true
+  }
+}

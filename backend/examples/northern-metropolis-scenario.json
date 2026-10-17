@@ -1,0 +1,1124 @@
+{
+  "name": "Synthetic Northern Metropolis regional development clusters",
+  "grid": {
+    "width": 12,
+    "height": 11,
+    "cellSizeMeters": 1507.5567228888183
+  },
+  "groupSize": 6250,
+  "groupWorkers": 3750,
+  "towerGroupSlots": 4,
+  "baseRent": 4000,
+  "rentPremium": 1000,
+  "firms": {
+    "small": {
+      "startingFunds": 520000000,
+      "monthlyProfit": 26000000,
+      "monthlyGDP": 52000000,
+      "jobCapacity": 26000,
+      "wage": 15000
+    },
+    "large": {
+      "startingFunds": 975000000,
+      "monthlyProfit": 39000000,
+      "monthlyGDP": 78000000,
+      "jobCapacity": 39000,
+      "wage": 25000
+    }
+  },
+  "buildings": [
+    {
+      "id": "S001",
+      "type": "station",
+      "x": 0,
+      "y": 0,
+      "startMonth": 1,
+      "completionMonth": 1
+    },
+    {
+      "id": "B001",
+      "type": "business",
+      "x": 1,
+      "y": 1,
+      "startMonth": 1,
+      "completionMonth": 1
+    },
+    {
+      "id": "P001",
+      "type": "park",
+      "x": 0,
+      "y": 3,
+      "startMonth": 1,
+      "completionMonth": 1
+    },
+    {
+      "id": "R001",
+      "type": "residential",
+      "x": 1,
+      "y": 0,
+      "startMonth": 1,
+      "completionMonth": 2
+    },
+    {
+      "id": "R002",
+      "type": "residential",
+      "x": 2,
+      "y": 0,
+      "startMonth": 1,
+      "completionMonth": 2
+    },
+    {
+      "id": "R003",
+      "type": "residential",
+      "x": 3,
+      "y": 0,
+      "startMonth": 1,
+      "completionMonth": 2
+    },
+    {
+      "id": "R004",
+      "type": "residential",
+      "x": 4,
+      "y": 0,
+      "startMonth": 1,
+      "completionMonth": 2
+    },
+    {
+      "id": "R005",
+      "type": "residential",
+      "x": 5,
+      "y": 0,
+      "startMonth": 1,
+      "completionMonth": 2
+    },
+    {
+      "id": "B002",
+      "type": "business",
+      "x": 8,
+      "y": 1,
+      "startMonth": 1,
+      "completionMonth": 2
+    },
+    {
+      "id": "R006",
+      "type": "residential",
+      "x": 6,
+      "y": 0,
+      "startMonth": 2,
+      "completionMonth": 3
+    },
+    {
+      "id": "R007",
+      "type": "residential",
+      "x": 7,
+      "y": 0,
+      "startMonth": 2,
+      "completionMonth": 3
+    },
+    {
+      "id": "R008",
+      "type": "residential",
+      "x": 8,
+      "y": 0,
+      "startMonth": 2,
+      "completionMonth": 3
+    },
+    {
+      "id": "R009",
+      "type": "residential",
+      "x": 9,
+      "y": 0,
+      "startMonth": 2,
+      "completionMonth": 3
+    },
+    {
+      "id": "R010",
+      "type": "residential",
+      "x": 10,
+      "y": 0,
+      "startMonth": 2,
+      "completionMonth": 3
+    },
+    {
+      "id": "P002",
+      "type": "park",
+      "x": 4,
+      "y": 1,
+      "startMonth": 2,
+      "completionMonth": 3
+    },
+    {
+      "id": "B003",
+      "type": "business",
+      "x": 5,
+      "y": 4,
+      "startMonth": 2,
+      "completionMonth": 3
+    },
+    {
+      "id": "R011",
+      "type": "residential",
+      "x": 0,
+      "y": 1,
+      "startMonth": 3,
+      "completionMonth": 4
+    },
+    {
+      "id": "R012",
+      "type": "residential",
+      "x": 3,
+      "y": 1,
+      "startMonth": 3,
+      "completionMonth": 4
+    },
+    {
+      "id": "R013",
+      "type": "residential",
+      "x": 5,
+      "y": 1,
+      "startMonth": 3,
+      "completionMonth": 4
+    },
+    {
+      "id": "R014",
+      "type": "residential",
+      "x": 6,
+      "y": 1,
+      "startMonth": 3,
+      "completionMonth": 4
+    },
+    {
+      "id": "R015",
+      "type": "residential",
+      "x": 7,
+      "y": 1,
+      "startMonth": 3,
+      "completionMonth": 4
+    },
+    {
+      "id": "B004",
+      "type": "business",
+      "x": 9,
+      "y": 7,
+      "startMonth": 3,
+      "completionMonth": 4
+    },
+    {
+      "id": "R016",
+      "type": "residential",
+      "x": 10,
+      "y": 1,
+      "startMonth": 4,
+      "completionMonth": 5
+    },
+    {
+      "id": "R017",
+      "type": "residential",
+      "x": 11,
+      "y": 1,
+      "startMonth": 4,
+      "completionMonth": 5
+    },
+    {
+      "id": "R018",
+      "type": "residential",
+      "x": 0,
+      "y": 2,
+      "startMonth": 4,
+      "completionMonth": 5
+    },
+    {
+      "id": "R019",
+      "type": "residential",
+      "x": 3,
+      "y": 2,
+      "startMonth": 4,
+      "completionMonth": 5
+    },
+    {
+      "id": "R020",
+      "type": "residential",
+      "x": 4,
+      "y": 2,
+      "startMonth": 4,
+      "completionMonth": 5
+    },
+    {
+      "id": "B005",
+      "type": "business",
+      "x": 2,
+      "y": 8,
+      "startMonth": 4,
+      "completionMonth": 5
+    },
+    {
+      "id": "B006",
+      "type": "business",
+      "x": 2,
+      "y": 1,
+      "startMonth": 5,
+      "completionMonth": 6
+    },
+    {
+      "id": "R021",
+      "type": "residential",
+      "x": 5,
+      "y": 2,
+      "startMonth": 5,
+      "completionMonth": 6
+    },
+    {
+      "id": "R022",
+      "type": "residential",
+      "x": 6,
+      "y": 2,
+      "startMonth": 5,
+      "completionMonth": 6
+    },
+    {
+      "id": "R023",
+      "type": "residential",
+      "x": 7,
+      "y": 2,
+      "startMonth": 5,
+      "completionMonth": 6
+    },
+    {
+      "id": "R024",
+      "type": "residential",
+      "x": 10,
+      "y": 2,
+      "startMonth": 5,
+      "completionMonth": 6
+    },
+    {
+      "id": "R025",
+      "type": "residential",
+      "x": 11,
+      "y": 2,
+      "startMonth": 5,
+      "completionMonth": 6
+    },
+    {
+      "id": "P003",
+      "type": "park",
+      "x": 7,
+      "y": 3,
+      "startMonth": 5,
+      "completionMonth": 6
+    },
+    {
+      "id": "S002",
+      "type": "station",
+      "x": 11,
+      "y": 0,
+      "startMonth": 7,
+      "completionMonth": 7
+    },
+    {
+      "id": "B007",
+      "type": "business",
+      "x": 9,
+      "y": 1,
+      "startMonth": 6,
+      "completionMonth": 7
+    },
+    {
+      "id": "R026",
+      "type": "residential",
+      "x": 1,
+      "y": 3,
+      "startMonth": 6,
+      "completionMonth": 7
+    },
+    {
+      "id": "R027",
+      "type": "residential",
+      "x": 2,
+      "y": 3,
+      "startMonth": 6,
+      "completionMonth": 7
+    },
+    {
+      "id": "R028",
+      "type": "residential",
+      "x": 3,
+      "y": 3,
+      "startMonth": 6,
+      "completionMonth": 7
+    },
+    {
+      "id": "R029",
+      "type": "residential",
+      "x": 4,
+      "y": 3,
+      "startMonth": 6,
+      "completionMonth": 7
+    },
+    {
+      "id": "R030",
+      "type": "residential",
+      "x": 5,
+      "y": 3,
+      "startMonth": 6,
+      "completionMonth": 7
+    },
+    {
+      "id": "R031",
+      "type": "residential",
+      "x": 6,
+      "y": 3,
+      "startMonth": 7,
+      "completionMonth": 8
+    },
+    {
+      "id": "R032",
+      "type": "residential",
+      "x": 8,
+      "y": 3,
+      "startMonth": 7,
+      "completionMonth": 8
+    },
+    {
+      "id": "R033",
+      "type": "residential",
+      "x": 9,
+      "y": 3,
+      "startMonth": 7,
+      "completionMonth": 8
+    },
+    {
+      "id": "R034",
+      "type": "residential",
+      "x": 10,
+      "y": 3,
+      "startMonth": 7,
+      "completionMonth": 8
+    },
+    {
+      "id": "R035",
+      "type": "residential",
+      "x": 11,
+      "y": 3,
+      "startMonth": 7,
+      "completionMonth": 8
+    },
+    {
+      "id": "B008",
+      "type": "business",
+      "x": 6,
+      "y": 4,
+      "startMonth": 7,
+      "completionMonth": 8
+    },
+    {
+      "id": "R036",
+      "type": "residential",
+      "x": 0,
+      "y": 4,
+      "startMonth": 8,
+      "completionMonth": 9
+    },
+    {
+      "id": "R037",
+      "type": "residential",
+      "x": 1,
+      "y": 4,
+      "startMonth": 8,
+      "completionMonth": 9
+    },
+    {
+      "id": "R038",
+      "type": "residential",
+      "x": 2,
+      "y": 4,
+      "startMonth": 8,
+      "completionMonth": 9
+    },
+    {
+      "id": "R039",
+      "type": "residential",
+      "x": 3,
+      "y": 4,
+      "startMonth": 8,
+      "completionMonth": 9
+    },
+    {
+      "id": "R040",
+      "type": "residential",
+      "x": 4,
+      "y": 4,
+      "startMonth": 8,
+      "completionMonth": 9
+    },
+    {
+      "id": "P004",
+      "type": "park",
+      "x": 11,
+      "y": 4,
+      "startMonth": 8,
+      "completionMonth": 9
+    },
+    {
+      "id": "B009",
+      "type": "business",
+      "x": 10,
+      "y": 7,
+      "startMonth": 8,
+      "completionMonth": 9
+    },
+    {
+      "id": "R041",
+      "type": "residential",
+      "x": 7,
+      "y": 4,
+      "startMonth": 9,
+      "completionMonth": 10
+    },
+    {
+      "id": "R042",
+      "type": "residential",
+      "x": 8,
+      "y": 4,
+      "startMonth": 9,
+      "completionMonth": 10
+    },
+    {
+      "id": "R043",
+      "type": "residential",
+      "x": 9,
+      "y": 4,
+      "startMonth": 9,
+      "completionMonth": 10
+    },
+    {
+      "id": "R044",
+      "type": "residential",
+      "x": 10,
+      "y": 4,
+      "startMonth": 9,
+      "completionMonth": 10
+    },
+    {
+      "id": "R045",
+      "type": "residential",
+      "x": 0,
+      "y": 5,
+      "startMonth": 9,
+      "completionMonth": 10
+    },
+    {
+      "id": "B010",
+      "type": "business",
+      "x": 3,
+      "y": 8,
+      "startMonth": 9,
+      "completionMonth": 10
+    },
+    {
+      "id": "B011",
+      "type": "business",
+      "x": 1,
+      "y": 2,
+      "startMonth": 10,
+      "completionMonth": 11
+    },
+    {
+      "id": "R046",
+      "type": "residential",
+      "x": 1,
+      "y": 5,
+      "startMonth": 10,
+      "completionMonth": 11
+    },
+    {
+      "id": "R047",
+      "type": "residential",
+      "x": 2,
+      "y": 5,
+      "startMonth": 10,
+      "completionMonth": 11
+    },
+    {
+      "id": "R048",
+      "type": "residential",
+      "x": 3,
+      "y": 5,
+      "startMonth": 10,
+      "completionMonth": 11
+    },
+    {
+      "id": "R049",
+      "type": "residential",
+      "x": 4,
+      "y": 5,
+      "startMonth": 10,
+      "completionMonth": 11
+    },
+    {
+      "id": "R050",
+      "type": "residential",
+      "x": 7,
+      "y": 5,
+      "startMonth": 10,
+      "completionMonth": 11
+    },
+    {
+      "id": "B012",
+      "type": "business",
+      "x": 8,
+      "y": 2,
+      "startMonth": 11,
+      "completionMonth": 12
+    },
+    {
+      "id": "R051",
+      "type": "residential",
+      "x": 8,
+      "y": 5,
+      "startMonth": 11,
+      "completionMonth": 12
+    },
+    {
+      "id": "R052",
+      "type": "residential",
+      "x": 9,
+      "y": 5,
+      "startMonth": 11,
+      "completionMonth": 12
+    },
+    {
+      "id": "R053",
+      "type": "residential",
+      "x": 10,
+      "y": 5,
+      "startMonth": 11,
+      "completionMonth": 12
+    },
+    {
+      "id": "R054",
+      "type": "residential",
+      "x": 11,
+      "y": 5,
+      "startMonth": 11,
+      "completionMonth": 12
+    },
+    {
+      "id": "R055",
+      "type": "residential",
+      "x": 0,
+      "y": 6,
+      "startMonth": 11,
+      "completionMonth": 12
+    },
+    {
+      "id": "P005",
+      "type": "park",
+      "x": 0,
+      "y": 7,
+      "startMonth": 11,
+      "completionMonth": 12
+    },
+    {
+      "id": "B013",
+      "type": "business",
+      "x": 5,
+      "y": 5,
+      "startMonth": 12,
+      "completionMonth": 13
+    },
+    {
+      "id": "R056",
+      "type": "residential",
+      "x": 1,
+      "y": 6,
+      "startMonth": 12,
+      "completionMonth": 13
+    },
+    {
+      "id": "R057",
+      "type": "residential",
+      "x": 2,
+      "y": 6,
+      "startMonth": 12,
+      "completionMonth": 13
+    },
+    {
+      "id": "R058",
+      "type": "residential",
+      "x": 3,
+      "y": 6,
+      "startMonth": 12,
+      "completionMonth": 13
+    },
+    {
+      "id": "R059",
+      "type": "residential",
+      "x": 4,
+      "y": 6,
+      "startMonth": 12,
+      "completionMonth": 13
+    },
+    {
+      "id": "R060",
+      "type": "residential",
+      "x": 5,
+      "y": 6,
+      "startMonth": 12,
+      "completionMonth": 13
+    },
+    {
+      "id": "R061",
+      "type": "residential",
+      "x": 6,
+      "y": 6,
+      "startMonth": 13,
+      "completionMonth": 14
+    },
+    {
+      "id": "R062",
+      "type": "residential",
+      "x": 7,
+      "y": 6,
+      "startMonth": 13,
+      "completionMonth": 14
+    },
+    {
+      "id": "R063",
+      "type": "residential",
+      "x": 8,
+      "y": 6,
+      "startMonth": 13,
+      "completionMonth": 14
+    },
+    {
+      "id": "R064",
+      "type": "residential",
+      "x": 9,
+      "y": 6,
+      "startMonth": 13,
+      "completionMonth": 14
+    },
+    {
+      "id": "R065",
+      "type": "residential",
+      "x": 10,
+      "y": 6,
+      "startMonth": 13,
+      "completionMonth": 14
+    },
+    {
+      "id": "B014",
+      "type": "business",
+      "x": 9,
+      "y": 8,
+      "startMonth": 13,
+      "completionMonth": 14
+    },
+    {
+      "id": "S003",
+      "type": "station",
+      "x": 0,
+      "y": 10,
+      "startMonth": 14,
+      "completionMonth": 14
+    },
+    {
+      "id": "R066",
+      "type": "residential",
+      "x": 11,
+      "y": 6,
+      "startMonth": 14,
+      "completionMonth": 15
+    },
+    {
+      "id": "R067",
+      "type": "residential",
+      "x": 1,
+      "y": 7,
+      "startMonth": 14,
+      "completionMonth": 15
+    },
+    {
+      "id": "R068",
+      "type": "residential",
+      "x": 2,
+      "y": 7,
+      "startMonth": 14,
+      "completionMonth": 15
+    },
+    {
+      "id": "R069",
+      "type": "residential",
+      "x": 3,
+      "y": 7,
+      "startMonth": 14,
+      "completionMonth": 15
+    },
+    {
+      "id": "P006",
+      "type": "park",
+      "x": 4,
+      "y": 7,
+      "startMonth": 14,
+      "completionMonth": 15
+    },
+    {
+      "id": "R070",
+      "type": "residential",
+      "x": 5,
+      "y": 7,
+      "startMonth": 14,
+      "completionMonth": 15
+    },
+    {
+      "id": "B015",
+      "type": "business",
+      "x": 2,
+      "y": 9,
+      "startMonth": 14,
+      "completionMonth": 15
+    },
+    {
+      "id": "B016",
+      "type": "business",
+      "x": 2,
+      "y": 2,
+      "startMonth": 15,
+      "completionMonth": 16
+    },
+    {
+      "id": "R071",
+      "type": "residential",
+      "x": 6,
+      "y": 7,
+      "startMonth": 15,
+      "completionMonth": 16
+    },
+    {
+      "id": "R072",
+      "type": "residential",
+      "x": 7,
+      "y": 7,
+      "startMonth": 15,
+      "completionMonth": 16
+    },
+    {
+      "id": "R073",
+      "type": "residential",
+      "x": 8,
+      "y": 7,
+      "startMonth": 15,
+      "completionMonth": 16
+    },
+    {
+      "id": "R074",
+      "type": "residential",
+      "x": 11,
+      "y": 7,
+      "startMonth": 15,
+      "completionMonth": 16
+    },
+    {
+      "id": "R075",
+      "type": "residential",
+      "x": 0,
+      "y": 8,
+      "startMonth": 15,
+      "completionMonth": 16
+    },
+    {
+      "id": "B017",
+      "type": "business",
+      "x": 9,
+      "y": 2,
+      "startMonth": 16,
+      "completionMonth": 17
+    },
+    {
+      "id": "R076",
+      "type": "residential",
+      "x": 1,
+      "y": 8,
+      "startMonth": 16,
+      "completionMonth": 17
+    },
+    {
+      "id": "R077",
+      "type": "residential",
+      "x": 4,
+      "y": 8,
+      "startMonth": 16,
+      "completionMonth": 17
+    },
+    {
+      "id": "R078",
+      "type": "residential",
+      "x": 5,
+      "y": 8,
+      "startMonth": 16,
+      "completionMonth": 17
+    },
+    {
+      "id": "R079",
+      "type": "residential",
+      "x": 6,
+      "y": 8,
+      "startMonth": 16,
+      "completionMonth": 17
+    },
+    {
+      "id": "R080",
+      "type": "residential",
+      "x": 7,
+      "y": 8,
+      "startMonth": 16,
+      "completionMonth": 17
+    },
+    {
+      "id": "B018",
+      "type": "business",
+      "x": 6,
+      "y": 5,
+      "startMonth": 17,
+      "completionMonth": 18
+    },
+    {
+      "id": "R081",
+      "type": "residential",
+      "x": 8,
+      "y": 8,
+      "startMonth": 17,
+      "completionMonth": 18
+    },
+    {
+      "id": "R082",
+      "type": "residential",
+      "x": 0,
+      "y": 9,
+      "startMonth": 17,
+      "completionMonth": 18
+    },
+    {
+      "id": "R083",
+      "type": "residential",
+      "x": 1,
+      "y": 9,
+      "startMonth": 17,
+      "completionMonth": 18
+    },
+    {
+      "id": "R084",
+      "type": "residential",
+      "x": 4,
+      "y": 9,
+      "startMonth": 17,
+      "completionMonth": 18
+    },
+    {
+      "id": "R085",
+      "type": "residential",
+      "x": 5,
+      "y": 9,
+      "startMonth": 17,
+      "completionMonth": 18
+    },
+    {
+      "id": "P007",
+      "type": "park",
+      "x": 7,
+      "y": 9,
+      "startMonth": 17,
+      "completionMonth": 18
+    },
+    {
+      "id": "B019",
+      "type": "business",
+      "x": 10,
+      "y": 8,
+      "startMonth": 18,
+      "completionMonth": 19
+    },
+    {
+      "id": "R086",
+      "type": "residential",
+      "x": 6,
+      "y": 9,
+      "startMonth": 18,
+      "completionMonth": 19
+    },
+    {
+      "id": "R087",
+      "type": "residential",
+      "x": 8,
+      "y": 9,
+      "startMonth": 18,
+      "completionMonth": 19
+    },
+    {
+      "id": "R088",
+      "type": "residential",
+      "x": 9,
+      "y": 9,
+      "startMonth": 18,
+      "completionMonth": 19
+    },
+    {
+      "id": "R089",
+      "type": "residential",
+      "x": 10,
+      "y": 9,
+      "startMonth": 18,
+      "completionMonth": 19
+    },
+    {
+      "id": "R090",
+      "type": "residential",
+      "x": 11,
+      "y": 9,
+      "startMonth": 18,
+      "completionMonth": 19
+    },
+    {
+      "id": "B020",
+      "type": "business",
+      "x": 3,
+      "y": 9,
+      "startMonth": 19,
+      "completionMonth": 20
+    },
+    {
+      "id": "R091",
+      "type": "residential",
+      "x": 1,
+      "y": 10,
+      "startMonth": 19,
+      "completionMonth": 20
+    },
+    {
+      "id": "R092",
+      "type": "residential",
+      "x": 2,
+      "y": 10,
+      "startMonth": 19,
+      "completionMonth": 20
+    },
+    {
+      "id": "R093",
+      "type": "residential",
+      "x": 3,
+      "y": 10,
+      "startMonth": 19,
+      "completionMonth": 20
+    },
+    {
+      "id": "R094",
+      "type": "residential",
+      "x": 4,
+      "y": 10,
+      "startMonth": 19,
+      "completionMonth": 20
+    },
+    {
+      "id": "R095",
+      "type": "residential",
+      "x": 5,
+      "y": 10,
+      "startMonth": 19,
+      "completionMonth": 20
+    },
+    {
+      "id": "S004",
+      "type": "station",
+      "x": 11,
+      "y": 8,
+      "startMonth": 21,
+      "completionMonth": 21
+    },
+    {
+      "id": "R096",
+      "type": "residential",
+      "x": 6,
+      "y": 10,
+      "startMonth": 20,
+      "completionMonth": 21
+    },
+    {
+      "id": "R097",
+      "type": "residential",
+      "x": 7,
+      "y": 10,
+      "startMonth": 20,
+      "completionMonth": 21
+    },
+    {
+      "id": "R098",
+      "type": "residential",
+      "x": 8,
+      "y": 10,
+      "startMonth": 20,
+      "completionMonth": 21
+    },
+    {
+      "id": "R099",
+      "type": "residential",
+      "x": 9,
+      "y": 10,
+      "startMonth": 20,
+      "completionMonth": 21
+    },
+    {
+      "id": "R100",
+      "type": "residential",
+      "x": 10,
+      "y": 10,
+      "startMonth": 20,
+      "completionMonth": 21
+    },
+    {
+      "id": "P008",
+      "type": "park",
+      "x": 11,
+      "y": 10,
+      "startMonth": 20,
+      "completionMonth": 21
+    }
+  ],
+  "scale": {
+    "unit": "development_cluster",
+    "label": "Synthetic aggregate regional development clusters, not literal towers",
+    "referenceAreaKm2": 300,
+    "referenceHousingCapacity": 2500000,
+    "referenceJobs": 650000,
+    "nominalJobsPerBusiness": 32500,
+    "notes": [
+      "All 132 schematic cells are aggregate planning objects, not surveyed buildings, parcels, stations or conservation areas.",
+      "100 residential clusters each offer 25000 resident places when completed; actual population depends on independent AI arrivals and departures.",
+      "Each resident group is 6250 people with 3750 potential workers; the 60% worker share is an assumption, not observed demographics.",
+      "20 business clusters offer 26000 small-firm or 39000 large-firm jobs each; 650000 is the nominal midpoint, with a 520000 to 780000 possible total, not a forced outcome.",
+      "Firm funds, profit and GDP scale from the small scenario in direct proportion to job capacity; these financial quantities remain synthetic, not measured regional GDP.",
+      "Wages remain synthetic HKD per employed worker per month; residential rent remains synthetic HKD per resident per month.",
+      "Unfilled modeled worker capacity is not measured regional unemployment; this sandbox omits other workplaces and labor-market movements.",
+      "The grid approximates 300 square kilometres using equal square cells; geography, object proportions and 21 monthly construction steps are illustrative, not official locations or delivery dates."
+    ],
+    "sources": [
+      {
+        "title": "Northern Metropolis Co-ordination Office: Vision",
+        "url": "https://www.nm.gov.hk/en/about-nm/vision",
+        "supports": [
+          "referenceHousingCapacity",
+          "referenceJobs"
+        ]
+      },
+      {
+        "title": "InvestHK: Super-Connector to China and The World",
+        "url": "https://www.investhk.gov.hk/en/why-hong-kong/super-connector-to-china-and-the-world/",
+        "supports": [
+          "referenceAreaKm2",
+          "referenceHousingCapacity",
+          "referenceJobs"
+        ]
+      }
+    ]
+  }
+}

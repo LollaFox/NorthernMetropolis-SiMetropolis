@@ -1,0 +1,14 @@
+{
+  "version": "0.1.0",
+  "releaseType": "internal",
+  "sourceCommit": "bce2bb9777866de0cdbcc667cea1511dec0259a1",
+  "sourceTag": "v0.1.0",
+  "archive": "northern-metropolis-backend-v0.1.0.zip",
+  "archivePrefix": "northern-metropolis-backend-v0.1.0/",
+  "archiveSHA256": "7b88454f6d67b19cbdb5fa60aacbfbc0de5f65680a7022cfd7792c6c85588d69",
+  "archiveBytes": 962257,
+  "trackedEntryCount": 179,
+  "contentsScope": "All regular tracked files from the exact tagged source commit, including unchanged frontend, backend, tests, examples, release notes, bilingual handoff and city-history guides, and existing third-party notices. Root MANIFEST.json is the historical frontend handoff manifest.",
+  "excluded": "Git metadata, runtime state, credentials/environment files, .DS_Store, untracked artifacts, and release output files.",
+  "publication": "No publication, push, deployment, or license change."
+}

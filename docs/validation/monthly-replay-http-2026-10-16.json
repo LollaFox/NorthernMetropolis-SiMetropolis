@@ -1,0 +1,32 @@
+{
+  "version": "H3-monthly-replay-2026-10-16",
+  "status": "passed",
+  "api": [
+    "GET /api/state",
+    "POST /api/seek {month: timeline[i].month}",
+    "POST /api/control {playing,speed}"
+  ],
+  "months": 21,
+  "defaultDate": "2025-01-01",
+  "visited": [
+    "2025-01-01",
+    "2025-02-01",
+    "2025-01-01",
+    "2025-12-01",
+    "2026-01-01",
+    "2026-09-01"
+  ],
+  "autoplayNextDate": "2025-02-01",
+  "canonicalFilesUnchanged": true,
+  "servedResourcesMatched": [
+    "index.html",
+    "backend-workspace.js",
+    "city-transition.js",
+    "city.js",
+    "analysis-compact.js",
+    "app.js",
+    "analysis-compact.css"
+  ],
+  "liveModelCalls": false,
+  "browserVisualAcceptance": false
+}

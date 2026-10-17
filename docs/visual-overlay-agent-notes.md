@@ -1,0 +1,23 @@
+# Clearer capacity overlays
+
+The existing schematic study map now distinguishes housing from school-place capacity by geometry, a visible category icon, and English text. Housing capacity uses taller gold blocks with a dark pitched-roof symbol and window facade; school-place capacity uses wider, lower gold blocks with a flat roof, windows and a school category marker. Each remains an analytical capacity symbol, not an actual facility, building count or service catchment. The underlying city, world data, camera and capacity model are untouched.
+
+One full housing symbol represents **250 commissioned usable housing units**, up to 80 symbols. One full school symbol represents **100 commissioned places**, up to 50 symbols. The final symbol's `scale.y` remains its exact capacity fraction; the same model uses the same geometry height across all dates. No monthly normalization, extra capacity or modelled migration is introduced. Parent glyph meshes retain `userData.kind = capacity-glyph`, `capacity`, `fraction` and add `icon` and `baseHeight`.
+
+A muted analytical tray, dashed outline and dark corner marks keep the symbols legible over the existing white city. A larger category marker uses a hand-drawn home or school icon, with `PLANNED · 0 COMMISSIONED` during setup or scheduled delivery. Unapplied and completed zero-addition cases use `NOT APPLIED` or `NO ADDITIONS`, respectively. Zero-commissioned views use no gold accent in their meshes or canvas labels. Gold bodies and active-marker accents are reserved for positive commissioned capacity.
+
+The enlarged five-line annotation gives the exact commissioned total and date, fixed symbol scale, hypothetical provenance and schematic placement. New category-marker metadata records `icon`, `state`, `commissioned` and `schematic`. Existing canvas datasets and public `TopicOverlay` methods remain compatible. The group keeps its `policyOverlay` flag, protecting all child materials from the white-model preset.
+
+Geometry, material and texture resources are shared within an overlay snapshot and registered in the existing owned-resource sets. Replacing the snapshot or disposing the overlay releases those resources once, including facades, icon canvases, roofs, edge geometry and tray objects. These changes do not add a rendering loop, image download, migration mesh, traffic-construction mesh or external dependency.
+
+Verification uses real Three.js scene objects and a stub 2D canvas without a GPU. Tests cover both geometric profiles, exact quantities, partial symbols, 80/50 maximums, explicit zero-delivery icon states and absence of gold, fixed scales across months, resource ownership and disposal, world/camera preservation, and white-mode refresh for body, facade and category-marker materials. Browser visual acceptance has not been performed because the existing local-browser access restriction must be respected; no visual screenshot result is claimed.
+
+The affected regression run passed **33 tests**: 13 topic-overlay, 3 white-model, and 17 topic UI business-flow tests. The UI business-flow test file was read and executed without changes in this visual-overlay task.
+
+## Passenger-flow direction consistency
+
+The all-passenger overlay now uses each route's independently calculated `inboundBaseline`, `outboundBaseline`, `inboundExtra` and `outboundExtra` quantities. Previously it reused the baseline direction share for additional trips even though additional demand has a different mix of trip-purpose cohorts. Cohort-filtered visuals continue to use the selected group's baseline/extra totals, its own direction share and each route's fixed district share. The aggregate August test scenario therefore renders 10,100 inbound and 9,900 outbound baseline trips/day, plus 682.733333 inbound and 656.6 outbound additional trips/day. These remain hypothetical passenger trips, not unique residents or migration counts.
+
+The correction preserves route geometry, cyan/gold meanings, opacity modes, radius formula, the fixed arrow scale of one marker per 500 trips (with the existing bounds), and animation. The flow group also explicitly declares `policyOverlay` for white-model exclusion. `test_port_flow_visuals.mjs` executes real updates with an `addPath` recorder and independently checks aggregate and route-specific directions, all trip-purpose filters, baseline/delta modes, zero effects, capacity settlement and official-date exposure. It does not require a browser or GPU.
+
+The directional-consistency regression run passed **23 tests**: 11 new flow-visual tests, 9 existing port-study tests and 3 white-model tests.

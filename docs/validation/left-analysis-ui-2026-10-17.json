@@ -1,0 +1,53 @@
+{
+  "version": "H3-round-2-left-ui-2026-10-17",
+  "status": "passed",
+  "url": "http://127.0.0.1:8893/",
+  "htmlUniqueIds": 270,
+  "htmlNesting": "passed",
+  "rootJavaScriptModulesChecked": 44,
+  "relativeImportsAndStyleReferences": "passed",
+  "servedResourcesMatched": [
+    "index.html",
+    "app.js",
+    "analysis-dashboard.js",
+    "analysis-dashboard-model.js",
+    "dashboard-chart.js",
+    "evidence-gate.js",
+    "analysis-dashboard.css",
+    "analysis-compact.js",
+    "analysis-compact.css",
+    "backend-results.js",
+    "backend-workspace.js",
+    "workspace-navigation.js",
+    "topic-ui.js",
+    "policy-charts.js",
+    "analysis-capability.js",
+    "analysis-capability.css",
+    "analysis-scope.js",
+    "city.js",
+    "port-study.js",
+    "plan-analysis.js",
+    "plan-analysis-model.js",
+    "plan-map.js",
+    "change-symbols.js",
+    "plan-analysis.css"
+  ],
+  "historyIndexBytes": 355,
+  "backendRecords": 1,
+  "canonicalStoreUnchanged": true,
+  "javascriptTestsPassed": 513,
+  "backendRegression": "unchanged this update; previous 78 passed",
+  "browserVisualAcceptance": false,
+  "liveModelCalls": false,
+  "notes": [
+    "HTTP resource checks and DOM tests are not screenshot or GPU acceptance.",
+    "Read-only checks do not invoke a provider."
+  ],
+  "codeComparisonBase": "H3-round-2-map-analysis-2026-10-17 source ZIP",
+  "changedWebOrBackendFiles": [
+    "sandbox/web/index.html",
+    "sandbox/web/plan-analysis.css",
+    "sandbox/web/plan-analysis.js"
+  ],
+  "policyCalculationsAndMapAdaptersUnchanged": true
+}

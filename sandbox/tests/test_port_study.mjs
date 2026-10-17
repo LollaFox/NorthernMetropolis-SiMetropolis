@@ -1,0 +1,13 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {runStudy,DEFAULTS} from '../web/port-model.js';
+const near=(a,b)=>assert.ok(Math.abs(a-b)<1e-7,`${a} != ${b}`);
+test('three calendar months and deterministic independent runs',()=>{const p={...DEFAULTS};const r=runStudy(p);assert.deepEqual(r,runStudy(p));assert.deepEqual(p,DEFAULTS);assert.deepEqual(r.months.map(m=>m.days),[31,30,31]);});
+test('group and district flows conserve total demand and direction counts',()=>{for(const m of runStudy().months){near(m.groups.reduce((s,g)=>s+g.policy,0),m.policy);near(m.routes.reduce((s,r)=>s+r.policy,0),m.policy);for(const r of m.routes){near(r.inboundBaseline+r.outboundBaseline,r.baseline);near(r.inboundExtra+r.outboundExtra,r.extra);}}});
+test('zero reach or zero clearance gain yields zero incremental trips',()=>{for(const inputs of [{reach:0},{clearance:30}])for(const m of runStudy(inputs).months)assert.equal(m.extra,0);});
+test('official date has no Aug/Sep effect and partial October exposure',()=>{const m=runStudy({timing:'announced'}).months;assert.equal(m[0].extra,0);assert.equal(m[1].extra,0);near(m[2].openingFraction,(20-6.5/24)/31);assert.ok(m[2].extra>0&&m[2].extra<runStudy().months[0].extra);});
+test('capacity constrains extra trips and retains unserved demand',()=>{for(const m of runStudy({capacity:20000}).months){assert.equal(m.policy,20000);assert.equal(m.extra,0);assert.ok(m.unserved>0);}const m=runStudy({capacity:20001}).months[2];near(m.extra,1);near(m.groups.reduce((s,g)=>s+g.extra,0),1);});
+test('month totals use each calendar month length',()=>{const r=runStudy();near(r.totalAdditionalTrips,r.months.reduce((s,m)=>s+m.extra*m.days,0));assert.ok(r.months[0].extra<r.months[1].extra&&r.months[1].extra<r.months[2].extra);});
+test('invalid scenarios fail without emitting misleading results',()=>{for(const p of [{reach:101},{baseline:-1},{capacity:100},{year:2025,timing:'announced'},{year:2026.5},{clearance:NaN},{timing:'invalid'}])assert.throws(()=>runStudy(p));});
+test('trace identifies stand-ins and all input provenance remains exportable',()=>{const r=runStudy();assert.equal(r.months[0].trace.length,5);assert.match(r.generatedBy,/rule-based/);assert.equal(r.sources.length,3);assert.match(r.assumptions.baseline,/no observed/);});
+test('editing an exported run cannot contaminate a subsequent run',()=>{const a=runStudy();a.months[0].groups[0].keep.push('injected');a.sources[0].title='changed';const b=runStudy();assert.ok(!b.months[0].groups[0].keep.includes('injected'));assert.notEqual(b.sources[0].title,'changed');});
