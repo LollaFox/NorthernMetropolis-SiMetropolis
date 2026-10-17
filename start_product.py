@@ -8,8 +8,23 @@ from pathlib import Path
 import socket
 import subprocess
 import sys
+import time
+import webbrowser
 
 ROOT = Path(__file__).resolve().parent
+
+
+def server_is_ready(port, proc, seconds=30):
+    deadline = time.monotonic() + seconds
+    while time.monotonic() < deadline:
+        if proc.poll() is not None:
+            return False
+        with socket.socket() as probe:
+            probe.settimeout(0.2)
+            if probe.connect_ex(('127.0.0.1', port)) == 0:
+                return True
+        time.sleep(0.1)
+    return False
 
 
 def main():
@@ -28,9 +43,17 @@ def main():
     if args.scenario:
         scenario=args.scenario if args.scenario.is_absolute() else ROOT/args.scenario
         cmd+=['--scenario',str(scenario.resolve())]
-    print(f'Northern Metropolis product: http://127.0.0.1:{args.port}/',flush=True)
+    url=f'http://127.0.0.1:{args.port}/'
+    print(f'Northern Metropolis product: {url}',flush=True)
     print('Enter a DeepSeek API key in Configure. No key file is read.',flush=True)
-    return subprocess.call(cmd,cwd=ROOT)
+    proc=subprocess.Popen(cmd,cwd=ROOT)
+    try:
+        if server_is_ready(args.port,proc):
+            webbrowser.open(url)
+        return proc.wait()
+    except KeyboardInterrupt:
+        proc.terminate()
+        return proc.wait()
 
 
 if __name__=='__main__':raise SystemExit(main())

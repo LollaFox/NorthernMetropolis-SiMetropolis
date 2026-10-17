@@ -599,6 +599,7 @@ async function startCity() {
     if (state) city.update(state.world, state.playing, true);
     await portStudy.open();await analysis.ready;
     await workspaceNavigation.openSandbox();workspaceNavigation.refreshHistory();
+    if(analysis.requiresDeepseekKey&&!$('analysis-config-dialog').open)analysis.configure();
   } catch (error) {
     $('render-error').textContent = `The 3D city needs WebGL graphics support. ${error.message}. You can still explore the city history and use policy controls.`;
     $('render-error').classList.remove('hidden');
