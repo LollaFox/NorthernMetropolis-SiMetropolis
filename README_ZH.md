@@ -4,10 +4,12 @@
 
 ## 启动
 
-Windows 双击 `start-product.cmd`，或执行：
+Windows 双击 `start-product.cmd`。该启动器会查找 Python 3.9 或更新版本，无需加入 PATH。如果没有安装，第一次启动会把一份专用 Python 下载到 `runtime/`，不修改系统设置。
 
-```powershell
-python -B start_product.py
+macOS 不支持双击启动。在终端中进入本目录后执行：
+
+```sh
+python3 -B start_product.py
 ```
 
 打开 http://127.0.0.1:8898/ 。默认离线，不读取密钥、不调用API。关闭终端停止服务；不要同时启动两个使用同一数据目录的进程。
@@ -15,7 +17,13 @@ python -B start_product.py
 真实政府大模型：
 
 ```powershell
-python -B start_product.py --live --model deepseek-flash --api-key-file "你的DeepSeek密钥文件完整路径"
+start-product.cmd --live --model deepseek-flash --api-key-file "你的DeepSeek密钥文件完整路径"
+```
+
+macOS 在本目录执行：
+
+```sh
+python3 -B start_product.py --live --model deepseek-flash --api-key-file "你的DeepSeek密钥文件完整路径"
 ```
 
 也可设置 `DEEPSEEK_API_KEY` 环境变量后省略 `--api-key-file`。密钥只在后端使用，不输入网页。既有密钥文件可以直接引用，无需复制到本目录。在线服务启动后，仅在网页选择实时政府、审查确认时发起调用；浏览、历史回放和导出不发起调用。

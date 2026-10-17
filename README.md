@@ -4,10 +4,12 @@ This directory is a standalone runnable version. It uses the new frontend from `
 
 ## Start
 
-On Windows, double-click `start-product.cmd`, or run:
+On Windows, double-click `start-product.cmd`. That launcher finds Python 3.9 or newer without adding it to PATH. If none is installed, the first launch downloads a private copy into `runtime/` and does not change system settings.
 
-```powershell
-python -B start_product.py
+macOS does not support double-click. In Terminal, from this folder, run:
+
+```sh
+python3 -B start_product.py
 ```
 
 Open http://127.0.0.1:8898/ . The default is offline: it does not read a key and does not call an API. Close the terminal to stop the service. Do not start two processes that use the same data directory at the same time.
@@ -15,7 +17,13 @@ Open http://127.0.0.1:8898/ . The default is offline: it does not read a key and
 To use the real government model:
 
 ```powershell
-python -B start_product.py --live --model deepseek-flash --api-key-file "full path to your DeepSeek key file"
+start-product.cmd --live --model deepseek-flash --api-key-file "full path to your DeepSeek key file"
+```
+
+On macOS, from this folder:
+
+```sh
+python3 -B start_product.py --live --model deepseek-flash --api-key-file "full path to your DeepSeek key file"
 ```
 
 You can also set the `DEEPSEEK_API_KEY` environment variable and omit `--api-key-file`. The key is used only on the backend and is never entered in the web page. An existing key file can be referenced directly; there is no need to copy it into this directory. After the online service starts, a call is made only when you select the live government option on the page and confirm the review. Browsing, history replay, and export do not make calls.
