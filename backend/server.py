@@ -111,6 +111,7 @@ class SavedCity:
         self.last_tick = time.monotonic()
         self.follow_latest = True
         self._world_cache = {}
+        self.startup_runs = None
 
     def _world(self, simulation_id, day):
         key = (simulation_id, day)
@@ -128,6 +129,19 @@ class SavedCity:
         runs = self._runs()
         if not runs:
             return None, []
+        if getattr(self.service, "product_restrictions", False):
+            if self.startup_runs is None:
+                self.startup_runs = {ident for ident, _ in runs}
+                self.follow_latest = False
+                self.active = None
+            fresh = [ident for ident, _ in runs if ident not in self.startup_runs]
+            if fresh and (self.active is None or self.follow_latest):
+                newest = fresh[-1]
+                if newest != self.active:
+                    self.active, self.viewing, self.playing = newest, 0, False
+                self.follow_latest = True
+            run = next((run for ident, run in runs if ident == self.active), None)
+            return run, runs
         if self.active is None or self.follow_latest:
             newest = runs[-1][0]
             if newest != self.active:
@@ -313,6 +327,7 @@ class Handler(StaticHandler):
                          "governmentLiveAvailable": bool(GOVERNMENT_LIVE_DECISIONS_ENABLED and getattr(service.provider_factory, "configuration", {}).get("live")),
                          "governmentDecisionsEnabled": GOVERNMENT_LIVE_DECISIONS_ENABLED,
                          "pdfUploadEnabled": PDF_UPLOAD_ENABLED,
+                         "launchId": getattr(service, "launch_id", None),
                          "governmentModel": getattr(service.provider_factory, "configuration", {}).get("model")}
         if self.command == "POST" and path == "/initializations":
             from .service import PDF_UPLOAD_ENABLED

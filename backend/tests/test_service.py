@@ -286,6 +286,24 @@ class ServiceTests(unittest.TestCase):
             with self.assertRaises(ServiceError):
                 city.command(action, {})
 
+    def test_product_launch_starts_empty_and_keeps_saved_history(self):
+        _, body = prepare(self.service, prefix="history")
+        older = finish(self.service, self.service.simulate(body, "history_run"))
+        self.service.product_restrictions = True
+        city = SavedCity(self.service)
+        initial = city.state()
+        self.assertEqual(initial["id"], "empty")
+        self.assertEqual([item["id"] for item in initial["branches"]], [older["simulationId"]])
+        self.assertEqual(initial["world"]["buildings"], [])
+        self.service.product_restrictions = False
+        _, fresh_body = prepare(self.service, prefix="fresh")
+        fresh = finish(self.service, self.service.simulate(fresh_body, "fresh_run"))
+        self.service.product_restrictions = True
+        self.assertEqual(city.state()["id"], fresh["simulationId"])
+        opened = city.command("switch", {"id": older["simulationId"]})
+        self.assertEqual(opened["id"], older["simulationId"])
+        self.assertEqual(opened["world"]["sourceDate"], "2024-05-31")
+
     def test_attempt_progress_is_durable_before_month_checkpoint(self):
         gate, release = threading.Event(), threading.Event()
         class ProgressFixture(OfflineProvider):

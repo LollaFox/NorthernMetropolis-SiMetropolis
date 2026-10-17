@@ -12,7 +12,7 @@ macOS does not support double-click. In Terminal, from this folder, run:
 python3 -B start_product.py
 ```
 
-The browser opens http://127.0.0.1:8898/ when the server is ready, and Configure opens with the page. Close the terminal to stop the service. Do not start two processes that use the same data directory at the same time.
+The browser opens http://127.0.0.1:8898/ when the server is ready, and Configure opens with the page. A new server start shows an empty city until you save Configure and run. Saved cities stay available in Analysis history. Close the terminal to stop the service. Do not start two processes that use the same data directory at the same time.
 
 This sandbox does not run offline. In Configure, choose a government script and enter a DeepSeek API key. The key is sent only to this local server for building narratives and is not saved in the browser. Government decision AI and PDF upload are disabled.
 

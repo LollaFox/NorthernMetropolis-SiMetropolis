@@ -175,6 +175,7 @@ class NarrativeService:
         self.stop = threading.Event()
         self.threads = {}
         self._run_keys = {}
+        self.launch_id = uuid.uuid4().hex
         if self.catalog_path.exists():
             self.catalog = json.loads(self.catalog_path.read_text(encoding="utf-8"))
             if self.catalog.get("schemaVersion") != 1:

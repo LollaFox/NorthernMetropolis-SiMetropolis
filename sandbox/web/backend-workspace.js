@@ -14,9 +14,17 @@ export class BackendWorkspace{
   $('backend-month-play').addEventListener('click',()=>this.togglePlayback().catch(e=>owner.status(e.message,true)));
  }
  get active(){return this.owner.config?.transport==='local-narrative-scenario';}
+ forgetPreviousLaunch(){
+  const launch=this.owner.config?.launchId;if(!launch)return;
+  let seen;try{seen=localStorage.getItem('nm-product-launch');}catch{return;}
+  if(seen===launch)return;
+  try{localStorage.setItem('nm-product-launch',launch);localStorage.removeItem('nm-integrated-backend-session-v1');}catch{}
+  this.owner.savedSetup=null;this.owner.deepseekApiKey=null;this.owner.presetAcknowledged=false;
+ }
  configure(){
   if(!this.active)return;
   $('backend-replay').classList.remove('hidden');$('backend-object-details').classList.remove('hidden');
+  this.forgetPreviousLaunch();
   if(this.owner.savedSetup){this.owner.engine='backend';if($('analysis-engine'))$('analysis-engine').value='backend';this.owner.update();return;}
   this.owner.session=this.createSession();
   // Fresh users start with the policy-specific local models. An existing API
