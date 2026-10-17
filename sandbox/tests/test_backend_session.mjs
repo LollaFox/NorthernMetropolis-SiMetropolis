@@ -44,7 +44,7 @@ test('unrecoverable failed jobs are surfaced without automatically posting anoth
 });
 test('stopping waiting preserves the job and does not claim or request backend cancellation',async()=>{
  let s,stopped=false;const t=transport(path=>path==='/simulations'?{jobId:'job_wait',status:'queued'}:path==='/jobs/job_wait'?{jobId:'job_wait',status:'complete',result:structuredClone(run)}:undefined);
- s=await confirmed(t,{sleep:async()=>{if(!stopped){stopped=true;s.stopWaiting();}}});await assert.rejects(s.simulate(),/Backend work may still be running/);assert.equal(s.state,'running');assert.equal(s.pending.jobId,'job_wait');assert.equal(s.busy,false);await s.resume();assert.equal(s.state,'ready');assert.ok(t.calls.every(c=>!c.path.includes('cancel')));assert.equal(t.calls.filter(c=>c.path==='/simulations').length,1);
+ s=await confirmed(t,{sleep:async()=>{if(!stopped){stopped=true;s.stopWaiting();}}});await assert.rejects(s.simulate(),/Waiting stopped/);assert.equal(s.state,'running');assert.equal(s.pending.jobId,'job_wait');assert.equal(s.busy,false);await s.resume();assert.equal(s.state,'ready');assert.ok(t.calls.every(c=>!c.path.includes('cancel')));assert.equal(t.calls.filter(c=>c.path==='/simulations').length,1);
 });
 test('unknown simulation POST outcome is retryable after refresh with the original operation key',async()=>{
  const storage=memory(),keys=[];const t=transport((path,body,signal,key)=>{if(path==='/simulations'){keys.push(key);throw new Error('Connection lost after POST.');}}),s=await confirmed(t,{storage});await assert.rejects(s.simulate(),/Connection lost/);assert.equal(s.pending.jobId,null);assert.equal(s.state,'running');

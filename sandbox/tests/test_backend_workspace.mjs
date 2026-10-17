@@ -76,6 +76,12 @@ test('a restored confirmed session can finish without an in-memory pending tag d
  await CompactAnalysisUI.prototype.runApi.call(o);assert.deepEqual(o.resultTags,['housing-affordability']);assert.equal(w.date,dates[0]);assert.equal(o.backendReplay,true);
 }));
 
+test('top bar names the configured script and says A New Start before configuration',async()=>fixture(async({o,d})=>{
+ o.savedSetup=null;o.backendReplay=false;o.session=null;CompactAnalysisUI.prototype.renderActiveScript.call(o);assert.equal(d.getElementById('active-script').textContent,'A New Start');
+ o.savedSetup={constructionScenario:'function-zones'};CompactAnalysisUI.prototype.renderActiveScript.call(o);assert.equal(d.getElementById('active-script').textContent,'Function Zones');
+ o.backendReplay=true;o.backend.current={raw:{setup:{constructionScenario:'mixed-zones'}}};CompactAnalysisUI.prototype.renderActiveScript.call(o);assert.equal(d.getElementById('active-script').textContent,'Mixed Zones');
+}));
+
 test('fresh backend connection retains the policy-specific local mode and does not post work',async()=>fixture(async({w,o,d,requests})=>{
  assert.equal(requests.length,0);w.configure();assert.equal(o.engine,'rules');assert.equal(o.session.state,'draft');assert.equal(d.getElementById('analysis-start-date').value,'');assert.equal(d.getElementById('backend-local-demos').classList.contains('hidden'),false);assert.equal(requests.length,0);
 }));

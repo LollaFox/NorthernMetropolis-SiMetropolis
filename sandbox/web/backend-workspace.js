@@ -8,7 +8,7 @@ export class BackendWorkspace{
   $('backend-run-select').addEventListener('change',()=>this.openSaved($('backend-run-select').value).catch(e=>owner.status(e.message,true)));
   $('backend-local-demos').addEventListener('click',()=>{owner.session?.stopWaiting();owner.restoreRules();owner.engine='rules';owner.selectPolicy(owner.policyId||'huanggang-opening');owner.status('Local policy demo. Its assumptions do not change the backend construction script.');});
   $('backend-resume').addEventListener('click',()=>this.resume().catch(e=>owner.status(e.message,true)));
-  $('backend-stop-wait').addEventListener('click',()=>{owner.session?.stopWaiting();owner.status('Stopped waiting only. The backend may still be running; resume this task to check it.');});
+  $('backend-stop-wait').addEventListener('click',()=>{owner.session?.stopWaiting();owner.status('Stopped waiting.');});
   $('backend-month-prev').addEventListener('click',()=>this.stepMonth(-1));
   $('backend-month-next').addEventListener('click',()=>this.stepMonth(1));
   $('backend-month-play').addEventListener('click',()=>this.togglePlayback().catch(e=>owner.status(e.message,true)));
@@ -40,7 +40,7 @@ export class BackendWorkspace{
   let storage;try{storage=globalThis.localStorage;}catch{}
   return new V3Session(transport,{storage,storageKey:'nm-integrated-backend-session-v1',pollLimit:1800,
    onProgress:p=>{const progress=p.progress??{},done=p.completedMonths??progress.completedMonths,total=p.totalMonths??progress.totalMonths,active=progress.activeMonth;
-    const metrics=p.providerMetrics??{};const text=`Backend task: ${p.status}${Number.isFinite(done)?' · '+done+(Number.isFinite(total)?'/'+total:'')+' months saved':''}${active?' · '+active:''}${Number.isFinite(metrics.successfulCalls)?' · successful calls '+metrics.successfulCalls:''}${Number.isFinite(metrics.attemptCount)?' / attempts '+metrics.attemptCount:''}. Completion is distinct from call success.`;
+    const metrics=p.providerMetrics??{};const text=`Backend task: ${p.status}${Number.isFinite(done)?' · '+done+(Number.isFinite(total)?'/'+total:'')+' months saved':''}${active?' · '+active:''}${Number.isFinite(metrics.successfulCalls)?' · successful calls '+metrics.successfulCalls:''}${Number.isFinite(metrics.attemptCount)?' / attempts '+metrics.attemptCount:''}.`;
     $('backend-job-progress').textContent=text;this.owner.status(text);this.update();},
    onState:()=>this.update()});
  }

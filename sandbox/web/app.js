@@ -108,7 +108,7 @@ async function poll() {
     if (pollFailures >= 2) {
       $('connection-banner').textContent = `${error.message} Reconnecting automatically…`;
       $('connection-banner').classList.remove('hidden');
-      $('scenario-state').textContent = 'Connection interrupted';
+      if ($('scenario-state')) $('scenario-state').textContent = 'Connection interrupted';
       if (!state) $('loading-state').classList.add('hidden');
     }
   } finally { setTimeout(poll, 450); }
@@ -263,7 +263,7 @@ function renderAI(envelope) {
   if(isBackendReplay(envelope)){
     $('rules-mode').disabled=true;$('live-mode').disabled=true;$('live-mode').title='Provider execution belongs to confirmed backend jobs; see saved result metrics.';
     $('ai-status').textContent='Saved backend replay · synthetic; provider metrics are in result details';
-    $('scenario-state').textContent=portStudy?.active?(analysis?.sourceLabel??'Backend saved city'):'Backend saved replay';return;
+    if ($('scenario-state')) $('scenario-state').textContent=portStudy?.active?(analysis?.sourceLabel??'Backend saved city'):'Backend saved replay';return;
   }
   const { mode, ai = {} } = envelope;
   $('rules-mode').classList.toggle('active', mode === 'rules');
@@ -277,7 +277,7 @@ function renderAI(envelope) {
   const status = mode === 'live' ? `Live AI · ${aiLabels[ai.status] || ai.status || 'ready'} · ${count}` : 'Rules engine · synthetic scenario';
   $('ai-status').textContent = status + (Number(ai.errors) > 0 ? ` · ${ai.errors} errors` : '') + (envelope.storageError ? ' · autosave issue' : '');
   $('ai-status').title = [ai.lastError, ai.status === 'budget_exhausted' ? 'The approved AI request allowance is used. Select Rules for continuing autonomous local decisions.' : '', envelope.storageError, 'Synthetic scenario · model-based projection, not a calibrated forecast.'].filter(Boolean).join(' · ');
-  $('scenario-state').textContent = portStudy?.active ? (analysis?.sourceLabel??'Policy sandbox · rules') : mode === 'live' ? 'Live AI decisions' : 'Rules simulation';
+  if ($('scenario-state')) $('scenario-state').textContent = portStudy?.active ? (analysis?.sourceLabel??'Policy sandbox · rules') : mode === 'live' ? 'Live AI decisions' : 'Rules simulation';
   $('ai-status').classList.toggle('has-errors', Number(ai.errors) > 0 || Boolean(envelope.storageError));
 }
 function applyState(envelope, snap = false) {

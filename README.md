@@ -24,7 +24,7 @@ No new simulation can run offline without a key. In Configure, choose a governme
 4. Enter a DeepSeek API key in the page. A run cannot start without one. The launcher does not read a key file.
 5. Save settings, then Start analysis. Review the assumptions and confirm the run.
 6. At the bottom, view population, jobs, and construction progress month by month. Each script asks DeepSeek for a narrative on each completed building. Government start-date decisions stay on the fixed schedule.
-7. File > Load City opens saved results without starting a new simulation. Export study downloads the saved run. After a refresh, enter the key again before resuming an unfinished task. Stop waiting does not cancel the backend task.
+7. File > Load City opens saved results without starting a new simulation. Export study downloads the saved run. After a refresh, enter the key again before resuming an unfinished task.
 
 The DeepSeek key is used for per-building narratives. It is not used to decide when the government starts projects. That government-decision mode is disabled.
 

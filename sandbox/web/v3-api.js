@@ -14,7 +14,7 @@ export class HttpTransport {
       const data=await response.json();
       if(!response.ok) {const error=new Error(typeof data.error==='string'?data.error:`Backend request failed (${response.status}).`);error.httpStatus=response.status;error.recoverable=data.recoverable===true;throw error;}
       return data;
-    } catch(e) {if(controller.signal.aborted) throw new Error('Request stopped or timed out. Its server outcome is unknown; retry uses the same operation key.'); throw e;}
+    } catch(e) {if(controller.signal.aborted) throw new Error('Request stopped or timed out.'); throw e;}
     finally {clearTimeout(timer); signal?.removeEventListener('abort',abort);}
   }
 }
@@ -24,9 +24,9 @@ const SESSION_SCHEMA='nm-v3-session-v1';
 const STATES=['draft','initializing','review','confirming','confirmed','running','ready'];
 const OPERATIONS=['initialize','confirm','simulate'];
 const validId=value=>typeof value==='string'&&/^[A-Za-z0-9_-]{1,100}$/.test(value);
-const assertLive=signal=>{if(signal?.aborted)throw new Error('Waiting stopped. Backend work may still be running; resume with the same operation key.');};
+const assertLive=signal=>{if(signal?.aborted)throw new Error('Waiting stopped.');};
 const wait=(ms,signal)=>new Promise((resolve,reject)=>{
-  const stop=()=>{clearTimeout(timer);reject(new Error('Stopped waiting. Backend work may still be running.'));};
+  const stop=()=>{clearTimeout(timer);reject(new Error('Stopped waiting.'));};
   const timer=setTimeout(()=>{signal?.removeEventListener('abort',stop);resolve();},ms);
   if(signal?.aborted) stop(); else signal?.addEventListener('abort',stop,{once:true});
 });
@@ -92,7 +92,7 @@ export class V3Session {
     for(let attempt=0;;attempt++){
       assertLive(signal);this.reportJob(data);
       if(data.status!=='queued'&&data.status!=='running')break;
-      if(attempt>=this.pollLimit)throw new Error('Stopped waiting at the polling limit. Backend work may still be running; resume this saved job.');
+      if(attempt>=this.pollLimit)throw new Error('Stopped waiting at the polling limit.');
       await this.sleep(this.pollInterval,signal);assertLive(signal);data=await this.transport.request(`/jobs/${id(data.jobId)}`,undefined,signal);
     }
     if(data.status==='failed'){const error=new Error(typeof data.error==='string'?data.error:'Backend job failed.');error.recoverable=data.recoverable===true;error.jobId=data.jobId??this.pending?.jobId;throw error;}

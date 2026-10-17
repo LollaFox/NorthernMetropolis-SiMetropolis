@@ -147,7 +147,14 @@ export class CompactAnalysisUI {
    this.status('Script and API key saved. Start analysis to run.');this.onOpen();this.update();
   }catch(e){this.configNote(e.message);}
  }
+ renderActiveScript(){
+  const el=$('active-script');if(!el)return;
+  const labels={'default-city':'Default City','function-zones':'Function Zones','mixed-zones':'Mixed Zones'};
+  const id=this.backendReplay?this.backend?.current?.raw?.setup?.constructionScenario:(this.savedSetup?.constructionScenario||this.session?.setup?.constructionScenario);
+  el.textContent=labels[id]||(this.backendReplay?'Saved city':'A New Start');
+ }
  update(){
+  this.renderActiveScript();
   $('analysis-start').disabled=this.busy||!this.selected.length||!this.policyId;$('analysis-settings').disabled=this.busy||!this.policyId;
   for(const checkbox of $('analysis-tag-list').querySelectorAll('input'))checkbox.disabled=this.busy||!matchingTags(this.areaId).includes(checkbox.value);
   $('analysis-area').disabled=this.busy;$('analysis-policy').disabled=this.busy;

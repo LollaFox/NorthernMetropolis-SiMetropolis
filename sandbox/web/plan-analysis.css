@@ -41,7 +41,12 @@ body.clear-view #plan-analysis-tools,body.clear-view #plan-analysis-panel,body.c
 .top-actions .nav-menu-button{position:static!important;inset:auto!important;z-index:auto!important;width:auto;height:auto;margin:0;padding:6px 10px;border:0;border-radius:6px;background:transparent;box-shadow:none;color:#d1dfdc}
 .top-actions .nav-menu-button:hover,.top-actions .nav-menu-button[aria-expanded="true"]{background:rgba(186,214,206,.18);color:#f8fbf9}
 .top-actions .nav-menu-button[aria-current="page"]{color:#ffe1a2;box-shadow:inset 0 -1px 0 #d5be79}
-.topbar-leading{display:flex;align-items:center;gap:22px;min-width:0}
+.topbar{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;column-gap:18px;padding-top:12px;padding-bottom:12px}
+.topbar-script{margin:0;justify-self:center;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:20px;font-weight:500;letter-spacing:.2px;color:#f4f7f1}
+.product-mark{justify-self:end;display:flex;flex-direction:column;align-items:flex-end;gap:1px;min-width:0;max-width:100%;text-align:right;line-height:1.15}
+.product-mark strong{font-size:26px;font-weight:650;letter-spacing:.3px;color:#f7fbf8}
+.product-mark span{font-size:10px;font-weight:400;letter-spacing:.15px;color:#c5d6ce}
+.topbar-leading{display:flex;align-items:center;gap:22px;min-width:0;justify-self:start}
 .topbar-leading .top-actions{gap:6px}
 .topbar-leading .nav-menu-button{font-size:15px;padding:8px 13px;letter-spacing:.15px}
 .nav-menu>.nav-dropdown{position:absolute;top:calc(100% + 6px);left:0;right:auto;z-index:5;width:max-content;min-width:196px;max-width:min(320px,calc(100vw - 16px));max-height:none;overflow:visible;padding:4px;border-radius:6px;background:rgba(16,40,48,.78);border:1px solid rgba(204,232,225,.22);box-shadow:0 12px 32px rgba(6,20,28,.36);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
@@ -49,6 +54,7 @@ body.clear-view #plan-analysis-tools,body.clear-view #plan-analysis-panel,body.c
 .nav-dropdown-empty{min-width:168px;min-height:36px}
 .nav-dropdown-item{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:7px 12px;border-radius:4px;font-size:13px;line-height:1.35;color:#e4eee8;white-space:nowrap}
 .nav-dropdown-item:hover,.nav-cascade:hover>.nav-cascade-item,.nav-cascade:focus-within>.nav-cascade-item{background:rgba(186,214,206,.16);color:#f7fbf8}
+.nav-dropdown-item:disabled,.nav-dropdown-item:disabled:hover{color:#8b9d96;background:transparent;cursor:not-allowed;opacity:1}
 .nav-dropdown-item .nav-count{margin-left:auto}
 .nav-dropdown-item.is-selected::after{content:"✓";margin-left:auto;color:#e2cc91;font-size:12px}
 .nav-cascade{position:relative}
@@ -60,4 +66,4 @@ body.clear-view #plan-analysis-tools,body.clear-view #plan-analysis-panel,body.c
 .nav-cascade:hover>.nav-flyout,.nav-cascade:focus-within>.nav-flyout{display:block}
 body.nav-menu-open .topbar{z-index:40}
 body.clear-view .topbar-leading .nav-menu{display:none!important}
-@media(max-width:760px){.topbar-leading{gap:12px}.topbar-leading .nav-menu-button{padding:6px 10px;font-size:13px}.nav-dropdown-item{font-size:12px;padding:6px 10px}.nav-flyout{min-width:188px}}
+@media(max-width:760px){.topbar-leading{gap:12px}.topbar-leading .nav-menu-button{padding:6px 10px;font-size:13px}.nav-dropdown-item{font-size:12px;padding:6px 10px}.nav-flyout{min-width:188px}.topbar-script{font-size:15px}.product-mark strong{font-size:18px}.product-mark span{font-size:8px}}

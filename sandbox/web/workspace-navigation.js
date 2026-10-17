@@ -36,6 +36,7 @@ export class WorkspaceNavigation{
  update(){
   const o=this.owner;$('analysis-results-toggle').disabled=o.busy||!this.hasResults;$('analysis-results-toggle').setAttribute('aria-expanded',String(!$('port-panel').classList.contains('hidden')));
   $('backend-replay').disabled=Boolean(o.busy);$('analysis-history-refresh').disabled=this.loading;
+  const save=$('file-save-city');if(save)save.disabled=Boolean(o.busy)||Boolean($('port-export')?.disabled);
   for(const button of $('analysis-history-list').querySelectorAll('button'))button.disabled=Boolean(o.busy);
   o.dashboard?.update();
  }
@@ -47,7 +48,7 @@ export class WorkspaceNavigation{
  chooseSelect(id,value){const select=$(id);if(!select)return;select.value=value;select.dispatchEvent?.(new Event('change'));}
  bindHoverMenus(){this.menuCloseTimer=0;for(const host of document.querySelectorAll('.nav-menu')){const kind=host.getAttribute('data-menu');if(!kind||!POPUPS[kind])continue;const button=host.querySelector('.nav-menu-button');host.addEventListener('pointerenter',()=>{if(button?.disabled)return;clearTimeout(this.menuCloseTimer);this.openMenu(kind);});host.addEventListener('pointerleave',()=>{clearTimeout(this.menuCloseTimer);this.menuCloseTimer=setTimeout(()=>{if(this.popup===kind)this.closeMenus();},140);});button?.addEventListener('click',event=>{if(button.disabled)return;if(event.detail===0)this.toggle(kind);else this.openMenu(kind);});}for(const row of document.querySelectorAll('.nav-cascade')){const trigger=row.querySelector('.nav-cascade-item');const set=open=>trigger?.setAttribute('aria-expanded',String(open));row.addEventListener('pointerenter',()=>set(true));row.addEventListener('pointerleave',()=>set(false));row.addEventListener('focusin',()=>set(true));row.addEventListener('focusout',event=>{if(!row.contains(event.relatedTarget))set(false);});}}
  async newCity(){if(this.owner.busy)return;try{await this.openSandbox();}catch(e){this.owner.status(e.message,true);}}
- saveCity(){if(this.owner.busy)return;this.closeMenus();const button=$('port-export');if(!button||button.disabled){this.owner.status('Save City is available after an analysis has results.',true);return;}button.click();}
+ saveCity(){if(this.owner.busy||$('file-save-city')?.disabled)return;this.closeMenus();const button=$('port-export');if(!button||button.disabled)return;button.click();}
  closeHistory(){$('analysis-history-dialog').close();$('backend-replay').setAttribute('aria-expanded','false');$('backend-replay').focus?.();}
  async openHistory(){
   if(this.owner.busy)return;this.owner.plan?.close();this.closeMenus();this.host.clearView?.();this.host.closeDrawers?.();$('analysis-history-search').value='';$('analysis-history-source').value='all';
