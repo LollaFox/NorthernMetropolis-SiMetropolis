@@ -19,6 +19,9 @@ from .layout_scenarios import layout_scenario
 from .product_scripts import SCRIPTS, load_product_script
 from .storage import StorageError, atomic_write_json, monthly_state_path, read_json, write_monthly_state
 
+# Product runs start in January 2025 and stop at the December of the selected year.
+PRODUCT_YEAR_ENDS = {"2025-12-01", "2026-12-01", "2027-12-01", "2028-12-01", "2029-12-01"}
+
 
 STEPS = {"month": 1, "quarter": 3, "year": 12}
 IDENTIFIER = re.compile(r"[A-Za-z0-9_-]{1,100}\Z")
@@ -235,6 +238,11 @@ class NarrativeService:
             from .ai import GOVERNMENT_LIVE_DECISIONS_ENABLED
             if not GOVERNMENT_LIVE_DECISIONS_ENABLED and setup.get("governmentMode", "fixed") != "fixed":
                 raise ServiceError("Government decision AI is currently disabled.")
+            if setup.get("constructionScenario") not in SCRIPTS or setup.get("fiscalEnabled"):
+                raise ServiceError("The previous government scripts are disabled.")
+            if (setup.get("step") != "month" or setup.get("start") != "2025-01-01"
+                    or setup.get("end") not in PRODUCT_YEAR_ENDS):
+                raise ServiceError("Choose 1 to 5 years. Older date selections are not used.")
         selected = setup.get("constructionScenario", "configured")
         if selected in SCRIPTS:
             try:

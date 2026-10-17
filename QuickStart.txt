@@ -1,3 +1,3 @@
 Windows: double-click start-product.cmd, then open http://127.0.0.1:8898/ .
 macOS does not support double-click. Start with the command in README.md.
-LIVE government AI startup method and complete usage steps are in README.md.
+In Configure, choose a script, choose 1 to 5 years, and enter a DeepSeek API key. Full steps are in README.md.

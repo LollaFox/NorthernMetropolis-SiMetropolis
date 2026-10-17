@@ -135,8 +135,8 @@ export class CompactAnalysisUI {
    if($('analysis-preset-ack'))$('analysis-preset-ack').checked=true;
    const years=Number($('simulation-years')?.value);
    if(![1,2,3,4,5].includes(years))throw new Error('Choose 1 to 5 years.');
-   $('analysis-start-date').value='2025-01-01';$('analysis-end-date').value=(2024+years)+'-12-01';$('analysis-step').value='month';
-   const setup=validateSetup({...this.setup(),policyScope:{...scopeMetadata(this.selected,'backend'),policyId:this.policyId,areaId:this.areaId,model:this.currentPolicy.model,catalogVersion:CATALOG_VERSION}});
+   const setup=validateSetup({...this.setup(),constructionScenario:script,start:'2025-01-01',end:(2024+years)+'-12-01',step:'month',policyScope:{...scopeMetadata(this.selected,'backend'),policyId:this.policyId,areaId:this.areaId,model:this.currentPolicy.model,catalogVersion:CATALOG_VERSION}});
+   delete setup.fiscalEnabled;delete setup.governmentMode;delete setup.fiscalParameters;
    if(this.apiResults||this.apiMap||this.localTopic)this.restoreRules();
    this.savedSetup=setup;this.session?.reset();
    this.session=this.backend?.active?this.backend.createSession():new V3Session(new HttpTransport());
@@ -177,6 +177,7 @@ export class CompactAnalysisUI {
    if(this.engine==='rules'){this.runRules();return;}
    if(this.engine==='backend'&&!this.config.backendConfigured){this.configure();this.configNote('The team backend is not connected yet. No test result will be substituted.');return;}
    const setup=this.setup();
+   if(this.requiresDeepseekKey&&this.savedSetup){setup.constructionScenario=this.savedSetup.constructionScenario;setup.start=this.savedSetup.start;setup.end=this.savedSetup.end;setup.step=this.savedSetup.step;delete setup.fiscalEnabled;delete setup.fiscalParameters;delete setup.governmentMode;}
    if(!this.session)this.session=this.engine==='backend'&&this.backend?.active?this.backend.createSession():new V3Session(this.engine==='fixture'?new FixtureTransport():new HttpTransport());
    if(this.session.state!=='draft'&&JSON.stringify(this.session.setup?.policyScope)!==JSON.stringify(setup.policyScope))this.session.reset();
    if(this.session.state==='ready'){if(this.engine==='backend'&&this.backend?.active)await this.backend.openSaved(this.session.run.simulationId);else{this.showApiResults();this.status('Showing the completed analysis. Configure a new setup to run again.');}return;}

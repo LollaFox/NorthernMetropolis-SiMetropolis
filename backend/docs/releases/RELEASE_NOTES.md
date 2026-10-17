@@ -30,7 +30,7 @@ The compressed-context live test covers two months, not 21. Byte reduction is no
 
 ## Integration / 接入
 
-Read [English handoff](FRONTEND_HANDOFF_EN.md) / [中文交接](FRONTEND_HANDOFF_ZH.md), and [English history guide](CITY_HISTORY_EN.md) / [中文存档指南](CITY_HISTORY_ZH.md). The main [README](../../../README.md) explains key placement and startup.
+Read [English handoff](FRONTEND_HANDOFF_EN.md) / [中文交接](FRONTEND_HANDOFF_ZH.md), and [English history guide](CITY_HISTORY_EN.md) / [中文存档指南](CITY_HISTORY_ZH.md). The main [README](../../../README.md) explains startup. Enter the DeepSeek key in Configure.
 
 Remaining limits: schematic geography, synthetic coefficients, PDF digest only, no HTTP government editor or intervention/branch/reset operations. Frontend polling, labels and export integration need the changes listed in the handoff. This is an internal sandbox release, not a validated forecast.
 

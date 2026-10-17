@@ -20,10 +20,11 @@ python3 -B start_product.py
 
 1. 点击 Configure，或在第一次运行前点击 Configure analysis。两者打开同一设置。
 2. 选择政府脚本：Default City、Function Zones，或 Mixed Zones。
-3. 填写 DeepSeek API key。没有密钥不能开始运行。
-4. 保存设置，然后 Start analysis。查看假设并确认运行。
-5. 底部按月查看人口、岗位和建设进度。每个脚本都会为每栋已完成建筑向 DeepSeek 请求一段叙事。政府开工时间仍按固定计划。
-6. Analysis history 打开已保存结果。刷新后如需继续未完成任务，要重新填写密钥。Stop waiting 不会取消后端任务。
+3. 选择模拟年数，1 至 5 年。五年脚本中未选中的后续年份不会运行。
+4. 在页面中填写 DeepSeek API key。没有密钥不能开始运行。启动器不读取密钥文件。
+5. 保存设置，然后 Start analysis。查看假设并确认运行。
+6. 底部按月查看人口、岗位和建设进度。每个脚本都会为每栋已完成建筑向 DeepSeek 请求一段叙事。政府开工时间仍按固定计划。
+7. Analysis history 打开已保存结果。刷新后如需继续未完成任务，要重新填写密钥。Stop waiting 不会取消后端任务。
 
 DeepSeek 密钥用于逐栋建筑叙事，不用于决定政府何时开工。政府决策模式已停用。
 

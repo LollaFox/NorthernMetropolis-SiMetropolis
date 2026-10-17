@@ -1,3 +1,3 @@
 Windows：双击 start-product.cmd，打开 http://127.0.0.1:8898/ 。
 macOS 不支持双击启动。请用 README.md 里的命令启动。
-实时政府AI启动方法与完整使用步骤见 README.md。
+在 Configure 中选择脚本、选择 1 至 5 年，并填写 DeepSeek API key。完整步骤见 README.md。

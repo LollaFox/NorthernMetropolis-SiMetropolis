@@ -21,33 +21,15 @@ Run from this extracted folder; open <http://127.0.0.1:8878/>. Stop an existing 
 python3 -B -m backend.server --port 8878 --preset northern-metropolis
 ```
 
-This prepares a saved offline demonstration. To create a new run, choose **Configure → Team API**, upload a PDF, select dates, start analysis, review and confirm. PDF text is not interpreted; the configured government JSON determines construction. Use `2025-01-01` through `2026-09-01`, monthly, for the full 21-month regional script.
+This prepares a saved offline demonstration. For a new product run, open Configure, choose Default City, Function Zones, or Mixed Zones, choose 1 to 5 years, enter a DeepSeek API key, then review and confirm. PDF upload is disabled.
 
-启动时生成离线示例。新建模拟请选择 **Configure → Team API**，上传 PDF、设置日期、开始分析并确认审阅结果。后端不解读 PDF 正文；政府建设由 JSON 脚本决定。完整区域脚本为 21 个月，可选择上述起止日期及月步长。
+启动时生成离线示例。新建产品运行时，打开 Configure，选择 Default City、Function Zones 或 Mixed Zones，选择 1 至 5 年，填写 DeepSeek API key，然后审阅并确认。PDF 上传已停用。
 
-## Where to put DeepSeek API keys / DeepSeek API 密钥放在哪里
+## DeepSeek API key / DeepSeek API 密钥
 
-Create `backend/.data/credentials/`. Save one raw key per UTF-8 text file, without quotes or JSON:
+The current product does not read `api_key` or `backend/.data/credentials`. Enter the key in Configure. It stays in memory for that run and is not saved in the browser.
 
-创建该文件夹，每个 UTF-8 文本文件只放一条密钥，不加引号或 JSON 包装：
-
-| File / 文件 | Purpose / 用途 |
-| --- | --- |
-| `backend/.data/credentials/deepseek-1.key` | First key / 第一条密钥 |
-| `backend/.data/credentials/deepseek-2.key` | Optional second key for parallel requests / 可选第二条密钥，用于并行请求 |
-
-```sh
-python3 -B -m backend.server --port 8878 --preset northern-metropolis \
-  --data-dir backend/.data/live_regional_storage \
-  --provider deepseek --model deepseek-flash \
-  --api-key-file backend/.data/credentials/deepseek-1.key \
-  --api-key-file backend/.data/credentials/deepseek-2.key \
-  --timeout 180 --retries 2 --no-demo
-```
-
-With only one key, remove the second `--api-key-file` line. Both keys use the same Flash model and simulation; there is no total live-call cap. `--no-demo` skips startup simulation; a new live run starts through the confirmed Team API workflow. Keep one server per data directory. Keys stay in backend files, never frontend JavaScript. `backend/.data/` is ignored by Git, and this release contains no keys or saved runtime data.
-
-只有一条密钥时，删除第二个 `--api-key-file` 参数。两条密钥服务于同一个 Flash 模型和同一次模拟，不设总调用次数上限。`--no-demo` 跳过启动示例，确认 Team API 流程后才发起新模拟。每个数据目录只运行一个服务。密钥只放后端文件，不放前端 JavaScript；`backend/.data/` 不纳入 Git，发布包不包含密钥或实际运行存档。
+当前产品不读取 `api_key` 或 `backend/.data/credentials`。在 Configure 中填写密钥。密钥只留在该次运行的内存中，不保存在浏览器。
 
 ## Government examples and original handoff / 政府示例及原始交接
 

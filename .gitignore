@@ -7,5 +7,4 @@ sandbox/.data/
 .history/
 __pycache__/
 
-/api_key
 /runtime/

@@ -17,7 +17,7 @@ export class BackendWorkspace{
  configure(){
   if(!this.active)return;
   $('backend-replay').classList.remove('hidden');$('backend-object-details').classList.remove('hidden');
-  $('analysis-start-date').value='2025-01-01';$('analysis-end-date').value='2026-09-01';
+  if(this.owner.savedSetup){this.owner.engine='backend';if($('analysis-engine'))$('analysis-engine').value='backend';this.owner.update();return;}
   this.owner.session=this.createSession();
   // Fresh users start with the policy-specific local models. An existing API
   // operation keeps its mode so opening the app does not discard recovery.
@@ -25,9 +25,6 @@ export class BackendWorkspace{
   if(this.owner.config.productVersion==='government-integrated-1'&&!this.owner.session.pending){
    this.owner.engine='backend';$('analysis-engine').value='backend';
    if($('construction-scenario')&&!$('construction-scenario').value)$('construction-scenario').value='default-city';
-   // Government decision AI is disabled; do not select live or offline-test.
-   if($('government-mode'))$('government-mode').value='fixed';
-   $('analysis-start-date').value='2025-01-01';$('analysis-end-date').value='2026-12-01';
   }
   this.owner.update();
  }

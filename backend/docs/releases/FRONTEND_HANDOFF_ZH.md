@@ -57,4 +57,4 @@ python3 -B -m backend.server --port 8878 --scenario backend/examples/<name>.json
 
 运行前替换 `<name>`。`--scenario` 与 `--preset` 二选一；可选住宅节奏参数会覆盖住宅日期。加载入口：[cli.py](../../cli.py) 的 `configured_scenario`；生成、校验、节奏设置：[scenario.py](../../scenario.py)；实际执行：[engine.py](../../engine.py) 的 `_construct` / `advance_month`。更换脚本后重启并新建初始化，旧模拟保留原脚本。AI 不编写政府建设计划。拆迁、税收、补贴、卖地需要扩展引擎，不能只增加 JSON 字段。
 
-历史数据读取见独立的[城市存档指南](CITY_HISTORY_ZH.md)。密钥放置方法见根目录 [README](../../../README.md)。
+历史数据读取见独立的[城市存档指南](CITY_HISTORY_ZH.md)。在 Configure 中填写 DeepSeek 密钥，不使用密钥文件。步骤见根目录 [README](../../../README.md)。

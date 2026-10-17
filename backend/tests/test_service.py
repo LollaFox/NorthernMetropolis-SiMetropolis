@@ -518,7 +518,16 @@ class ProductConfigureTests(unittest.TestCase):
                     service.initialize({**SETUP, "fiscalEnabled": True, "constructionScenario": "mixed",
                                         "governmentMode": "live"}, None, None, "live_disabled")
                 self.assertIn("disabled", str(raised.exception).lower())
-                review = service.initialize({**SETUP, "deepseekApiKey": "must-not-persist"}, None, None, "init_no_pdf")
+                with self.assertRaises(ServiceError) as old_script:
+                    service.initialize({**SETUP, "constructionScenario": "segregated", "fiscalEnabled": True,
+                                        "start": "2025-01-01", "end": "2026-12-01", "step": "month"}, None, None, "old_script")
+                self.assertIn("disabled", str(old_script.exception).lower())
+                with self.assertRaises(ServiceError) as old_dates:
+                    service.initialize({**SETUP, "constructionScenario": "default-city",
+                                        "start": "2025-01-01", "end": "2026-09-01", "step": "month"}, None, None, "old_dates")
+                self.assertIn("years", str(old_dates.exception).lower())
+                review = service.initialize({**SETUP, "constructionScenario": "default-city", "start": "2025-01-01",
+                                             "end": "2025-12-01", "step": "month", "deepseekApiKey": "must-not-persist"}, None, None, "init_no_pdf")
                 self.assertTrue(any(item["id"] == "upload" and item["value"] == "Disabled" for item in review["items"]))
                 service.remember_run_key(review["initializationId"], "page-secret-key")
                 saved = Path(folder, "catalog.json").read_text(encoding="utf-8")
@@ -543,6 +552,67 @@ class ProductConfigureTests(unittest.TestCase):
                     finish(service, service.simulate(body, "run_no_pdf"))
                 self.assertEqual(seen.get("api_key"), "page-secret-key")
                 self.assertNotIn("page-secret-key", Path(folder, "catalog.json").read_text(encoding="utf-8"))
+            finally:
+                service.close()
+
+    def test_selected_script_page_key_and_year_limit_drive_the_run(self):
+        scripts = {name: json.loads((ROOT / "scripts" / filename).read_text(encoding="utf-8"))
+                   for name, filename in {"default-city": "default-city.json", "function-zones": "function-zones.json"}.items()}
+        function_ids = {item["id"] for item in scripts["function-zones"]["buildings"]}
+        default_ids = {item["id"] for item in scripts["default-city"]["buildings"]}
+        only_function = next(iter(function_ids - default_ids))
+        only_default = next(iter(default_ids - function_ids))
+        with tempfile.TemporaryDirectory() as folder:
+            class Factory:
+                configuration = {"governmentOnly": True, "live": False}
+                def __call__(self):
+                    raise AssertionError("the page key must be used instead of the offline server provider")
+            service = NarrativeService(folder, scenario=SCENARIO, provider_factory=Factory(), today="2026-10-16")
+            service.product_restrictions = True
+            try:
+                setup = {**SETUP, "constructionScenario": "function-zones", "start": "2025-01-01",
+                         "end": "2025-12-01", "step": "month"}
+                review = service.initialize(setup, None, None, "script_year_init")
+                record = service.catalog["initializations"][review["initializationId"]]
+                self.assertEqual(record["scenario"]["name"], "Function Zones")
+                stored_ids = {item["id"] for item in record["scenario"]["buildings"]}
+                self.assertIn(only_function, stored_ids)
+                self.assertNotIn(only_default, stored_ids)
+                self.assertIn("Function Zones", review["items"][0]["value"])
+                service.remember_run_key(review["initializationId"], "run-this-key")
+                service.confirm(review["initializationId"], {"reviewVersion": review["reviewVersion"]}, "script_year_confirm")
+                seen = {}
+
+                class Fake:
+                    metrics = []
+                    def __init__(self, **kwargs):
+                        seen.update(kwargs)
+                    def call(self, role, context):
+                        return None
+                    def set_metrics_callback(self, callback):
+                        pass
+                    def metrics_summary(self):
+                        return {}
+
+                with patch("backend.ai.DeepSeekProvider", Fake):
+                    body = {"initializationId": review["initializationId"], "reviewVersion": review["reviewVersion"]}
+                    deadline = time.monotonic() + 60
+                    result = service.simulate(body, "script_year_run")
+                    while result["status"] in ("queued", "running") and time.monotonic() < deadline:
+                        time.sleep(.02)
+                        result = service.job(result["jobId"])
+                self.assertEqual(result["status"], "complete", result.get("error"))
+                months = service.catalog["simulations"][result["result"]["simulationId"]]["months"]
+                self.assertEqual(months, schedule("2025-01-01", "2025-12-01"))
+                self.assertEqual(len(months), 12)
+                world = service._load_world(result["result"]["simulationId"], months[-1])
+                self.assertEqual(world["step"], 12)
+                self.assertEqual(world["config"]["name"], "Function Zones")
+                self.assertTrue(any(item["completionMonth"] <= 12 and item["status"] == "complete" for item in world["buildings"]))
+                self.assertTrue(all(item["status"] != "complete" for item in world["buildings"] if item["completionMonth"] > 12))
+                self.assertTrue(all(item["status"] == "planned" for item in world["buildings"] if item["startMonth"] > 12))
+                self.assertEqual(seen.get("api_key"), "run-this-key")
+                self.assertNotIn("run-this-key", Path(folder, "catalog.json").read_text(encoding="utf-8"))
             finally:
                 service.close()
 

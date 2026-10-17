@@ -2,7 +2,7 @@
 
 # Narrative city sandbox
 
-For the **v0.1.0 internal release**, start with the root [README](../README.md), including DeepSeek key placement. Teammate guides: [frontend API handoff (English)](docs/releases/FRONTEND_HANDOFF_EN.md) / [中文](docs/releases/FRONTEND_HANDOFF_ZH.md); [reading saved city history (English)](docs/releases/CITY_HISTORY_EN.md) / [中文](docs/releases/CITY_HISTORY_ZH.md).
+For the **v0.1.0 internal release**, start with the root [README](../README.md). Enter the DeepSeek key in Configure; do not place it in a file. Teammate guides: [frontend API handoff (English)](docs/releases/FRONTEND_HANDOFF_EN.md) / [中文](docs/releases/FRONTEND_HANDOFF_ZH.md); [reading saved city history (English)](docs/releases/CITY_HISTORY_EN.md) / [中文](docs/releases/CITY_HISTORY_ZH.md).
 
 A working backend for the existing Northern Metropolis handoff frontend. The default offline demonstration completes 50 residential towers, 12 business towers, 10 parks and 4 stations. The frontend files are unchanged. All scenario values and social profiles are synthetic.
 
@@ -18,11 +18,12 @@ Open http://127.0.0.1:8877/ . No installation or key is needed. Startup prepares
 
 To run the new backend through the real frontend workflow:
 
-1. Select **Configure → Team API**.
-2. Upload a PDF (the included `frontend/sandbox/web/fixture-plan.pdf` works for an interface test). The backend records its digest; PDF interpretation is not implemented.
-3. Choose dates. Use **2025-01-01 to 2025-12-01**, monthly, to see the entire default construction script.
-4. Save settings, then **Start analysis**. Review the explicit scenario override and assumptions, acknowledge, and confirm.
-5. Select **Result month** to inspect snapshots. The API mode displays footprint zones and charts. Reload to return to the 3D background.
+1. Open **Configure**.
+2. Choose Default City, Function Zones, or Mixed Zones.
+3. Choose 1 to 5 years. The rest of the five-year script is not run.
+4. Enter a DeepSeek API key. PDF upload is disabled, and no key file is read.
+5. Save settings, then **Start analysis**. Review the assumptions, acknowledge, and confirm.
+6. Select **Result month** to inspect snapshots. The API mode displays footprint zones and charts. Reload to return to the 3D background.
 
 The unchanged frontend API renderer has no tower-mesh input. Its API map is therefore a separate footprint view; the overview uses schematic existing city sites. Display distances/district labels are not the engine's exact grid. Legacy housing labels mean resident places here; unavailable climate/finance panels can display zero. These limits are also disclosed in the initialization review and `/api/model`.
 
@@ -47,7 +48,7 @@ python3 -B -m backend.server --port 8879 --preset northern-metropolis --data-dir
 python3 -B -m backend.cli --preset northern-metropolis --output /private/tmp/nm-regional-offline
 ```
 
-The preset fills all 132 cells of a schematic 12×11 grid: 100 residential development clusters, 20 business clusters, eight park objects and four station objects. Five residential clusters start each month and complete in the following month; the full script takes 21 monthly steps. Its startup demonstration and CLI default cover **2025-01-01 through 2026-09-01**. For Team API runs, submit those dates explicitly; API requests always honor the selected dates. An explicit CLI `--end` overrides its default. Choose either `--preset` or `--scenario`, not both.
+The preset fills all 132 cells of a schematic 12×11 grid: 100 residential development clusters, 20 business clusters, eight park objects and four station objects. Five residential clusters start each month and complete in the following month; the full script takes 21 monthly steps. Its startup demonstration and CLI default cover **2025-01-01 through 2026-09-01**. Configure chooses 1 to 5 years and the product run honors those dates. An explicit CLI `--end` overrides its default. Choose either `--preset` or `--scenario`, not both.
 
 Each residential cluster has four 6,250-person slots: 25,000 resident places, totaling 2.5 million potential places when all clusters complete. Actual population comes from AI entry/departure decisions and can be much lower. Each assigned business cluster offers 26,000 small-firm or 39,000 large-firm positions; the AI mix produces between 520,000 and 780,000 offers. The 650,000 reference is a midpoint, not a forced outcome. The 60% potential-worker assumption and workers without allocated modeled jobs do not measure real regional unemployment.
 
@@ -63,25 +64,11 @@ python3 -B -m backend.cli --output /private/tmp/nm-narrative-offline
 
 Choose a new output directory for each run. Outputs include monthly states, complete decision context/outcomes, narratives, events, provider-attempt metrics and a summary. New monthly files use lossless gzip plus shared structural records; [storage format and measurements](docs/STORAGE.md) explain the transparent reader and preserved legacy files. Server data lives under `backend/.data/` and is excluded from Git. `/api/v3/simulations/{simulationId}/export` provides fully hydrated canonical states, per-object tables and metrics; IDs are returned by simulation or available in `/api/state`.
 
-For a **single DeepSeek Flash simulation using two separately stored keys**, reference the existing local credential files:
-
-```sh
-python3 -B -m backend.server \
-  --port 8878 \
-  --data-dir backend/.data/live_flash_dual \
-  --provider deepseek --model deepseek-flash \
-  --api-key-file backend/.data/credentials/deepseek-1.key \
-  --api-key-file backend/.data/credentials/deepseek-2.key \
-  --timeout 180 --retries 2 \
-  --residential-starts-per-month 5 --construction-months 2 \
-  --no-demo
-```
-
-These are credential **file paths**, not key values; replace the paths if your approved files are elsewhere. Startup reads them silently. Both keys serve the same model and simulation. Independent resident decisions use at most two simultaneous requests per run, with one request per credential slot; narration and firm assignment retain their deterministic ordering. This does not create two scenarios or run two models. Keep one live job active when relying on this two-request limit.
+The product launcher does not read `api_key` or `backend/.data/credentials`. Enter the DeepSeek key in Configure.
 
 The pacing flags start five residential towers each month and finish each tower in the following month, completing all fifty by month 11. Change `--residential-starts-per-month`, `--construction-months`, and optional `--construction-interval-months` to vary the government schedule. Omitting all pacing flags preserves the original script. Month 1 of this paced scenario has residential construction sites and no completed residential occupancy.
 
-Open http://127.0.0.1:8878/ and use the same Team API initialization, review and confirmation workflow. With `--no-demo`, no simulation starts until confirmation. The CLI accepts the same provider, credential-file and pacing flags for a direct exported run. DeepSeek defaults to `deepseek-flash`; `--timeout 120` or `--timeout 180` sets the per-request wait, and `--retries 2` allows at most two transient retries per request.
+Open the server URL and use Configure for the DeepSeek key. With `--no-demo`, no simulation starts until confirmation. The CLI accepts provider and pacing flags for a direct exported run. DeepSeek defaults to `deepseek-flash`; `--timeout 120` or `--timeout 180` sets the per-request wait, and `--retries 2` allows at most two transient retries per request.
 
 The existing OpenAI environment mode remains available after a key has been supplied through `OPENAI_API_KEY`:
 

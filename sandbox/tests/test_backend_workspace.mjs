@@ -77,7 +77,7 @@ test('a restored confirmed session can finish without an in-memory pending tag d
 }));
 
 test('fresh backend connection retains the policy-specific local mode and does not post work',async()=>fixture(async({w,o,d,requests})=>{
- assert.equal(requests.length,0);w.configure();assert.equal(o.engine,'rules');assert.equal(o.session.state,'draft');assert.equal(d.getElementById('analysis-start-date').value,'2025-01-01');assert.equal(d.getElementById('backend-local-demos').classList.contains('hidden'),false);assert.equal(requests.length,0);
+ assert.equal(requests.length,0);w.configure();assert.equal(o.engine,'rules');assert.equal(o.session.state,'draft');assert.equal(d.getElementById('analysis-start-date').value,'');assert.equal(d.getElementById('backend-local-demos').classList.contains('hidden'),false);assert.equal(requests.length,0);
 }));
 
 test('connecting a backend with a stored running operation preserves its API mode and job identity',async()=>fixture(async({w,o,memory,requests})=>{
