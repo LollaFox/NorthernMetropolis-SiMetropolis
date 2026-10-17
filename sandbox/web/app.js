@@ -213,9 +213,17 @@ function renderDistrict() {
     $('experience-subtitle').title = `${summary.completed} completed development parcels · ${summary.underConstruction} under construction in this snapshot`;
   } else $('experience-subtitle').removeAttribute('title');
 }
+function markMenu(group, value) {
+  for (const button of document.querySelectorAll(`[data-menu-group="${group}"]`)) {
+    const on = button.dataset.value === value;
+    button.classList.toggle('is-selected', on);
+    button.setAttribute('aria-checked', String(on));
+  }
+}
 function renderView(mode) {
   viewMode = mode;
   document.body.dataset.view = mode;
+  markMenu('camera', mode);
   for (const candidate of ['overview', 'street']) {
     const active = candidate === mode;
     $(`view-${candidate}`).classList.toggle('active', active);
@@ -465,8 +473,8 @@ function setClearView(clear) {
   }
 }
 $('scene-toggle').addEventListener('click', () => setClearView(!document.body.classList.contains('clear-view')));
-$('render-style').addEventListener('change', event => city?.setRenderStyle(event.target.value));
-$('quality-select').addEventListener('change', event => city?.setQuality(event.target.value));
+$('render-style').addEventListener('change', event => { city?.setRenderStyle(event.target.value); markMenu('style', event.target.value); });
+$('quality-select').addEventListener('change', event => { city?.setQuality(event.target.value); markMenu('quality', event.target.value); });
 $('policy-form').addEventListener('submit', event => {
   event.preventDefault();
   const text = $('policy-input').value.trim();
@@ -498,7 +506,6 @@ for (const mode of ['rules', 'live']) $(`${mode}-mode`).addEventListener('click'
 });
 for (const name of ['actors', 'model']) $(`${name}-toggle`).addEventListener('click', () => openDrawer(name));
 for (const button of document.querySelectorAll('[data-close]')) button.addEventListener('click', () => openDrawer(button.dataset.close));
-$('help-toggle').addEventListener('click', () => workspaceNavigation?.toggle('help'));
 $('objectives-toggle').addEventListener('click', () => toggleObjectives());
 $('mobile-objectives').addEventListener('click', () => {
   $('help-popover').classList.add('hidden');
@@ -527,6 +534,7 @@ for (const mode of ['overview', 'street']) $(`view-${mode}`).addEventListener('c
 for (const light of ['day', 'dusk']) $(`light-${light}`).addEventListener('click', () => {
   city?.setTimeOfDay(light);
   document.body.dataset.lighting = light;
+  markMenu('light', light);
   for (const candidate of ['day', 'dusk']) {
     $(`light-${candidate}`).classList.toggle('active', candidate === light);
     $(`light-${candidate}`).setAttribute('aria-pressed', String(candidate === light));

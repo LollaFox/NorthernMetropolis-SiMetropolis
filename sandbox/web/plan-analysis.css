@@ -35,3 +35,24 @@ body.clear-view #plan-analysis-tools,body.clear-view #plan-analysis-panel,body.c
 @media(prefers-reduced-motion:no-preference){.plan-analysis-panel:not(.hidden){animation:plan-reveal .16s ease-out}@keyframes plan-reveal{from{opacity:.5;transform:translateX(7px)}to{opacity:1;transform:none}}}
 
 @media(max-width:760px){body.plan-analysis-open #port-heading{display:none}}
+
+/* Header menus. Colours stay with the workspace; the hover pill and list follow the menu-bar pattern. */
+.nav-menu{position:relative;display:flex;align-items:center}
+.top-actions .nav-menu-button{position:static!important;inset:auto!important;z-index:auto!important;width:auto;height:auto;margin:0;padding:6px 10px;border:0;border-radius:6px;background:transparent;box-shadow:none;color:#d1dfdc}
+.top-actions .nav-menu-button:hover,.top-actions .nav-menu-button[aria-expanded="true"]{background:rgba(186,214,206,.18);color:#f8fbf9}
+.top-actions .nav-menu-button[aria-current="page"]{color:#ffe1a2;box-shadow:inset 0 -1px 0 #d5be79}
+.nav-menu>.nav-dropdown{position:absolute;top:calc(100% + 6px);right:0;left:auto;z-index:5;width:max-content;min-width:196px;max-width:min(320px,calc(100vw - 16px));max-height:none;overflow:visible;padding:4px;border-radius:6px;background:rgba(16,40,48,.98);border:1px solid rgba(204,232,225,.18);box-shadow:0 12px 32px rgba(6,20,28,.48)}
+.nav-menu>.nav-dropdown::before{content:"";position:absolute;left:0;right:0;top:-10px;height:10px}
+.nav-dropdown-empty{min-width:168px;min-height:36px}
+.nav-dropdown-item{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:7px 12px;border-radius:4px;font-size:13px;line-height:1.35;color:#e4eee8;white-space:nowrap}
+.nav-dropdown-item:hover,.nav-cascade:hover>.nav-cascade-item,.nav-cascade:focus-within>.nav-cascade-item{background:rgba(186,214,206,.16);color:#f7fbf8}
+.nav-dropdown-item .nav-count{margin-left:auto}
+.nav-dropdown-item.is-selected::after{content:"✓";margin-left:auto;color:#e2cc91;font-size:12px}
+.nav-cascade{position:relative}
+.nav-cascade-arrow{width:1.1em;color:#c5d4cc;flex:none}
+.nav-rule{height:1px;margin:4px 8px;background:rgba(204,232,225,.16)}
+.nav-flyout{display:none;position:absolute;top:-4px;right:calc(100% - 6px);z-index:2;min-width:220px;padding:4px;border-radius:6px;background:rgba(16,40,48,.98);border:1px solid rgba(204,232,225,.18);box-shadow:0 12px 32px rgba(6,20,28,.48)}
+.nav-cascade:hover>.nav-flyout,.nav-cascade:focus-within>.nav-flyout{display:block}
+body.nav-menu-open .topbar{z-index:40}
+body.clear-view .nav-menu:not(.nav-menu-settings){display:none!important}
+@media(max-width:760px){.top-actions .nav-menu-button{padding:5px 8px;font-size:10px}.nav-dropdown-item{font-size:12px;padding:6px 10px}.nav-flyout{min-width:188px}}

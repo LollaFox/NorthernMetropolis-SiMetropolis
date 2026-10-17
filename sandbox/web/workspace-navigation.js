@@ -3,18 +3,30 @@ import {backendHistory,localHistory,filterHistory} from './analysis-history.js';
 import {getPolicy} from './policy-catalog.js';
 const $=id=>document.getElementById(id);
 const make=(tag,text,cls)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=String(text);if(cls)e.className=cls;return e;};
-const POPUPS={settings:['settings-popover','settings-toggle'],appearance:['appearance-popover','port-expand'],help:['help-popover','help-toggle']};
+const POPUPS={file:['file-menu','backend-replay'],settings:['settings-popover','settings-toggle'],appearance:['appearance-popover','port-expand'],help:['help-popover','help-toggle']};
 export class WorkspaceNavigation{
  constructor(owner,host={}){
   this.owner=owner;this.host=host;this.backendRows=[];this.historyGeneration=0;this.historyError='';this.loading=false;
-  $('backend-replay').addEventListener('click',()=>this.openHistory());
   $('analysis-history-close').addEventListener('click',()=>this.closeHistory());
   $('analysis-history-dialog').addEventListener('close',()=>$('backend-replay').setAttribute('aria-expanded','false'));
   $('analysis-history-search').addEventListener('input',()=>this.renderHistory());$('analysis-history-source').addEventListener('change',()=>this.renderHistory());
   $('analysis-history-refresh').addEventListener('click',()=>this.refreshHistory());
-  $('settings-toggle').addEventListener('click',()=>this.toggle('settings'));$('port-expand').addEventListener('click',()=>this.toggle('appearance'));
   $('analysis-results-toggle').addEventListener('click',()=>this.showResults());
-  $('appearance-reset-camera').addEventListener('click',()=>{$('reset-camera').click();});
+  $('appearance-reset-camera').addEventListener('click',()=>{$('reset-camera').click();this.closeMenus();});
+  $('file-new-city').addEventListener('click',()=>this.newCity());
+  $('file-save-city').addEventListener('click',()=>this.saveCity());
+  $('file-load-city').addEventListener('click',()=>this.openHistory());
+  this.bindChoice('menu-camera-overview',()=>$('view-overview').click());
+  this.bindChoice('menu-camera-street',()=>$('view-street').click());
+  this.bindChoice('menu-style-original',()=>this.chooseSelect('render-style','original'));
+  this.bindChoice('menu-style-white',()=>this.chooseSelect('render-style','white'));
+  this.bindChoice('menu-light-day',()=>$('light-day').click());
+  this.bindChoice('menu-light-dusk',()=>$('light-dusk').click());
+  this.bindChoice('menu-quality-auto',()=>this.chooseSelect('quality-select','auto'));
+  this.bindChoice('menu-quality-high',()=>this.chooseSelect('quality-select','high'));
+  this.bindChoice('menu-quality-balanced',()=>this.chooseSelect('quality-select','balanced'));
+  this.bindChoice('menu-quality-light',()=>this.chooseSelect('quality-select','light'));
+  this.bindHoverMenus();
   $('help-open-history').addEventListener('click',()=>this.openHistory());$('help-open-sandbox').addEventListener('click',()=>this.openSandbox().catch(e=>owner.status(e.message,true)));
   for(const button of document.querySelectorAll('[data-workspace-close]'))button.addEventListener('click',()=>this.closeMenus(true));
   for(const id of ['model-toggle','scene-toggle'])$(id).addEventListener('click',()=>this.closeMenus());
@@ -31,8 +43,14 @@ export class WorkspaceNavigation{
   for(const button of $('analysis-history-list').querySelectorAll('button'))button.disabled=Boolean(o.busy);
   o.dashboard?.update();
  }
- closeMenus(restore=false){const previous=this.popup;for(const [panel,toggle] of Object.values(POPUPS)){$(panel).classList.add('hidden');$(toggle).setAttribute('aria-expanded','false');}this.popup=null;if(restore&&previous)$(POPUPS[previous][1]).focus?.();}
- toggle(kind){const opening=this.popup!==kind;this.closeMenus();if(opening){this.owner.plan?.close();this.host.closeDrawers?.();this.popup=kind;const [panel,toggle]=POPUPS[kind];$(panel).classList.remove('hidden');$(toggle).setAttribute('aria-expanded','true');$(panel).querySelector('select, button')?.focus?.();this.update();}}
+ closeMenus(restore=false){const previous=this.popup;for(const [panel,toggle] of Object.values(POPUPS)){$(panel).classList.add('hidden');$(toggle).setAttribute('aria-expanded','false');}this.popup=null;document.body.classList.remove('nav-menu-open');if(restore&&previous)$(POPUPS[previous][1]).focus?.();}
+ openMenu(kind){if(!POPUPS[kind]||this.popup===kind)return;this.closeMenus();this.owner.plan?.close();this.host.closeDrawers?.();this.popup=kind;const [panel,toggle]=POPUPS[kind];$(panel).classList.remove('hidden');$(toggle).setAttribute('aria-expanded','true');document.body.classList.add('nav-menu-open');}
+ toggle(kind){const opening=this.popup!==kind;this.closeMenus();if(opening){this.openMenu(kind);if(kind==='help')$(POPUPS[kind][0]).querySelector('select, button')?.focus?.();this.update();}}
+ bindChoice(id,action){const el=$(id);if(!el)return;el.addEventListener('click',()=>{action();this.closeMenus();});}
+ chooseSelect(id,value){const select=$(id);if(!select)return;select.value=value;select.dispatchEvent?.(new Event('change'));}
+ bindHoverMenus(){this.menuCloseTimer=0;for(const host of document.querySelectorAll('.nav-menu')){const kind=host.getAttribute('data-menu');if(!kind||!POPUPS[kind])continue;const button=host.querySelector('.nav-menu-button');host.addEventListener('pointerenter',()=>{if(button?.disabled)return;clearTimeout(this.menuCloseTimer);this.openMenu(kind);});host.addEventListener('pointerleave',()=>{clearTimeout(this.menuCloseTimer);this.menuCloseTimer=setTimeout(()=>{if(this.popup===kind)this.closeMenus();},140);});button?.addEventListener('click',event=>{if(button.disabled)return;if(event.detail===0)this.toggle(kind);else this.openMenu(kind);});}for(const row of document.querySelectorAll('.nav-cascade')){const trigger=row.querySelector('.nav-cascade-item');const set=open=>trigger?.setAttribute('aria-expanded',String(open));row.addEventListener('pointerenter',()=>set(true));row.addEventListener('pointerleave',()=>set(false));row.addEventListener('focusin',()=>set(true));row.addEventListener('focusout',event=>{if(!row.contains(event.relatedTarget))set(false);});}}
+ async newCity(){if(this.owner.busy)return;try{await this.openSandbox();if(this.owner.busy||$('analysis-config-dialog')?.open)return;this.owner.configure?.();}catch(e){this.owner.status(e.message,true);}}
+ saveCity(){if(this.owner.busy)return;this.closeMenus();const button=$('port-export');if(!button||button.disabled){this.owner.status('Save City is available after an analysis has results.',true);return;}button.click();}
  closeHistory(){$('analysis-history-dialog').close();$('backend-replay').setAttribute('aria-expanded','false');$('backend-replay').focus?.();}
  async openHistory(){
   if(this.owner.busy)return;this.owner.plan?.close();this.closeMenus();this.host.clearView?.();this.host.closeDrawers?.();$('analysis-history-search').value='';$('analysis-history-source').value='all';
@@ -81,8 +99,8 @@ export class WorkspaceNavigation{
    const session=o.session;o.session=null;try{o.selectPolicy(o.policyId||'huanggang-opening');}finally{o.session=session;}
   }else{
    o.restoreRules();o.city.showPortStudy(false);document.querySelector('.port-flow-key').classList.add('hidden');
-   $('port-heading').querySelector('small').textContent='City context only. Configure and start an analysis, or open saved results from Analysis history.';
-   $('port-scenario-note').textContent=o.session?.pending?'An existing backend task is available to resume.':'Select policy tags and Configure the analysis inputs. Saved results remain in Analysis history.';
+   $('port-heading').querySelector('small').textContent='City context only. Configure and start an analysis, or load a saved city from File.';
+   $('port-scenario-note').textContent=o.session?.pending?'An existing backend task is available to resume.':'Select policy tags and Configure the analysis inputs. Saved cities stay under File, then Load City.';
   }
   o.onOpen();this.setContext('analysis');o.update();o.status(o.session?.pending?'Resume the existing task; opening the sandbox did not submit a new run.':'Choose policy tags, Configure the inputs, then Start analysis.');
  }

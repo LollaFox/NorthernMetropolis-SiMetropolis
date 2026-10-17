@@ -25,10 +25,58 @@
       <div class="scenario-pill"><span class="status-dot"></span><span id="scenario-state">Connecting</span><span class="pill-divider"></span><span>POLICY RESEARCH</span></div>
       <nav class="top-actions" aria-label="Policy analysis tools">
         <button id="port-toggle" class="icon-label" aria-pressed="false">Analysis sandbox</button>
-        <button id="backend-replay" class="icon-label" aria-controls="analysis-history-dialog" aria-haspopup="dialog" aria-expanded="false">Analysis history <span id="analysis-history-count" class="nav-count">0</span></button>
-        <button id="port-expand" class="icon-label" aria-controls="appearance-popover" aria-expanded="false">Map appearance ⌄</button>
-        <button id="settings-toggle" class="icon-label" aria-controls="settings-popover" aria-expanded="false">Settings</button>
-        <button id="help-toggle" class="icon-label" aria-label="Open help" aria-controls="help-popover" aria-expanded="false">Help <span aria-hidden="true">?</span></button>
+        <div class="nav-menu" data-menu="file">
+          <button id="backend-replay" class="icon-label nav-menu-button" type="button" aria-controls="file-menu" aria-haspopup="menu" aria-expanded="false">File</button>
+          <div id="file-menu" class="nav-dropdown hidden" role="menu" aria-label="File">
+            <button id="file-new-city" class="nav-dropdown-item" type="button" role="menuitem">New City</button>
+            <button id="file-save-city" class="nav-dropdown-item" type="button" role="menuitem">Save City</button>
+            <button id="file-load-city" class="nav-dropdown-item" type="button" role="menuitem">Load City <span id="analysis-history-count" class="nav-count">0</span></button>
+          </div>
+        </div>
+        <div class="nav-menu" data-menu="appearance">
+          <button id="port-expand" class="icon-label nav-menu-button" type="button" aria-controls="appearance-popover" aria-haspopup="menu" aria-expanded="false">View</button>
+          <div id="appearance-popover" class="nav-dropdown hidden" role="menu" aria-label="View">
+            <div class="nav-cascade">
+              <button class="nav-dropdown-item nav-cascade-item" type="button" aria-haspopup="menu" aria-expanded="false"><span class="nav-cascade-arrow" aria-hidden="true">←</span><span>Camera Position</span></button>
+              <div class="nav-flyout" role="menu" aria-label="Camera Position">
+                <button id="menu-camera-overview" class="nav-dropdown-item is-selected" type="button" role="menuitemradio" data-menu-group="camera" data-value="overview" aria-checked="true">Regional view</button>
+                <button id="menu-camera-street" class="nav-dropdown-item" type="button" role="menuitemradio" data-menu-group="camera" data-value="street" aria-checked="false">Enter the city</button>
+                <div class="nav-rule" role="separator"></div>
+                <button id="appearance-reset-camera" class="nav-dropdown-item" type="button" role="menuitem">Reset camera</button>
+              </div>
+            </div>
+            <div class="nav-cascade">
+              <button class="nav-dropdown-item nav-cascade-item" type="button" aria-haspopup="menu" aria-expanded="false"><span class="nav-cascade-arrow" aria-hidden="true">←</span><span>Style</span></button>
+              <div class="nav-flyout" role="menu" aria-label="Style">
+                <button id="menu-style-original" class="nav-dropdown-item is-selected" type="button" role="menuitemradio" data-menu-group="style" data-value="original" aria-checked="true">Original material</button>
+                <button id="menu-style-white" class="nav-dropdown-item" type="button" role="menuitemradio" data-menu-group="style" data-value="white" aria-checked="false">White study model</button>
+                <div class="nav-rule" role="separator"></div>
+                <button id="menu-light-day" class="nav-dropdown-item is-selected" type="button" role="menuitemradio" data-menu-group="light" data-value="day" aria-checked="true">Day</button>
+                <button id="menu-light-dusk" class="nav-dropdown-item" type="button" role="menuitemradio" data-menu-group="light" data-value="dusk" aria-checked="false">Dusk</button>
+              </div>
+            </div>
+            <div class="nav-cascade">
+              <button class="nav-dropdown-item nav-cascade-item" type="button" aria-haspopup="menu" aria-expanded="false"><span class="nav-cascade-arrow" aria-hidden="true">←</span><span>Rendering Quality</span></button>
+              <div class="nav-flyout" role="menu" aria-label="Rendering Quality">
+                <button id="menu-quality-auto" class="nav-dropdown-item is-selected" type="button" role="menuitemradio" data-menu-group="quality" data-value="auto" aria-checked="true">Auto · adaptive</button>
+                <button id="menu-quality-high" class="nav-dropdown-item" type="button" role="menuitemradio" data-menu-group="quality" data-value="high" aria-checked="false">High · sharper shadows</button>
+                <button id="menu-quality-balanced" class="nav-dropdown-item" type="button" role="menuitemradio" data-menu-group="quality" data-value="balanced" aria-checked="false">Balanced</button>
+                <button id="menu-quality-light" class="nav-dropdown-item" type="button" role="menuitemradio" data-menu-group="quality" data-value="light" aria-checked="false">Smooth · lower resolution</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-menu nav-menu-settings" data-menu="settings">
+          <button id="settings-toggle" class="icon-label nav-menu-button" type="button" aria-controls="settings-popover" aria-haspopup="menu" aria-expanded="false">Settings</button>
+          <div id="settings-popover" class="nav-dropdown nav-dropdown-empty hidden" role="menu" aria-label="Settings"></div>
+        </div>
+        <div class="nav-menu" data-menu="help">
+          <button id="help-toggle" class="icon-label nav-menu-button" type="button" aria-controls="help-popover" aria-haspopup="menu" aria-expanded="false">Help</button>
+          <div id="help-popover" class="nav-dropdown hidden" role="menu" aria-label="Help">
+            <button id="help-send-feedback" class="nav-dropdown-item" type="button" role="menuitem">Send Feedback</button>
+            <button id="help-about" class="nav-dropdown-item" type="button" role="menuitem">About</button>
+          </div>
+        </div>
       </nav>
     </header>
 
@@ -163,19 +211,16 @@
       <p id="analysis-history-status" class="quiet" role="status" aria-live="polite"></p><div id="analysis-history-list" class="history-list"></div>
       <p class="history-storage-note">Local studies use browser storage when available; export if storage is unavailable. Backend cities are saved by this local server. Unrun drafts are excluded.</p>
     </dialog>
-    <section id="appearance-popover" class="workspace-popover appearance-popover glass hidden" aria-label="Map appearance">
-      <div class="card-topline"><h3>Map appearance</h3><button data-workspace-close="appearance" class="close-button" type="button" aria-label="Close map appearance">×</button></div>
-      <label class="quality-control" for="render-style">City materials<select id="render-style"><option value="original" selected>Original material</option><option value="white">White study model</option></select></label><p class="quiet">Appearance changes the presentation only. Policy colours and saved results are preserved.</p><button id="appearance-reset-camera" type="button" class="workspace-menu-action">Reset camera view ↗</button>
-    </section>
-    <section id="settings-popover" class="workspace-popover glass hidden" aria-label="Application settings">
-      <div class="card-topline"><h3>Settings</h3><button data-workspace-close="settings" class="close-button" type="button" aria-label="Close settings">×</button></div>
-      <label class="quality-control" for="quality-select">Rendering quality<select id="quality-select"><option value="auto">Auto · adaptive</option><option value="high">High · sharper shadows</option><option value="balanced">Balanced</option><option value="light">Smooth · lower resolution</option></select></label><p id="quality-status" class="quiet" role="status">Auto adjusts detail to your device.</p>
-      <p id="settings-data-status" class="quiet" role="status"></p><p id="settings-result-source" class="quiet"></p><button id="model-toggle" class="workspace-menu-action" aria-controls="model-drawer" aria-expanded="false">Model & data sources ↗</button><button id="scene-toggle" class="workspace-menu-action" aria-pressed="false">Clear view</button><p class="quiet">For the government script, years, and DeepSeek API key, use Configure inside Analysis sandbox.</p>
-    </section>
-    <section id="help-popover" class="workspace-popover help-popover glass hidden" aria-label="Policy workspace help">
-      <div class="card-topline"><h3>Help</h3><button data-workspace-close="help" class="close-button" type="button" aria-label="Close help">×</button></div>
-      <p>1. Analysis sandbox: choose the area, policy tags and analysis setup, then Start analysis.</p><p>2. Configure: choose a government script, choose 1 to 5 years, and enter a DeepSeek API key. A key is required. Building narratives use that key. Later years of the script are not run. Government decision AI and PDF upload are disabled.</p><p>3. Analysis history: open completed local studies or saved backend months. A partial backend run is labelled explicitly.</p><p>4. Use ← / ▶ / → and Result month for saved city playback. The bottom dashboard shows key values and charts. Evidence opens assumptions and checks. The left-side 2D analysis shows supported plan layers and follows Result month; Change symbols explains each change mark. Map appearance beside Settings changes city materials only; Original material is the startup default.</p><p>Drag to orbit. Scroll to zoom. No playback operation calls a model.</p><button id="help-open-sandbox" class="workspace-menu-action" type="button">Open Analysis sandbox ↗</button><button id="help-open-history" class="workspace-menu-action" type="button">Open Analysis history ↗</button>
-    </section>
+    <div class="nav-legacy" hidden>
+      <label class="quality-control" for="render-style">City materials<select id="render-style"><option value="original" selected>Original material</option><option value="white">White study model</option></select></label>
+      <label class="quality-control" for="quality-select">Rendering quality<select id="quality-select"><option value="auto" selected>Auto · adaptive</option><option value="high">High · sharper shadows</option><option value="balanced">Balanced</option><option value="light">Smooth · lower resolution</option></select></label>
+      <p id="quality-status" class="quiet" role="status">Auto adjusts detail to your device.</p>
+      <p id="settings-data-status" class="quiet" role="status"></p><p id="settings-result-source" class="quiet"></p>
+      <button id="model-toggle" type="button" aria-controls="model-drawer" aria-expanded="false">Model & data sources</button>
+      <button id="scene-toggle" type="button" aria-pressed="false">Clear view</button>
+      <button id="help-open-sandbox" type="button">Open Analysis sandbox</button>
+      <button id="help-open-history" type="button">Load City</button>
+    </div>
     <div class="hidden" aria-hidden="true"><button id="objectives-toggle" aria-controls="mission-panel" aria-expanded="false">Legacy objectives</button><button id="actors-toggle" aria-controls="actors-drawer" aria-expanded="false">Legacy society <span id="activity-dot"></span></button><button id="mobile-objectives">Legacy objectives</button></div>
     <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
     <div class="loading-state" id="loading-state"><span class="loading-orbit"></span><span>Loading the policy workspace…</span></div>
