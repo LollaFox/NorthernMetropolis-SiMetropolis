@@ -12,9 +12,9 @@ macOS does not support double-click. In Terminal, from this folder, run:
 python3 -B start_product.py
 ```
 
-The browser opens http://127.0.0.1:8898/ when the server is ready, and Configure opens with the page. A new server start shows an empty city until you save Configure and run. Saved cities stay available in Analysis history. Close the terminal to stop the service. Do not start two processes that use the same data directory at the same time.
+The browser opens http://127.0.0.1:8898/ when the server is ready, and Configure opens with the page. A new server start shows an empty city until you save Configure and run. Saved cities stay available under File > Load City. Close the terminal to stop the service. Do not start two processes that use the same data directory at the same time.
 
-This sandbox does not run offline. In Configure, choose a government script and enter a DeepSeek API key. The key is sent only to this local server for building narratives and is not saved in the browser. Government decision AI and PDF upload are disabled.
+No new simulation can run offline without a key. In Configure, choose a government script and enter a DeepSeek API key. To inspect a saved city, use File > Load City. The key is sent only to this local server for building narratives and is not saved in the browser. Government decision AI and PDF upload are disabled.
 
 ## Using the web app
 
@@ -24,7 +24,7 @@ This sandbox does not run offline. In Configure, choose a government script and 
 4. Enter a DeepSeek API key in the page. A run cannot start without one. The launcher does not read a key file.
 5. Save settings, then Start analysis. Review the assumptions and confirm the run.
 6. At the bottom, view population, jobs, and construction progress month by month. Each script asks DeepSeek for a narrative on each completed building. Government start-date decisions stay on the fixed schedule.
-7. Analysis history opens saved results. Export study downloads the saved run. After a refresh, enter the key again before resuming an unfinished task. Stop waiting does not cancel the backend task.
+7. File > Load City opens saved results without starting a new simulation. Export study downloads the saved run. After a refresh, enter the key again before resuming an unfinished task. Stop waiting does not cancel the backend task.
 
 The DeepSeek key is used for per-building narratives. It is not used to decide when the government starts projects. That government-decision mode is disabled.
 

@@ -1,3 +1,4 @@
 Windows: double-click start-product.cmd. The browser and Configure screen open automatically.
 macOS does not support double-click. Start with the command in README.md.
 In Configure, choose a script, choose 1 to 5 years, and enter a DeepSeek API key.
+To inspect a saved city, use File > Load City. This does not start a new simulation, and does not require an API key.

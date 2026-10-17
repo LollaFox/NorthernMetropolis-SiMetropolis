@@ -1,3 +1,4 @@
 Windows：双击 start-product.cmd。浏览器和 Configure 画面会自动打开。
 macOS 不支持双击启动。请用 README.md 里的命令启动。
 在 Configure 中选择脚本、选择 1 至 5 年，并填写 DeepSeek API key。
+查看已保存城市请用 File > Load City。这不会开始新模拟。
