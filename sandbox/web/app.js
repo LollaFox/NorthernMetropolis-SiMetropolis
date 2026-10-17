@@ -207,6 +207,7 @@ function renderDistrict() {
     button.setAttribute('aria-pressed', String(active));
   }
   document.body.dataset.district = activeDistrict || 'region';
+  markMenu('camera', activeDistrict || 'overview');
   // Summaries refer only to the selected snapshot, including while exploring history.
   if (district && state) {
     const summary = summarizeDistrict(state.world, district.id);
@@ -223,7 +224,6 @@ function markMenu(group, value) {
 function renderView(mode) {
   viewMode = mode;
   document.body.dataset.view = mode;
-  markMenu('camera', mode);
   for (const candidate of ['overview', 'street']) {
     const active = candidate === mode;
     $(`view-${candidate}`).classList.toggle('active', active);

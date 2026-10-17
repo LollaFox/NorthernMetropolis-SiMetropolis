@@ -21,32 +21,32 @@
     <div id="connection-banner" class="connection-banner hidden" role="status"></div>
 
     <header class="topbar">
-      <a class="brand" href="./" aria-label="Northern Metropolis home"><span class="brand-mark" aria-hidden="true">北</span><span>NORTHERN METROPOLIS<span class="brand-sub">北部都會區 <i></i> A WORLD IN THE MAKING</span></span></a>
-      <div class="scenario-pill"><span class="status-dot"></span><span id="scenario-state">Connecting</span><span class="pill-divider"></span><span>POLICY RESEARCH</span></div>
+      <div class="topbar-leading">
+      <a class="brand" href="./" aria-label="Northern Metropolis home"><span class="brand-mark" aria-hidden="true">北</span></a>
       <nav class="top-actions" aria-label="Policy analysis tools">
-        <button id="port-toggle" class="icon-label" aria-pressed="false">Analysis sandbox</button>
         <div class="nav-menu" data-menu="file">
           <button id="backend-replay" class="icon-label nav-menu-button" type="button" aria-controls="file-menu" aria-haspopup="menu" aria-expanded="false">File</button>
           <div id="file-menu" class="nav-dropdown hidden" role="menu" aria-label="File">
             <button id="file-new-city" class="nav-dropdown-item" type="button" role="menuitem">New City</button>
             <button id="file-save-city" class="nav-dropdown-item" type="button" role="menuitem">Save City</button>
-            <button id="file-load-city" class="nav-dropdown-item" type="button" role="menuitem">Load City <span id="analysis-history-count" class="nav-count">0</span></button>
+            <button id="file-load-city" class="nav-dropdown-item" type="button" role="menuitem">Load City</button>
           </div>
         </div>
         <div class="nav-menu" data-menu="appearance">
           <button id="port-expand" class="icon-label nav-menu-button" type="button" aria-controls="appearance-popover" aria-haspopup="menu" aria-expanded="false">View</button>
           <div id="appearance-popover" class="nav-dropdown hidden" role="menu" aria-label="View">
             <div class="nav-cascade">
-              <button class="nav-dropdown-item nav-cascade-item" type="button" aria-haspopup="menu" aria-expanded="false"><span class="nav-cascade-arrow" aria-hidden="true">←</span><span>Camera Position</span></button>
+              <button class="nav-dropdown-item nav-cascade-item" type="button" aria-haspopup="menu" aria-expanded="false"><span>Camera Position</span><span class="nav-cascade-arrow" aria-hidden="true">&gt;</span></button>
               <div class="nav-flyout" role="menu" aria-label="Camera Position">
-                <button id="menu-camera-overview" class="nav-dropdown-item is-selected" type="button" role="menuitemradio" data-menu-group="camera" data-value="overview" aria-checked="true">Regional view</button>
-                <button id="menu-camera-street" class="nav-dropdown-item" type="button" role="menuitemradio" data-menu-group="camera" data-value="street" aria-checked="false">Enter the city</button>
-                <div class="nav-rule" role="separator"></div>
-                <button id="appearance-reset-camera" class="nav-dropdown-item" type="button" role="menuitem">Reset camera</button>
+                <button id="menu-camera-overview" class="nav-dropdown-item is-selected" type="button" role="menuitemradio" data-menu-group="camera" data-value="overview" aria-checked="true">Overview</button>
+                <button id="menu-camera-hung-shui-kiu" class="nav-dropdown-item" type="button" role="menuitemradio" data-menu-group="camera" data-value="hung-shui-kiu" aria-checked="false">Hung Shui Kiu</button>
+                <button id="menu-camera-san-tin" class="nav-dropdown-item" type="button" role="menuitemradio" data-menu-group="camera" data-value="san-tin" aria-checked="false">San Tin</button>
+                <button id="menu-camera-kwu-tung" class="nav-dropdown-item" type="button" role="menuitemradio" data-menu-group="camera" data-value="kwu-tung" aria-checked="false">Kwu Tung</button>
+                <button id="menu-camera-ta-kwu-ling" class="nav-dropdown-item" type="button" role="menuitemradio" data-menu-group="camera" data-value="ta-kwu-ling" aria-checked="false">Ta Kwu Ling</button>
               </div>
             </div>
             <div class="nav-cascade">
-              <button class="nav-dropdown-item nav-cascade-item" type="button" aria-haspopup="menu" aria-expanded="false"><span class="nav-cascade-arrow" aria-hidden="true">←</span><span>Style</span></button>
+              <button class="nav-dropdown-item nav-cascade-item" type="button" aria-haspopup="menu" aria-expanded="false"><span>Style</span><span class="nav-cascade-arrow" aria-hidden="true">&gt;</span></button>
               <div class="nav-flyout" role="menu" aria-label="Style">
                 <button id="menu-style-original" class="nav-dropdown-item is-selected" type="button" role="menuitemradio" data-menu-group="style" data-value="original" aria-checked="true">Original material</button>
                 <button id="menu-style-white" class="nav-dropdown-item" type="button" role="menuitemradio" data-menu-group="style" data-value="white" aria-checked="false">White study model</button>
@@ -56,7 +56,7 @@
               </div>
             </div>
             <div class="nav-cascade">
-              <button class="nav-dropdown-item nav-cascade-item" type="button" aria-haspopup="menu" aria-expanded="false"><span class="nav-cascade-arrow" aria-hidden="true">←</span><span>Rendering Quality</span></button>
+              <button class="nav-dropdown-item nav-cascade-item" type="button" aria-haspopup="menu" aria-expanded="false"><span>Rendering Quality</span><span class="nav-cascade-arrow" aria-hidden="true">&gt;</span></button>
               <div class="nav-flyout" role="menu" aria-label="Rendering Quality">
                 <button id="menu-quality-auto" class="nav-dropdown-item is-selected" type="button" role="menuitemradio" data-menu-group="quality" data-value="auto" aria-checked="true">Auto · adaptive</button>
                 <button id="menu-quality-high" class="nav-dropdown-item" type="button" role="menuitemradio" data-menu-group="quality" data-value="high" aria-checked="false">High · sharper shadows</button>
@@ -66,18 +66,17 @@
             </div>
           </div>
         </div>
-        <div class="nav-menu nav-menu-settings" data-menu="settings">
-          <button id="settings-toggle" class="icon-label nav-menu-button" type="button" aria-controls="settings-popover" aria-haspopup="menu" aria-expanded="false">Settings</button>
-          <div id="settings-popover" class="nav-dropdown nav-dropdown-empty hidden" role="menu" aria-label="Settings"></div>
-        </div>
         <div class="nav-menu" data-menu="help">
           <button id="help-toggle" class="icon-label nav-menu-button" type="button" aria-controls="help-popover" aria-haspopup="menu" aria-expanded="false">Help</button>
           <div id="help-popover" class="nav-dropdown hidden" role="menu" aria-label="Help">
             <button id="help-send-feedback" class="nav-dropdown-item" type="button" role="menuitem">Send Feedback</button>
+            <button id="help-view-license" class="nav-dropdown-item" type="button" role="menuitem">View License</button>
             <button id="help-about" class="nav-dropdown-item" type="button" role="menuitem">About</button>
           </div>
         </div>
       </nav>
+      </div>
+      <div class="scenario-pill"><span class="status-dot"></span><span id="scenario-state">Connecting</span><span class="pill-divider"></span><span>POLICY RESEARCH</span></div>
     </header>
 
     <div id="port-heading" class="port-heading hidden"><span class="eyebrow">NORTHERN METROPOLIS · ANALYSIS SANDBOX</span><h1>Explore policy scenarios.<br>Inspect the evidence.</h1><p id="port-scenario-note"></p><div class="port-flow-key"><span class="cyan">● Baseline</span><span class="gold">● Added trips</span></div><small>Arrows show direction. Density shows modeled volume.<br>Schematic links; not measured routes or journey speed.</small></div>
@@ -215,11 +214,8 @@
       <label class="quality-control" for="render-style">City materials<select id="render-style"><option value="original" selected>Original material</option><option value="white">White study model</option></select></label>
       <label class="quality-control" for="quality-select">Rendering quality<select id="quality-select"><option value="auto" selected>Auto · adaptive</option><option value="high">High · sharper shadows</option><option value="balanced">Balanced</option><option value="light">Smooth · lower resolution</option></select></label>
       <p id="quality-status" class="quiet" role="status">Auto adjusts detail to your device.</p>
-      <p id="settings-data-status" class="quiet" role="status"></p><p id="settings-result-source" class="quiet"></p>
       <button id="model-toggle" type="button" aria-controls="model-drawer" aria-expanded="false">Model & data sources</button>
       <button id="scene-toggle" type="button" aria-pressed="false">Clear view</button>
-      <button id="help-open-sandbox" type="button">Open Analysis sandbox</button>
-      <button id="help-open-history" type="button">Load City</button>
     </div>
     <div class="hidden" aria-hidden="true"><button id="objectives-toggle" aria-controls="mission-panel" aria-expanded="false">Legacy objectives</button><button id="actors-toggle" aria-controls="actors-drawer" aria-expanded="false">Legacy society <span id="activity-dot"></span></button><button id="mobile-objectives">Legacy objectives</button></div>
     <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>

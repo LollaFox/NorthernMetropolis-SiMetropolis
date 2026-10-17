@@ -3,7 +3,7 @@ import {backendHistory,localHistory,filterHistory} from './analysis-history.js';
 import {getPolicy} from './policy-catalog.js';
 const $=id=>document.getElementById(id);
 const make=(tag,text,cls)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=String(text);if(cls)e.className=cls;return e;};
-const POPUPS={file:['file-menu','backend-replay'],settings:['settings-popover','settings-toggle'],appearance:['appearance-popover','port-expand'],help:['help-popover','help-toggle']};
+const POPUPS={file:['file-menu','backend-replay'],appearance:['appearance-popover','port-expand'],help:['help-popover','help-toggle']};
 export class WorkspaceNavigation{
  constructor(owner,host={}){
   this.owner=owner;this.host=host;this.backendRows=[];this.historyGeneration=0;this.historyError='';this.loading=false;
@@ -12,12 +12,11 @@ export class WorkspaceNavigation{
   $('analysis-history-search').addEventListener('input',()=>this.renderHistory());$('analysis-history-source').addEventListener('change',()=>this.renderHistory());
   $('analysis-history-refresh').addEventListener('click',()=>this.refreshHistory());
   $('analysis-results-toggle').addEventListener('click',()=>this.showResults());
-  $('appearance-reset-camera').addEventListener('click',()=>{$('reset-camera').click();this.closeMenus();});
   $('file-new-city').addEventListener('click',()=>this.newCity());
   $('file-save-city').addEventListener('click',()=>this.saveCity());
   $('file-load-city').addEventListener('click',()=>this.openHistory());
-  this.bindChoice('menu-camera-overview',()=>$('view-overview').click());
-  this.bindChoice('menu-camera-street',()=>$('view-street').click());
+  this.bindChoice('menu-camera-overview',()=>this.focusCamera('overview'));
+  for(const id of ['hung-shui-kiu','san-tin','kwu-tung','ta-kwu-ling'])this.bindChoice('menu-camera-'+id,()=>this.focusCamera(id));
   this.bindChoice('menu-style-original',()=>this.chooseSelect('render-style','original'));
   this.bindChoice('menu-style-white',()=>this.chooseSelect('render-style','white'));
   this.bindChoice('menu-light-day',()=>$('light-day').click());
@@ -27,7 +26,6 @@ export class WorkspaceNavigation{
   this.bindChoice('menu-quality-balanced',()=>this.chooseSelect('quality-select','balanced'));
   this.bindChoice('menu-quality-light',()=>this.chooseSelect('quality-select','light'));
   this.bindHoverMenus();
-  $('help-open-history').addEventListener('click',()=>this.openHistory());$('help-open-sandbox').addEventListener('click',()=>this.openSandbox().catch(e=>owner.status(e.message,true)));
   for(const button of document.querySelectorAll('[data-workspace-close]'))button.addEventListener('click',()=>this.closeMenus(true));
   for(const id of ['model-toggle','scene-toggle'])$(id).addEventListener('click',()=>this.closeMenus());
   document.addEventListener('pointerdown',event=>{if(!this.popup)return;const [panel,toggle]=POPUPS[this.popup];if(!$(panel).contains(event.target)&&!$(toggle).contains(event.target))this.closeMenus();});
@@ -36,10 +34,8 @@ export class WorkspaceNavigation{
  get rows(){return [...this.backendRows,...localHistory(this.owner.port.cases,this.owner.topics.store.cases)];}
  get hasResults(){const o=this.owner;if(o.backendReplay)return true;if(o.engine==='rules')return Boolean(o.localTopic?o.topics.hasResult:o.port.ledger.revisions.length);return Boolean(o.apiResults&&o.session?.state==='ready');}
  update(){
-  const o=this.owner;const count=this.rows.length;$('analysis-history-count').textContent=count;$('analysis-results-toggle').disabled=o.busy||!this.hasResults;$('analysis-results-toggle').setAttribute('aria-expanded',String(!$('port-panel').classList.contains('hidden')));
+  const o=this.owner;$('analysis-results-toggle').disabled=o.busy||!this.hasResults;$('analysis-results-toggle').setAttribute('aria-expanded',String(!$('port-panel').classList.contains('hidden')));
   $('backend-replay').disabled=Boolean(o.busy);$('analysis-history-refresh').disabled=this.loading;
-  $('settings-data-status').textContent=o.config.backendConfigured?'Local backend connected. This does not indicate an online model is enabled.':'Local backend not configured. Browser studies remain available.';
-  $('settings-result-source').textContent='Current view: '+o.sourceLabel;
   for(const button of $('analysis-history-list').querySelectorAll('button'))button.disabled=Boolean(o.busy);
   o.dashboard?.update();
  }
@@ -47,9 +43,10 @@ export class WorkspaceNavigation{
  openMenu(kind){if(!POPUPS[kind]||this.popup===kind)return;this.closeMenus();this.owner.plan?.close();this.host.closeDrawers?.();this.popup=kind;const [panel,toggle]=POPUPS[kind];$(panel).classList.remove('hidden');$(toggle).setAttribute('aria-expanded','true');document.body.classList.add('nav-menu-open');}
  toggle(kind){const opening=this.popup!==kind;this.closeMenus();if(opening){this.openMenu(kind);if(kind==='help')$(POPUPS[kind][0]).querySelector('select, button')?.focus?.();this.update();}}
  bindChoice(id,action){const el=$(id);if(!el)return;el.addEventListener('click',()=>{action();this.closeMenus();});}
+ focusCamera(id){const city=this.owner.city;if(!city?.focusDistrict)return;if(id==='overview'){city.resetCamera();return;}if(city.view==='street')city.setView('overview');city.focusDistrict(id);}
  chooseSelect(id,value){const select=$(id);if(!select)return;select.value=value;select.dispatchEvent?.(new Event('change'));}
  bindHoverMenus(){this.menuCloseTimer=0;for(const host of document.querySelectorAll('.nav-menu')){const kind=host.getAttribute('data-menu');if(!kind||!POPUPS[kind])continue;const button=host.querySelector('.nav-menu-button');host.addEventListener('pointerenter',()=>{if(button?.disabled)return;clearTimeout(this.menuCloseTimer);this.openMenu(kind);});host.addEventListener('pointerleave',()=>{clearTimeout(this.menuCloseTimer);this.menuCloseTimer=setTimeout(()=>{if(this.popup===kind)this.closeMenus();},140);});button?.addEventListener('click',event=>{if(button.disabled)return;if(event.detail===0)this.toggle(kind);else this.openMenu(kind);});}for(const row of document.querySelectorAll('.nav-cascade')){const trigger=row.querySelector('.nav-cascade-item');const set=open=>trigger?.setAttribute('aria-expanded',String(open));row.addEventListener('pointerenter',()=>set(true));row.addEventListener('pointerleave',()=>set(false));row.addEventListener('focusin',()=>set(true));row.addEventListener('focusout',event=>{if(!row.contains(event.relatedTarget))set(false);});}}
- async newCity(){if(this.owner.busy)return;try{await this.openSandbox();if(this.owner.busy||$('analysis-config-dialog')?.open)return;this.owner.configure?.();}catch(e){this.owner.status(e.message,true);}}
+ async newCity(){if(this.owner.busy)return;try{await this.openSandbox();}catch(e){this.owner.status(e.message,true);}}
  saveCity(){if(this.owner.busy)return;this.closeMenus();const button=$('port-export');if(!button||button.disabled){this.owner.status('Save City is available after an analysis has results.',true);return;}button.click();}
  closeHistory(){$('analysis-history-dialog').close();$('backend-replay').setAttribute('aria-expanded','false');$('backend-replay').focus?.();}
  async openHistory(){
@@ -71,7 +68,7 @@ export class WorkspaceNavigation{
  }
  setContext(mode,title=''){
   document.body.dataset.workspace=mode;$('analysis-context-label').textContent=title;$('analysis-context-label').classList.toggle('hidden',mode!=='history');
-  $('backend-replay').setAttribute('aria-current',mode==='history'?'page':'false');$('port-toggle').setAttribute('aria-current',mode==='analysis'?'page':'false');this.update();
+  $('backend-replay').setAttribute('aria-current',mode==='history'?'page':'false');this.update();
  }
  markResult(title){this.setContext('history',title);if(this.owner.dashboard)this.owner.onOpen();this.update();this.refreshHistory();}
  async openRecord(row){

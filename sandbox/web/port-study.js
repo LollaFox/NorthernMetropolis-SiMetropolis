@@ -17,7 +17,6 @@ export class PortStudyUI {
     this.study=buildPolicyStudy(this.ledger);
     $('policy-new-case').addEventListener('click',()=>{if(this.analysis?.localTopic){try{this.analysis.topics.newCase();}catch(e){this.analysis.status(e.message,true);}return;}if(this.cases.length>=20){this.error(new Error('This workspace supports up to 20 retained cases. Export cases for further research.'));return;}this.stop();const id=`case-${this.cases.length+1}`;this.cases.push({id,label:`Case ${this.cases.length+1}`,ledger:emptyLedger()});this.selectCase(id);this.analysis?.navigation?.setContext('analysis');});
     $('policy-case-select').addEventListener('change',e=>this.analysis?.localTopic?this.analysis.topics.selectCase(e.target.value):this.selectCase(e.target.value));
-    $('port-toggle').addEventListener('click',()=>{if(this.analysis?.navigation){this.analysis.navigation.openSandbox().catch(e=>this.error(e));return;}if(this.analysis?.backendReplay){this.analysis.backend.openSaved(this.analysis.backend.simulationId,this.analysis.backend.date).catch(e=>this.error(e));return;}this.active?this.showTab('policy'):this.open().catch(e=>this.error(e));});
     $('port-collapse').addEventListener('click',()=>{$('port-panel').classList.add('hidden');$('port-expand').classList.remove('hidden');this.analysis?.navigation?.update();});
     $('port-close').addEventListener('click',()=>this.close());
     for(const b of document.querySelectorAll('[data-port-tab]'))b.addEventListener('click',()=>this.showTab(b.dataset.portTab));
@@ -62,12 +61,12 @@ export class PortStudyUI {
     if(this.opening||this.active)return;this.opening=true;
     try{
       await this.options.pause();this.options.clearPanels();this.active=true;
-      document.body.classList.add('port-study-active');$('port-toggle').setAttribute('aria-pressed','true');
+      document.body.classList.add('port-study-active');
       for(const id of ['port-heading','port-panel','port-deck'])$(id).classList.remove('hidden');
       this.city.resetCamera();this.city.showPortStudy(true);this.showTab(this.tab);this.render();this.analysis?.onOpen();
     }finally{this.opening=false;}
   }
-  close(){this.stop();this.analysis?.backend.pauseForExit();this.active=false;document.body.classList.remove('port-study-active');$('port-toggle').setAttribute('aria-pressed','false');for(const id of ['port-heading','port-panel','port-deck'])$(id).classList.add('hidden');this.city.showPortStudy(false);}
+  close(){this.stop();this.analysis?.backend.pauseForExit();this.active=false;document.body.classList.remove('port-study-active');for(const id of ['port-heading','port-panel','port-deck'])$(id).classList.add('hidden');this.city.showPortStudy(false);}
   showTab(tab){if(this.analysis?.localTopic){this.analysis.topics.showTab(tab);return;}if(this.analysis&&this.analysis.engine!=='rules'){this.analysis.showApiResults();return;}this.tab=tab;for(const name of ['policy','results','agents','inputs'])$(name==='policy'?'port-policy-review':`port-${name}`).classList.toggle('hidden',name!==tab);for(const b of document.querySelectorAll('[data-port-tab]')){b.classList.toggle('active',b.dataset.portTab===tab);b.setAttribute('aria-pressed',String(b.dataset.portTab===tab));}if(tab==='inputs'&&!this.draftDirty)this.prepareForm();$('port-panel').scrollTop=0;}
   prepareForm(){
     const p=this.study.months[this.month].activeInputs??this.ledger.revisions.at(-1)?.inputs??DEFAULTS;
