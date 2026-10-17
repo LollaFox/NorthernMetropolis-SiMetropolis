@@ -1,0 +1,2 @@
+Please double click start-product.cmd, and open http://127.0.0.1:8898/ .
+LIVE government AI startup method and complete usage steps are in README.md.
