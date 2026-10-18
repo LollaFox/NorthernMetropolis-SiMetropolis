@@ -138,7 +138,7 @@ export class BackendWorkspace{
   const o=this.owner;if(o.busy||!o.session?.pending)return;o.restoreRules();o.engine='backend';o.busy=true;o.update();
   try{if(o.deepseekApiKey&&o.session)o.session._apiKey=o.deepseekApiKey;await o.session.resume(o.sampleFile||$('analysis-plan')?.files?.[0]);
    if(o.session.state==='ready'){if(this.active)await this.openSaved(o.session.run.simulationId,undefined,{withinAnalysis:true});else{o.apiResults=true;o.fillApiMonths();o.showApiResults();await o.loadFrame(0);}}
-   else if(o.session.state==='review'){o.renderReview();$('analysis-review-dialog').showModal();}
+   else if(o.session.state==='review'){o.renderReview();const exit=$('analysis-review-enter');if(exit)exit.textContent='Cancel';const review=$('analysis-review-dialog');if(review&&!review.open)review.showModal();}
    else o.status('Saved operation restored. Start analysis to continue after confirmation.');
   }catch(e){o.status(e.message,true);}finally{o.busy=false;o.update();}
  }

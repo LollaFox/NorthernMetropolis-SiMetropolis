@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {describeAnalysisCapability,needsScriptAcknowledgement,renderCapabilityBrief} from '../web/analysis-capability.js';
 import {getPolicy} from '../web/policy-catalog.js';
 import {POLICY_TAGS} from '../web/analysis-scope.js';
-import {CompactAnalysisUI} from '../web/analysis-compact.js';
+import {CompactAnalysisUI,deepseekKeyMessage} from '../web/analysis-compact.js';
 
 for(const [id,units,limit] of [['huanggang-opening',/trips\/day/,/Housing/],['kwu-tung-housing',/Households and housing units/,/affordability/],['hung-shui-kiu-school',/Pupils and school places/,/Healthcare/]])test(`${id}: local capability explains its actual mechanism, units and missing outcomes`,()=>{
  const p=describeAnalysisCapability({policy:getPolicy(id),engine:'rules',backendActive:true});assert.equal(p.support,'local');assert.equal(p.status,'Local model ready');assert.match(p.units,units);assert.match(p.limits,limit);assert.match(p.basis,/assumed/);
@@ -16,6 +16,12 @@ test('fixed-script mode never implies that the selected school policy drives con
 });
 test('test snapshots and unknown external APIs are not labelled as validated policy adapters',()=>{
  const policy=getPolicy('kwu-tung-housing');assert.equal(describeAnalysisCapability({policy,engine:'fixture'}).support,'test');assert.equal(describeAnalysisCapability({policy,engine:'backend'}).support,'unknown');assert.equal(describeAnalysisCapability({policy:{model:'unsupported',label:'New policy'},engine:'rules'}).support,'unavailable');assert.equal(describeAnalysisCapability({engine:'rules'}).support,'unselected');
+});
+test('a DeepSeek key must use the sk- format before configuration can be saved',()=>{
+ assert.equal(deepseekKeyMessage(''),'Enter a DeepSeek API key. This sandbox does not run offline.');
+ assert.match(deepseekKeyMessage('not-a-key'),/^Enter a DeepSeek API key starting with sk-/);
+ assert.match(deepseekKeyMessage('sk-short'),/^Enter a DeepSeek API key starting with sk-/);
+ assert.equal(deepseekKeyMessage('sk-'+'a'.repeat(32)),'');
 });
 test('only a fresh scripted run requires the extra purpose choice; recovery and saved results remain available',()=>{
  const base={engine:'backend',backendActive:true,presetAcknowledged:false};assert.equal(needsScriptAcknowledgement(base),true);assert.equal(needsScriptAcknowledgement({...base,session:{state:'draft'}}),true);

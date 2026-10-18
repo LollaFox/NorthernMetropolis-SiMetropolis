@@ -22,7 +22,7 @@ No new simulation can run offline without a key. In Configure, choose a governme
 2. Choose a government script: Default City, Function Zones, or Mixed Zones.
 3. Choose how many years to simulate, from 1 to 5. Later years in the five-year script are not run.
 4. Enter a DeepSeek API key in the page. A run cannot start without one. The launcher does not read a key file.
-5. Save settings, then Start analysis. Review the assumptions and confirm the run.
+5. Save settings. The review screen opens when the key and script are accepted. Review the assumptions and confirm the run.
 6. At the bottom, view population, jobs, and construction progress month by month. Each script asks DeepSeek for a narrative on each completed building. Government start-date decisions stay on the fixed schedule.
 7. File > Load City opens saved results without starting a new simulation. Export study downloads the saved run. After a refresh, enter the key again before resuming an unfinished task.
 

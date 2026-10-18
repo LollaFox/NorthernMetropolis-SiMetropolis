@@ -47,7 +47,7 @@ export class WorkspaceNavigation{
  focusCamera(id){const city=this.owner.city;if(!city?.focusDistrict)return;if(id==='overview'){city.resetCamera();return;}if(city.view==='street')city.setView('overview');city.focusDistrict(id);}
  chooseSelect(id,value){const select=$(id);if(!select)return;select.value=value;select.dispatchEvent?.(new Event('change'));}
  bindHoverMenus(){this.menuCloseTimer=0;for(const host of document.querySelectorAll('.nav-menu')){const kind=host.getAttribute('data-menu');if(!kind||!POPUPS[kind])continue;const button=host.querySelector('.nav-menu-button');host.addEventListener('pointerenter',()=>{if(button?.disabled)return;clearTimeout(this.menuCloseTimer);this.openMenu(kind);});host.addEventListener('pointerleave',()=>{clearTimeout(this.menuCloseTimer);this.menuCloseTimer=setTimeout(()=>{if(this.popup===kind)this.closeMenus();},140);});button?.addEventListener('click',event=>{if(button.disabled)return;if(event.detail===0)this.toggle(kind);else this.openMenu(kind);});}for(const row of document.querySelectorAll('.nav-cascade')){const trigger=row.querySelector('.nav-cascade-item');const set=open=>trigger?.setAttribute('aria-expanded',String(open));row.addEventListener('pointerenter',()=>set(true));row.addEventListener('pointerleave',()=>set(false));row.addEventListener('focusin',()=>set(true));row.addEventListener('focusout',event=>{if(!row.contains(event.relatedTarget))set(false);});}}
- async newCity(){if(this.owner.busy)return;try{await this.openSandbox();}catch(e){this.owner.status(e.message,true);}}
+ async newCity(){if(this.owner.busy)return;try{await this.openSandbox();this.owner.configure?.();}catch(e){this.owner.status(e.message,true);}}
  saveCity(){if(this.owner.busy||$('file-save-city')?.disabled)return;this.closeMenus();const button=$('port-export');if(!button||button.disabled)return;button.click();}
  closeHistory(){$('analysis-history-dialog').close();$('backend-replay').setAttribute('aria-expanded','false');$('backend-replay').focus?.();}
  async openHistory(){
@@ -69,7 +69,7 @@ export class WorkspaceNavigation{
  }
  setContext(mode,title=''){
   document.body.dataset.workspace=mode;$('analysis-context-label').textContent=title;$('analysis-context-label').classList.toggle('hidden',mode!=='history');
-  $('backend-replay').setAttribute('aria-current',mode==='history'?'page':'false');this.update();
+  $('backend-replay').removeAttribute('aria-current');this.update();
  }
  markResult(title){this.setContext('history',title);if(this.owner.dashboard)this.owner.onOpen();this.update();this.refreshHistory();}
  async openRecord(row){

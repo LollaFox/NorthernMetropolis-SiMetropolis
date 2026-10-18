@@ -16,6 +16,12 @@ import {RegionPicker} from './v3-region.js';
 import {V3Map} from './v3-map.js';
 import {describeAnalysisCapability,renderCapabilityBrief,needsScriptAcknowledgement} from './analysis-capability.js';
 const $=id=>document.getElementById(id);
+export function deepseekKeyMessage(key){
+ const value=String(key??'').trim();
+ if(!value||value.length>4096||/[\r\n\u0000]/.test(value)||/^[\uFEFF"']/.test(value))return 'Enter a DeepSeek API key. This sandbox does not run offline.';
+ if(!/^sk-[A-Za-z0-9]{32,}$/.test(value))return 'Enter a DeepSeek API key starting with sk-.';
+ return '';
+}
 const node=(tag,value,cls)=>{const n=document.createElement(tag);if(value!==undefined)n.textContent=String(value);if(cls)n.className=cls;return n;};
 const number=n=>new Intl.NumberFormat('en').format(Math.round(n));
 export class CompactAnalysisUI {
@@ -73,6 +79,7 @@ export class CompactAnalysisUI {
   $('analysis-month').addEventListener('change',()=>{if(this.backendReplay){this.backend.selectMonth(Number($('analysis-month').value));return;}if(this.localTopic){this.topics.selectMonth(Number($('analysis-month').value));return;}if(this.apiResults)this.loadFrame(Number($('analysis-month').value));else {this.port.stop();this.port.month=Number($('analysis-month').value);this.port.render();}});
   $('analysis-config-close').addEventListener('click',()=>$('analysis-config-dialog').close());
   $('analysis-review-close').addEventListener('click',()=>$('analysis-review-dialog').close());
+  $('analysis-review-enter')?.addEventListener('click',()=>$('analysis-review-dialog').close());
   $('analysis-review-ack').addEventListener('change',()=>this.update());
   $('analysis-confirm-run').addEventListener('click',()=>this.confirmAndRun());
   $('analysis-config-form').addEventListener('submit',e=>{e.preventDefault();this.saveConfiguration();});
@@ -96,7 +103,7 @@ export class CompactAnalysisUI {
  setup(){return {...governmentSetup(),bounds:this.bounds(),start:$('analysis-start-date').value,end:$('analysis-end-date').value,step:$('analysis-step').value,policyScope:{...scopeMetadata(this.selected,this.engine),policyId:this.policyId,areaId:this.areaId,model:this.currentPolicy.model,catalogVersion:CATALOG_VERSION}};}
  configNote(message){const el=$('analysis-config-status');el.textContent=message||'';el.classList.toggle('config-key-warning',/^Enter (a|the) DeepSeek API/.test(message||''));}
  syncSaveAvailability(){if(!this.requiresDeepseekKey)return;const button=$('analysis-save-config');if(!button)return;const idle=!$('deepseek-api-key')?.value.trim();button.classList.toggle('config-save-idle',idle);button.setAttribute('aria-disabled',idle?'true':'false');}
- configure(){if(this.busy)return;if(this.backendReplay){this.backend.newAnalysis();return;}if(this.currentPolicy.model!=='huanggang'&&this.topics.record)this.topics.prepareForm();if($('analysis-engine'))$('analysis-engine').value=this.engine;if($('analysis-preset-ack'))$('analysis-preset-ack').checked=Boolean(this.presetAcknowledged);if($('deepseek-api-key')&&this.deepseekApiKey)$('deepseek-api-key').value=this.deepseekApiKey;this.renderEngineNote();this.configNote('');this.syncSaveAvailability();$('analysis-config-dialog').showModal();}
+ configure(){if(this.busy)return;if(this.backendReplay){this.backend.newAnalysis();return;}if(this.currentPolicy.model!=='huanggang'&&this.topics.record)this.topics.prepareForm();if($('analysis-engine'))$('analysis-engine').value=this.engine;if($('analysis-preset-ack'))$('analysis-preset-ack').checked=Boolean(this.presetAcknowledged);if($('deepseek-api-key')&&this.deepseekApiKey)$('deepseek-api-key').value=this.deepseekApiKey;this.renderEngineNote();this.configNote('');this.syncSaveAvailability();const dialog=$('analysis-config-dialog');if(dialog&&!dialog.open)dialog.showModal();}
  renderEngineNote(){
   syncGovernment(this);
   const engine=$('analysis-engine').value,api=engine!=='rules';$('analysis-api-config').classList.toggle('hidden',!api);$('analysis-sample-pdf').classList.toggle('hidden',engine==='rules');$('analysis-rule-assumptions').classList.toggle('hidden',api||this.currentPolicy.model!=='huanggang');$('topic-config').classList.toggle('hidden',api||this.currentPolicy.model==='huanggang');
@@ -129,7 +136,8 @@ export class CompactAnalysisUI {
    const script=$('construction-scenario').value;
    if(!['default-city','function-zones','mixed-zones'].includes(script))throw new Error('Choose a government script.');
    const key=$('deepseek-api-key').value.trim();
-   if(!key||key.length>4096||/[\r\n\u0000]/.test(key)||/^[\uFEFF"']/.test(key))throw new Error('Enter a DeepSeek API key. This sandbox does not run offline.');
+   const keyProblem=deepseekKeyMessage(key);
+   if(keyProblem)throw new Error(keyProblem);
    this.deepseekApiKey=key;this.engine='backend';this.presetAcknowledged=true;
    if($('analysis-engine'))$('analysis-engine').value='backend';
    if($('analysis-preset-ack'))$('analysis-preset-ack').checked=true;
@@ -144,7 +152,8 @@ export class CompactAnalysisUI {
    this.city.showPortStudy(false);document.querySelector('.port-flow-key')?.classList.add('hidden');
    $('port-scenario-note').textContent='Government script saved. Start analysis to review and run it.';
    this.drawTags();this.navigation?.setContext('analysis');$('analysis-config-dialog').close();
-   this.status('Script and API key saved. Start analysis to run.');this.onOpen();this.update();
+   this.status('Script and API key saved.');this.onOpen();this.update();
+   void this.start({fromSave:true});
   }catch(e){this.configNote(e.message);}
  }
  renderActiveScript(){
@@ -169,7 +178,7 @@ export class CompactAnalysisUI {
   this.renderCapability?.();
   this.navigation?.update();
  }
- async start(){
+ async start({fromSave=false}={}){
   if(this.busy)return;
   if(this.backendReplay){this.backend.newAnalysis();return;}
   if(this.requiresDeepseekKey){
@@ -198,7 +207,7 @@ export class CompactAnalysisUI {
      this.busy=true;this.pendingTags=[...this.selected];this.status(this.backend?.active?'Preparing the scripted scenario review…':'Initializing the API review…');this.update();await this.session.initialize(setup,file);
     }
    }
-   this.renderReview();$('analysis-review-dialog').showModal();this.status('Review the initialized sources and assumptions to continue.');
+   this.renderReview();const exit=$('analysis-review-enter');if(exit)exit.textContent=fromSave?"Enter But Don't Run":'Cancel';const review=$('analysis-review-dialog');if(review&&!review.open)review.showModal();this.status('Review the initialized sources and assumptions to continue.');
   }catch(e){this.status(e.message,true);}finally{this.busy=false;this.update();}
  }
  runRules(){
