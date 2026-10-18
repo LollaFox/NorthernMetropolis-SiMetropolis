@@ -1,0 +1,94 @@
+SiMetropolis Decision Sandbox Restricted License
+
+Version 1.0
+18 October 2026
+
+Copyright (c) 2026 SiMetropolis team. All rights reserved.
+
+This License is a grant of limited permission. It is not a transfer of ownership and it is not an open-source license. The Software is not licensed under the MIT License or under any other public license.
+
+1. Definitions
+
+"Competition" means the Inter-University GenAI Hackathon for SDGs.
+
+"Team" means the group entered in the Competition under the name "SiMetropolis", and "Team member" means a natural person who is a member of that group.
+
+"Judge" means a natural person appointed to judge entries in the Competition, while and only to the extent that person is acting in that capacity with respect to the Team's entry.
+
+"Authorized User" means a Team member or a Judge.
+
+"Licensor" means the SiMetropolis team.
+
+"Software" means the original work known as the Northern Metropolis Decision Sandbox, including its source code, scripts, documentation, configuration, models, and original assets, in whatever form they are made available together with this License. "Software" does not include Third-Party Components.
+
+"Third-Party Component" means a component supplied with its own license notice. The Three.js library in sandbox/web/vendor/, and the notice in sandbox/web/vendor/THREE-LICENSE.txt, are Third-Party Components.
+
+"License" means this SiMetropolis Decision Sandbox Restricted License, Version 1.0.
+
+2. Grant to Team members
+
+Subject to the terms and conditions of this License, the Licensor hereby grants each Team member a non-exclusive, non-transferable, non-sublicensable, revocable license to:
+
+(a) use, reproduce, and modify the Software;
+
+(b) prepare derivative works of the Software; and
+
+(c) distribute copies of the Software, in source or executable form, solely to other Team members and to Judges.
+
+3. Grant to Judges
+
+Subject to the terms and conditions of this License, the Licensor hereby grants each Judge a non-exclusive, non-transferable, non-sublicensable, revocable license to use, reproduce, and inspect the Software, and to make such copies as are reasonably required, solely for the purpose of judging, reviewing, or evaluating the Team's entry in the Competition.
+
+4. Reservation of rights; no other permission
+
+All rights not expressly granted in this License are reserved by the Licensor. No license or other right is granted, by implication, estoppel, or otherwise, to any person who is not an Authorized User.
+
+Except for the permissions in Sections 2 and 3, no person may use, reproduce, modify, merge, publish, distribute, sublicense, sell, rent, lease, lend, publicly display, publicly perform, or create derivative works of the Software, or of any substantial portion of it, in source or object form, for any purpose, including a commercial, academic, research, personal, or competition purpose.
+
+Receipt, download, clone, or possession of a copy of the Software does not grant any right to use the Software. Access to a repository or other location in which a copy is stored does not make the recipient an Authorized User.
+
+5. Conditions
+
+5.1 Each copy of the Software that an Authorized User distributes under Section 2 or Section 3 shall include a complete copy of this License and shall retain all copyright notices.
+
+5.2 An Authorized User shall not remove, alter, or obscure this License or any copyright notice.
+
+5.3 An Authorized User shall not license, sublicense, or otherwise authorize any person who is not an Authorized User to use the Software.
+
+5.4 An Authorized User shall not place the Software, or any derivative work of the Software, under any other terms, including the MIT License, the Apache License, the GNU General Public License, or any other public or open-source license.
+
+5.5 The permissions in this License are personal to the Authorized User. An Authorized User shall not assign or delegate them, and shall not make the Software available through an account, service, mirror, or automated system that permits use by any person who is not an Authorized User.
+
+6. Cessation of status
+
+A person ceases to be an Authorized User when that person ceases to be a Team member or, for a Judge, when that person is no longer acting as a Judge of the Competition with respect to the Team's entry. The license granted to that person ends at that time. Section 9 then applies to that person.
+
+7. Third-Party Components
+
+Third-Party Components are licensed solely under their own terms. The MIT License accompanying Three.js applies only to the Three.js files it covers and to the notice required to accompany those files. That notice is retained because those terms require it to be retained. The MIT License does not apply to the Software, and the presence of that notice shall not be read as a grant of any right in the Software.
+
+This License does not limit any right that the license of a Third-Party Component grants in that component standing alone. Separating a Third-Party Component from the Software does not grant any right in the Software.
+
+8. Names
+
+This License does not grant any right to use the names "SiMetropolis" or "Northern Metropolis Decision Sandbox", or any associated mark, except as needed for ordinary attribution among Authorized Users and for identification of the entry in the Competition.
+
+9. Termination
+
+If any person uses the Software beyond the permission granted to that person, the license granted to that person terminates automatically. On termination, that person shall cease all use of the Software and shall destroy all copies in that person's possession or control, except that a Judge may retain one copy where the rules of the Competition require an official record to be kept.
+
+Sections 4, 7, 8, 10, 11, and 12 survive termination.
+
+10. Disclaimer of warranty
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT. THE LICENSOR DOES NOT WARRANT THAT THE SOFTWARE WILL BE UNINTERRUPTED, ACCURATE, OR FREE OF ERRORS. THE SOFTWARE IS AN EXPLORATORY SCENARIO TOOL. IT IS NOT A FORECAST, AN OFFICIAL DEVELOPMENT PLAN, OR PROFESSIONAL ADVICE.
+
+11. Limitation of liability
+
+IN NO EVENT SHALL THE LICENSOR OR ANY TEAM MEMBER BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+12. Entire license
+
+This License is the complete agreement governing the Software. No statement outside this License, and no course of dealing, grants any additional right. If a provision of this License is held unenforceable, the remaining provisions continue in full force.
+
+END OF LICENSE

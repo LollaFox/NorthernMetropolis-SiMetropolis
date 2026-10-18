@@ -51,3 +51,7 @@ node --test sandbox/tests/test_*.mjs
 ```
 
 Browser check script: `tools/check_product.mjs`. It depends on an existing Playwright installation and Chrome. Use `PLAYWRIGHT_PATH`, `PRODUCT_BASE`, and `PRODUCT_LAYOUT` to set the module, service address, and scenario. This script only runs offline tests.
+
+## License
+
+Original code in this repository is covered by the SiMetropolis Decision Sandbox Restricted License in `LICENSE`. Permission is limited to members of the SiMetropolis team in the Inter-University GenAI Hackathon for SDGs and to that competition's judges. The vendored Three.js files remain under the MIT License in `sandbox/web/vendor/THREE-LICENSE.txt`.

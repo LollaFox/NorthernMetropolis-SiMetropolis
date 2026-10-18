@@ -1,6 +1,6 @@
 # Third-party provenance
 
-This local/internal prototype has no selected project license. New city geometry and application code are original; no sandbox-game source was copied.
+The original Northern Metropolis Decision Sandbox is covered by the SiMetropolis Decision Sandbox Restricted License in the repository [LICENSE](../LICENSE). That license permits use only by members of the SiMetropolis team in the Inter-University GenAI Hackathon for SDGs and by that competition's judges. New city geometry and application code are original; no sandbox-game source was copied. The MIT License identified below applies only to the vendored Three.js files.
 
 ## Three.js 0.180.0
 

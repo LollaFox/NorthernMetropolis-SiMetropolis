@@ -51,3 +51,7 @@ node --test sandbox/tests/test_*.mjs
 ```
 
 浏览器检查脚本：`tools/check_product.mjs`，依赖已有Playwright及Chrome；通过 `PLAYWRIGHT_PATH`、`PRODUCT_BASE` 和 `PRODUCT_LAYOUT` 指定模块、服务地址及情景。此脚本只做离线测试。
+
+## 许可
+
+本仓库中的原创代码受根目录 `LICENSE` 所载 SiMetropolis Decision Sandbox Restricted License 约束。获许使用的人限于 Inter-University GenAI Hackathon for SDGs 的 SiMetropolis 队伍成员，以及该比赛的评委。随附的 Three.js 文件仍受 `sandbox/web/vendor/THREE-LICENSE.txt` 中的 MIT License 约束。

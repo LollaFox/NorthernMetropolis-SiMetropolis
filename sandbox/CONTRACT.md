@@ -1,6 +1,6 @@
 # Sandbox v2 interface contract
 Version 2.0 / lead-owned / 2026-09-30
-Local internal, licensing undecided. Reviewed v2 is the primary sandbox/ package; original v1 is preserved unchanged in sandbox_v1/. The relative sandbox_v2 -> sandbox compatibility symlink supports existing v2 commands. Canonical launch: python3 sandbox/server.py --port 8877 or python3 -m sandbox.server --port 8877. Existing provider transport is imported from sandbox_v1/ without changing its configuration loader.
+Local internal. Original software is covered by the repository LICENSE (SiMetropolis Decision Sandbox Restricted License). Reviewed v2 is the primary sandbox/ package; original v1 is preserved unchanged in sandbox_v1/. The relative sandbox_v2 -> sandbox compatibility symlink supports existing v2 commands. Canonical launch: python3 sandbox/server.py --port 8877 or python3 -m sandbox.server --port 8877. Existing provider transport is imported from sandbox_v1/ without changing its configuration loader.
 ## Python world
 sandbox/engine.py functions: create_world(seed=42), step_world(world, decisions=None), intervene(world, text, kind=None), validate_world(world), actor_packet(world, actor_id).
 All pure, deepcopy input, deterministic with seed+month; no provider I/O. ValidationError(ValueError).

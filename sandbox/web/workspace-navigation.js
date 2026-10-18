@@ -15,6 +15,11 @@ export class WorkspaceNavigation{
   $('file-new-city').addEventListener('click',()=>this.newCity());
   $('file-save-city').addEventListener('click',()=>this.saveCity());
   $('file-load-city').addEventListener('click',()=>this.openHistory());
+  $('help-send-feedback').addEventListener('click',()=>this.closeMenus());
+  this.bindChoice('help-view-license',()=>this.openLicense());
+  $('license-close').addEventListener('click',()=>this.closeLicense());
+  this.bindChoice('help-about',()=>this.openAbout());
+  $('about-close').addEventListener('click',()=>this.closeAbout());
   this.bindChoice('menu-camera-overview',()=>this.focusCamera('overview'));
   for(const id of ['hung-shui-kiu','san-tin','kwu-tung','ta-kwu-ling'])this.bindChoice('menu-camera-'+id,()=>this.focusCamera(id));
   this.bindChoice('menu-style-original',()=>this.chooseSelect('render-style','original'));
@@ -50,6 +55,10 @@ export class WorkspaceNavigation{
  async newCity(){if(this.owner.busy)return;try{await this.openSandbox();this.owner.configure?.();}catch(e){this.owner.status(e.message,true);}}
  saveCity(){if(this.owner.busy||$('file-save-city')?.disabled)return;this.closeMenus();const button=$('port-export');if(!button||button.disabled)return;button.click();}
  closeHistory(){$('analysis-history-dialog').close();$('backend-replay').setAttribute('aria-expanded','false');$('backend-replay').focus?.();}
+ openAbout(){const dialog=$('about-dialog');if(dialog&&!dialog.open)dialog.showModal();}
+ closeAbout(){const dialog=$('about-dialog');if(dialog?.open)dialog.close();$('help-toggle').focus?.();}
+ openLicense(){const dialog=$('license-dialog');if(dialog&&!dialog.open)dialog.showModal();const body=$('license-text');if(!body||body.dataset.loaded)return;fetch('./LICENSE.txt').then(response=>{if(!response.ok)throw new Error('unavailable');return response.text();}).then(text=>{body.textContent=text;body.dataset.loaded='1';}).catch(()=>{body.textContent='The license could not be loaded from this page. The controlling copy is the LICENSE file in the repository root.';});}
+ closeLicense(){const dialog=$('license-dialog');if(dialog?.open)dialog.close();$('help-toggle').focus?.();}
  async openHistory(){
   if(this.owner.busy)return;this.owner.plan?.close();this.closeMenus();this.host.clearView?.();this.host.closeDrawers?.();$('analysis-history-search').value='';$('analysis-history-source').value='all';
   if(!$('analysis-history-dialog').open)$('analysis-history-dialog').showModal();$('backend-replay').setAttribute('aria-expanded','true');await this.refreshHistory();
@@ -68,8 +77,7 @@ export class WorkspaceNavigation{
    const open=make('button','Open results ↗','history-open');open.type='button';open.disabled=Boolean(this.owner.busy);open.addEventListener('click',()=>this.openRecord(row).catch(e=>{this.historyError=e.message;this.renderHistory();}));card.append(open);list.append(card);}
  }
  setContext(mode,title=''){
-  document.body.dataset.workspace=mode;$('analysis-context-label').textContent=title;$('analysis-context-label').classList.toggle('hidden',mode!=='history');
-  $('backend-replay').removeAttribute('aria-current');this.update();
+  document.body.dataset.workspace=mode;$('analysis-context-label').textContent=title;$('analysis-context-label').classList.toggle('hidden',mode!=='history');this.update();
  }
  markResult(title){this.setContext('history',title);if(this.owner.dashboard)this.owner.onOpen();this.update();this.refreshHistory();}
  async openRecord(row){
